@@ -5,15 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Type and Learn Korean</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
-  <main>
+  <body>
+    <div class="banner">
+      <img class="logo" src="talk-talk-logo.png" />
+    </div>
     <nav>
-      <a>Home</a><img class="logo" src="talk-talk-logo.png" /><a>About</a>
+      <a>Start Learning!</a>
+      <a>Why type?</a>
+      <a>About</a>
+      <a>Help</a>
     </nav>
-    <body>
-      <div class="prompt">
-        <textarea>Test</textarea>
+    <main>
+      <div class="learning-container">
+        <div class="prompt">Type the following in Korean:</div>
+        <div class="user-text-container">
+          <textarea class="user-text" placeholder="Type here..."></textarea>
+        </div>
       </div>
       <div class="keyboard-container">
         <div class="keyboard">
@@ -35,8 +51,12 @@
           <div class="key row-top ㅅ">ㅅ</div>
           <div class="key row-top ㅕ">ㅕ</div>
           <div class="key row-top ㅑ">ㅑ</div>
-          <div class="key row-top ㅐ">ㅐ</div>
-          <div class="key row-top ㅔ">ㅔ</div>
+          <div class="key row-top ㅐ">
+            ㅐ<span class="key-upper-right">ㅒ</span>
+          </div>
+          <div class="key row-top ㅔ">
+            ㅔ<span class="key-upper-right">ㅖ</span>
+          </div>
           <div class="key row-middle filler"></div>
           <div class="key row-middle ㅁ">ㅁ</div>
           <div class="key row-middle ㄴ">ㄴ</div>
@@ -56,8 +76,8 @@
           <div class="key row-bottom ㅡ">ㅡ</div>
         </div>
       </div>
-    </body>
-  </main>
+    </main>
+  </body>
 
   <script src="koreanData.js"></script>
   <script src="script.js"></script>
