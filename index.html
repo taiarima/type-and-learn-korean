@@ -25,60 +25,78 @@
       <a>Help</a>
     </nav>
     <main>
-      <div class="learning-container">
-        <div class="prompt">Type the following in Korean:</div>
-        <div class="user-text-container">
-          <textarea class="user-text" placeholder="Type here..."></textarea>
+      <div class="container">
+        <div class="about-container hidden">
+          <section class="section" id="section-1">
+            <div class="section-title">Section 1 Title</div>
+          </section>
+          <section class="section" id="section-2"></section>
+          <section class="section" id="section-3"></section>
         </div>
       </div>
-      <div class="keyboard-container">
-        <div class="keyboard">
-          <div class="key row-top ㅂ">
-            ㅂ<span class="key-upper-right">ㅃ</span>
+      <div class="container">
+        <div class="learning-container">
+          <div class="prompt">
+            <p class="prompt-instructions">Type the following in Korean:</p>
+            <p class="prompt-prompt">Test</p>
           </div>
-          <div class="key row-top ㅈ">
-            ㅈ<span class="key-upper-right">ㅉ</span>
+          <div class="user-text-container">
+            <textarea class="user-text" placeholder="Type here..."></textarea>
+            <p>Press enter to submit</p>
           </div>
-          <div class="key row-top ㄷ">
-            ㄷ<span class="key-upper-right">ㄸ</span>
+        </div>
+      </div>
+      <div class="container">
+        <div class="keyboard-container">
+          <div class="keyboard">
+            <div class="key row-top ㅂ">
+              ㅂ<span class="key-upper-right">ㅃ</span>
+            </div>
+            <div class="key row-top ㅈ">
+              ㅈ<span class="key-upper-right">ㅉ</span>
+            </div>
+            <div class="key row-top ㄷ">
+              ㄷ<span class="key-upper-right">ㄸ</span>
+            </div>
+            <div class="key row-top ㄱ">
+              ㄱ<span class="key-upper-right">ㄲ</span>
+            </div>
+            <div class="key row-top ㅅ">
+              ㅅ<span class="key-upper-right">ㅆ</span>
+            </div>
+            <div class="key row-top ㅅ">ㅅ</div>
+            <div class="key row-top ㅕ">ㅕ</div>
+            <div class="key row-top ㅑ">ㅑ</div>
+            <div class="key row-top ㅐ">
+              ㅐ<span class="key-upper-right">ㅒ</span>
+            </div>
+            <div class="key row-top ㅔ">
+              ㅔ<span class="key-upper-right">ㅖ</span>
+            </div>
+            <div class="key row-middle filler"></div>
+            <div class="key row-middle ㅁ">ㅁ</div>
+            <div class="key row-middle ㄴ">ㄴ</div>
+            <div class="key row-middle ㅇ">ㅇ</div>
+            <div class="key row-middle ㄹ">ㄹ</div>
+            <div class="key row-middle ㅎ">ㅎ</div>
+            <div class="key row-middle ㅓ">ㅓ</div>
+            <div class="key row-middle ㅏ">ㅏ</div>
+            <div class="key row-middle ㅣ">ㅣ</div>
+            <div class="key row-bottom filler"></div>
+            <div class="key row-bottom filler"></div>
+            <div class="key row-bottom ㅋ">ㅋ</div>
+            <div class="key row-bottom ㅌ">ㅌ</div>
+            <div class="key row-bottom ㅊ">ㅊ</div>
+            <div class="key row-bottom ㅍ">ㅍ</div>
+            <div class="key row-bottom ㅜ">ㅜ</div>
+            <div class="key row-bottom ㅡ">ㅡ</div>
           </div>
-          <div class="key row-top ㄱ">
-            ㄱ<span class="key-upper-right">ㄲ</span>
-          </div>
-          <div class="key row-top ㅅ">
-            ㅅ<span class="key-upper-right">ㅆ</span>
-          </div>
-          <div class="key row-top ㅅ">ㅅ</div>
-          <div class="key row-top ㅕ">ㅕ</div>
-          <div class="key row-top ㅑ">ㅑ</div>
-          <div class="key row-top ㅐ">
-            ㅐ<span class="key-upper-right">ㅒ</span>
-          </div>
-          <div class="key row-top ㅔ">
-            ㅔ<span class="key-upper-right">ㅖ</span>
-          </div>
-          <div class="key row-middle filler"></div>
-          <div class="key row-middle ㅁ">ㅁ</div>
-          <div class="key row-middle ㄴ">ㄴ</div>
-          <div class="key row-middle ㅇ">ㅇ</div>
-          <div class="key row-middle ㄹ">ㄹ</div>
-          <div class="key row-middle ㅎ">ㅎ</div>
-          <div class="key row-middle ㅓ">ㅓ</div>
-          <div class="key row-middle ㅏ">ㅏ</div>
-          <div class="key row-middle ㅣ">ㅣ</div>
-          <div class="key row-bottom filler"></div>
-          <div class="key row-bottom filler"></div>
-          <div class="key row-bottom ㅋ">ㅋ</div>
-          <div class="key row-bottom ㅌ">ㅌ</div>
-          <div class="key row-bottom ㅊ">ㅊ</div>
-          <div class="key row-bottom ㅍ">ㅍ</div>
-          <div class="key row-bottom ㅜ">ㅜ</div>
-          <div class="key row-bottom ㅡ">ㅡ</div>
         </div>
       </div>
     </main>
+    <footer></footer>
   </body>
-
   <script src="koreanData.js"></script>
+  <script src="domSelectors.js"></script>
   <script src="script.js"></script>
 </html>
