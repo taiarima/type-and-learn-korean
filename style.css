@@ -53,7 +53,7 @@ body {
   padding-top: 4%;
 }
 
-.prompt {
+.prompt-container {
   background-color: white;
   width: 300px;
   height: 100px;
@@ -63,8 +63,14 @@ body {
     "Lucida Sans", Arial, sans-serif;
   padding: 5px;
   text-align: center;
-  border: 3px solid rgb(255, 131, 22);
+  border: 3px solid #ff8316;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.prompt {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-top: -12px;
 }
 
 .user-text-container {
@@ -73,6 +79,16 @@ body {
     "Lucida Sans", Arial, sans-serif;
   color: white;
   text-align: center;
+}
+
+.next-btn {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--color-light-orange);
+  border: 2px solid #ff8316;
+  cursor: pointer;
 }
 
 .user-text {

@@ -15,6 +15,7 @@ const keyRowMiddle = document.querySelectorAll(".row-middle");
 const keyRowBottom = document.querySelectorAll(".row-bottom");
 const keyFiller = document.querySelectorAll(".filler");
 const keyUpperRight = document.querySelectorAll(".key-upper-right");
+const nextButton = document.querySelector(".next-btn");
 
 const keyBieup = document.querySelector(".key.ㅂ");
 const keyJieut = document.querySelector(".key.ㅈ");
@@ -39,5 +40,3 @@ const keyChieut = document.querySelector(".key.ㅊ");
 const keyPieup = document.querySelector(".key.ㅍ");
 const keyU = document.querySelector(".key.ㅜ");
 const keyEu = document.querySelector(".key.ㅡ");
-
-
