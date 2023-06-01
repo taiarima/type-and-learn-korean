@@ -96,7 +96,7 @@ const foodItems = {
 };
 
 const natureTerms = {
-  title: "Nature Words",
+  title: "Nature",
   items: [
     { korean: "강", english: "river" },
     { korean: "산", english: "mountain" },
@@ -201,26 +201,73 @@ const greetings = {
   ],
 };
 
-const basicVocabCategories = [];
-basicVocabCategories.push(countries);
-basicVocabCategories.push(foodItems);
-basicVocabCategories.push(natureTerms);
-basicVocabCategories.push(animals);
-basicVocabCategories.push(colors);
-basicVocabCategories.push(greetings);
+const basicVocabCategories = {
+  title: "Basic Vocabulary",
+  items: [],
+};
+basicVocabCategories.items.push(countries);
+basicVocabCategories.items.push(foodItems);
+basicVocabCategories.items.push(natureTerms);
+basicVocabCategories.items.push(animals);
+basicVocabCategories.items.push(colors);
+basicVocabCategories.items.push(greetings);
 
-// In progress:
-// Looping over the array of arrays
-// basicVocabCategories.forEach((category) => {
-//     // Create an element for each array
-//     const box = document.createElement("div");
+// class Category {
+//   constructor(title) {
+//     this.title = title;
+//     this.items = [];
+//   }
 
-//     // Use the array to do something on your page, such as display the data
-//     category.forEach((item) => {
-//       // Use item.korean and item.english to access the translations
-//       // Do something with the data, like creating elements or displaying them on the page
-//     });
+//   addItem(item) {
+//     this.items.push(item);
+//   }
+// }
 
-//     // Append the element to your page
-//     document.body.appendChild(box);
-//   });
+// class Item {
+//   constructor(title) {
+//     this.title = title;
+//   }
+// }
+
+// // Create an instance of Category
+// const basicVocabCategories = new Category("Basic Vocabulary");
+
+// // Create instances of Item and add them to the category
+// basicVocabCategories.addItem(new Item(countries));
+// basicVocabCategories.addItem(new Item(foodItems));
+// basicVocabCategories.addItem(new Item(natureTerms));
+// basicVocabCategories.addItem(new Item(animals));
+// basicVocabCategories.addItem(new Item(colors));
+// basicVocabCategories.addItem(new Item(greetings));
+
+// New OOP approach:
+// class Category {
+//     constructor(title) {
+//       this.title = title;
+//       this.drills = [];
+//     }
+
+//     addDrill(drill) {
+//       this.drills.push(drill);
+//     }
+//   }
+
+//   class Drill {
+//     constructor(title, type, items) {
+//       this.title = title;
+//       this.items = items;
+//       this.type = type; // e.g. fill in blank, write full prompt (FIB, WFP)
+//      this.instructions = -- if (fib) { these, or these}
+//     }
+//   }
+
+//   // Creating instances of Category and Drill
+//   const vocabularyCategory = new Category("Vocabulary Drills");
+
+//   const greetingsDrill = new Drill("Greetings", [
+//     { korean: "안녕", english: "Hello (informal)" },
+//     // Add more items if needed
+//   ]);
+
+//   vocabularyCategory.addDrill(greetingsDrill);
+//   // Add more drills to the vocabularyCategory if needed
