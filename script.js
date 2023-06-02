@@ -13,6 +13,9 @@ function checkAnswer() {
   nextButton.focus();
 }
 
+let currentWord; // deconstructed current word
+let charCounter = 0;
+
 // I am just testing functionality for now
 function loadVocabList(listIndex) {
   const randomizedList = shuffleArray(
@@ -20,9 +23,9 @@ function loadVocabList(listIndex) {
   );
   const firstItem = randomizedList[0].korean;
   prompt.textContent = firstItem;
-  const deconstFirstItem = Hangul.disassemble(firstItem);
+  currentWord = Hangul.disassemble(firstItem);
   document
-    .querySelector(`.${deconstFirstItem[0]}`)
+    .querySelector(`.${currentWord[charCounter]}`)
     .classList.add("activated-key");
 }
 
@@ -112,22 +115,48 @@ bubbleContainer.addEventListener("click", function (event) {
   }
 });
 
-// Testing
+// Keyboard Switch
 const switchOn = document.getElementById("switch-on");
 const switchOff = document.getElementById("switch-off");
 
 switchOn.addEventListener("change", function () {
   if (this.checked) {
-    // "On" is selected
-    console.log("Switch is ON");
     keyboardContainer.parentElement.classList.remove("hidden");
   }
 });
 
 switchOff.addEventListener("change", function () {
   if (this.checked) {
-    // "Off" is selected
-    console.log("Switch is OFF");
     keyboardContainer.parentElement.classList.add("hidden");
+  }
+});
+
+// Event listener for lighting up keys
+document.addEventListener("compositionupdate", function (event) {
+  console.log("event.data = ", event.data);
+  const syllable = Hangul.disassemble(String(event.data));
+  console.log(syllable.length);
+  console.log("sllyable[0] = ", syllable[syllable.length - 1]);
+  const key = syllable[syllable.length - 1];
+  const targetElement = document.querySelector(`.key.${key}`);
+
+  if (targetElement) {
+    // Remove previous animation class if any
+    const previousKey = document.querySelector(".key.lightup");
+    if (previousKey) {
+      previousKey.classList.remove("lightup");
+    }
+
+    // Add animation class to the target key
+    targetElement.classList.add("lightup");
+    targetElement.classList.remove("activated-key");
+    document
+      .querySelector(`.${currentWord[++charCounter]}`)
+      .classList.add("activated-key");
+
+    // Reset the animation after 1 second
+    setTimeout(() => {
+      targetElement.classList.remove("lightup");
+    }, 500);
   }
 });
