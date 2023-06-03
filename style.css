@@ -45,7 +45,9 @@ nav a:hover {
 body {
   background-color: #ffa8b8;
 }
-
+/* main {
+  display: flex;
+} */
 .hidden {
   display: none;
 }
@@ -311,4 +313,76 @@ body {
 
 .switch input[type="radio"]:checked + label + .slider:before {
   left: 30px;
+}
+
+/* Coding dropdown menu */
+.dropdown-btn {
+  background-color: var(--color-light-pink);
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown-container {
+  /* position: relative;
+  display: inline-block; */
+  display: none;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  top: 60px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  right: 2%;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border: 1px solid var(--color-light-pink);
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown-container:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown-container:hover .dropdown-btn {
+  background-color: var(--color-dark-pink);
+}
+
+.hamburger-button {
+  height: 30px;
+  width: 30px;
+  filter: invert(100%);
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 1100px) {
+  nav {
+    display: none;
+  }
+  .dropdown-container {
+    position: absolute;
+    display: block;
+    right: 0%;
+  }
 }

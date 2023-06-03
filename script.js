@@ -160,3 +160,15 @@ document.addEventListener("compositionupdate", function (event) {
     }, 500);
   }
 });
+
+
+// Plan
+// Start a timer only when the user starts typing. Stop it when they get hit enter.
+// As they type, each decomposed hangeul string should have spaces removed, and then
+// the length of the characters for each exercise added on to a counter.
+// At the end of the exercise, I will calculate characters per minute by simply dividing the time
+// in minutes by the total of the counter. 
+
+// I will have one modal window, which will be injected with the correct HTML depending on the exercise
+// There will be options: Show Korean, show English, Show fill in blank, show keyboard, calculate typing speed
+// How many reps to do. <-- that can be an option for certain exercises
