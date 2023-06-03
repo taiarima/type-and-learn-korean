@@ -1,18 +1,30 @@
 :root {
-  --color-light-orange: #fbe5d6;
-  --color-dark-pink: #fc56e4;
-  --color-light-pink: #ffa8b8;
+  --color-gray: #5d5f71;
+  --color-beige: #b4957e;
+  --color-red: #db324d;
+  --color-beige-highlight: #dcb9a0;
+  --color-blue: #4ea5d9;
+  --color-yellow: #f2c14e;
+  --color-green: #5fad56;
+  --font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
 .banner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #fbe5d6;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  color: #fc56e4;
+  background-color: var(--color-red);
+  font-family: "Aoboshi One", serif;
+  color: white;
   font-size: 3rem;
-  padding: 20px;
+}
+.banner h1 {
+  font-size: 3rem;
+}
+.banner p {
+  font-size: 1rem;
+  margin-top: -25px;
 }
 
 .logo {
@@ -21,15 +33,14 @@
 
 nav {
   height: 50px;
-  background-color: var(--color-light-orange);
+  background-color: var(--color-red);
   margin-top: 2px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  color: var(--color-dark-pink);
+  font-family: var(--font-family);
+  color: white;
   font-size: 2rem;
   font-weight: 900;
 }
@@ -43,13 +54,40 @@ nav a:hover {
 }
 
 body {
-  background-color: #ffa8b8;
+  background-color: var(--color-gray);
 }
 /* main {
   display: flex;
 } */
 .hidden {
   display: none;
+}
+
+.slogan-container {
+  font-family: var(--font-family);
+}
+
+.slogan-container h1 {
+  font-size: 4.5rem;
+  line-height: 1.35;
+  margin-left: 10%;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex; /* Add this line */
+  flex-direction: column; /* Add this line */
+}
+
+.slogan-container h3 {
+  color: white;
+  font-size: 1.5rem;
+  text-align: center;
+  border: 2px dotted var(--color-gray);
+  padding: 15px;
+}
+
+.slogan-container img {
+  width: 100px;
+  border-radius: 50%;
 }
 
 .learning-container {
@@ -65,11 +103,10 @@ body {
   height: 100px;
   border-radius: 5px;
   margin: 10px auto;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: var(--font-family);
   padding: 5px;
   text-align: center;
-  border: 3px solid #ff8316;
+  border: 3px solid var(--color-red);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -81,19 +118,17 @@ body {
 
 .user-text-container {
   padding: 20px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: var(--font-family);
   color: white;
   text-align: center;
 }
 
 .next-btn {
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: var(--font-family);
   padding: 10px;
   border-radius: 5px;
-  background-color: var(--color-light-orange);
-  border: 2px solid #ff8316;
+  background-color: var(--color-blue);
+  border: 2px solid var(--color-red);
   cursor: pointer;
 }
 
@@ -184,9 +219,9 @@ body {
 }
 /* Testing */
 /* .dark-theme {
-  --color-light-orange: #333333;
-  --color-dark-pink: #660066;
-  --color-light-pink: #993399;
+  --color-gray: #333333;
+  --color-beige: #660066;
+  --color-red: #993399;
   --color-background: #1f1f1f;
   --color-text: #ffffff;
 } */
@@ -211,26 +246,25 @@ body {
   width: 150px;
   height: 150px;
   /* background: linear-gradient(to bottom right, #a2e9ff 20%, #0999d7 80%); */
-  background-color: var(--color-light-orange);
-  color: var(--color-dark-pink);
+  background-color: var(--color-blue);
+  color: white;
   border-radius: 30%;
-  border: 4px solid var(--color-dark-pink);
+  border: 4px solid var(--color-yellow);
   margin: 10px;
   font-size: 1.5rem;
   font-weight: 900;
   cursor: pointer;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: var(--font-family);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .bubble-heading {
   font-size: 2rem;
   color: white;
   text-align: center;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: var(--font-family);
   font-weight: 900;
-  background-color: var(--color-dark-pink);
+  background-color: var(--color-blue);
   width: 325px;
   margin: 0 auto;
   border-radius: 20px;
@@ -240,14 +274,13 @@ body {
 
 .bubble:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background-color: var(--color-green);
 }
 /* Testing switch */
 .switch-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: Arial, sans-serif;
   color: #333;
   margin-top: 20px;
   font-family: "Press Start 2P", cursive;
@@ -317,11 +350,12 @@ body {
 
 /* Coding dropdown menu */
 .dropdown-btn {
-  background-color: var(--color-light-pink);
+  background-color: transparent;
   color: white;
   padding: 16px;
   font-size: 16px;
   border: none;
+  margin-right: 8px;
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -340,9 +374,8 @@ body {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   top: 60px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  right: 2%;
+  font-family: var(--font-family);
+  right: 10%;
 }
 
 /* Links inside the dropdown */
@@ -351,7 +384,7 @@ body {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  border: 1px solid var(--color-light-pink);
+  border: 1px solid var(--color-red);
 }
 
 /* Change color of dropdown links on hover */
@@ -366,7 +399,7 @@ body {
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown-container:hover .dropdown-btn {
-  background-color: var(--color-dark-pink);
+  background-color: var(--color-blue);
 }
 
 .hamburger-button {
