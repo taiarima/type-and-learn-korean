@@ -200,6 +200,128 @@ const greetings = {
     { korean: "잘가", english: "Bye! (among close friends)" },
   ],
 };
+const sea = {
+  title: "The Sea",
+  items: [
+    { korean: "배", english: "boat" },
+    { korean: "미역", english: "seaweed" },
+    { korean: "게", english: "crab" },
+    { korean: "갑각류", english: "barnacle" },
+    { korean: "파도", english: "wave" },
+    { korean: "닻", english: "anchor" },
+    { korean: "바닷속", english: "ocean" },
+    { korean: "고래", english: "whale" },
+    { korean: "상어", english: "shark" },
+    { korean: "오징어", english: "squid" },
+    { korean: "조개", english: "shellfish" },
+    { korean: "소라", english: "seashell" },
+    { korean: "바닷가", english: "seashore" },
+    { korean: "모래", english: "sand" },
+    { korean: "소금", english: "salt" },
+    { korean: "햇볕", english: "sunlight" },
+    { korean: "돌고래", english: "dolphin" },
+    { korean: "계류", english: "current" },
+    { korean: "물고기", english: "fish" },
+    { korean: "조류", english: "tide" },
+    { korean: "솔방울", english: "seagull" },
+    { korean: "물결", english: "surf" },
+    { korean: "바다표범", english: "sealion" },
+    { korean: "저녁노을", english: "evening sunset" },
+  ],
+};
+const space = {
+  title: "Space",
+  items: [
+    { korean: "은하", english: "galaxy" },
+    { korean: "블랙홀", english: "black hole" },
+    { korean: "빅뱅", english: "big bang" },
+    { korean: "별", english: "star" },
+    { korean: "슈퍼노바", english: "supernova" },
+    { korean: "운석", english: "meteoroid" },
+    { korean: "태양", english: "sun" },
+    { korean: "행성", english: "planet" },
+    { korean: "달", english: "moon" },
+    { korean: "성운", english: "nebula" },
+    { korean: "혜성", english: "comet" },
+    { korean: "수성", english: "Mercury" },
+    { korean: "금성", english: "Venus" },
+    { korean: "지구", english: "Earth" },
+    { korean: "화성", english: "Mars" },
+    { korean: "목성", english: "Jupiter" },
+    { korean: "토성", english: "Saturn" },
+    { korean: "천왕성", english: "Uranus" },
+    { korean: "해왕성", english: "Neptune" },
+    { korean: "명왕성", english: "Pluto" },
+    { korean: "우주선", english: "spaceship" },
+    { korean: "로켓", english: "rocket" },
+    { korean: "인공위성", english: "satellite" },
+    { korean: "우주복", english: "spacesuit" },
+    { korean: "우주정거장", english: "space station" },
+    { korean: "행성계", english: "planetary system" },
+    { korean: "운석떨어짐", english: "meteor shower" },
+  ],
+};
+const technology = {
+  title: "Technology",
+  items: [
+    { korean: "컴퓨터", english: "computer" },
+    { korean: "인터넷", english: "internet" },
+    { korean: "핸드폰", english: "mobile phone" },
+    { korean: "카메라", english: "camera" },
+    { korean: "마우스", english: "mouse" },
+    { korean: "키보드", english: "keyboard" },
+    { korean: "모니터", english: "monitor" },
+    { korean: "프린터", english: "printer" },
+    { korean: "스마트폰", english: "smartphone" },
+    { korean: "노트북", english: "laptop" },
+    { korean: "스크린", english: "screen" },
+    { korean: "앱", english: "app" },
+    { korean: "소프트웨어", english: "software" },
+    { korean: "하드웨어", english: "hardware" },
+    { korean: "데이터", english: "data" },
+    { korean: "바이러스", english: "virus" },
+    { korean: "프로그램", english: "program" },
+    { korean: "클라우드", english: "cloud" },
+    { korean: "서버", english: "server" },
+    { korean: "네트워크", english: "network" },
+    { korean: "디지털", english: "digital" },
+    { korean: "웹사이트", english: "website" },
+    { korean: "인공지능", english: "artificial intelligence" },
+    { korean: "코딩", english: "coding" },
+    { korean: "백업", english: "backup" },
+    { korean: "보안", english: "security" },
+  ],
+};
+const sports = {
+  title: "Sports",
+  items: [
+    { korean: "축구", english: "soccer" },
+    { korean: "농구", english: "basketball" },
+    { korean: "테니스", english: "tennis" },
+    { korean: "야구", english: "baseball" },
+    { korean: "배구", english: "volleyball" },
+    { korean: "수영", english: "swimming" },
+    { korean: "골프", english: "golf" },
+    { korean: "럭비", english: "rugby" },
+    { korean: "크리켓", english: "cricket" },
+    { korean: "육상", english: "athletics" },
+    { korean: "복싱", english: "boxing" },
+    { korean: "자전거", english: "cycling" },
+    { korean: "체조", english: "gymnastics" },
+    { korean: "레슬링", english: "wrestling" },
+    { korean: "하키", english: "hockey" },
+    { korean: "배드민턴", english: "badminton" },
+    { korean: "탁구", english: "table tennis" },
+    { korean: "무술", english: "martial arts" },
+    { korean: "서핑", english: "surfing" },
+    { korean: "스키", english: "skiing" },
+    { korean: "스노보드", english: "snowboarding" },
+    { korean: "스케이트보드", english: "skateboarding" },
+    { korean: "육상 경기", english: "track and field" },
+    { korean: "양궁", english: "archery" },
+    { korean: "펜싱", english: "fencing" }
+  ]
+};
 
 const basicVocabCategories = {
   title: "Basic Vocabulary",
@@ -211,6 +333,10 @@ basicVocabCategories.items.push(natureTerms);
 basicVocabCategories.items.push(animals);
 basicVocabCategories.items.push(colors);
 basicVocabCategories.items.push(greetings);
+basicVocabCategories.items.push(sea);
+basicVocabCategories.items.push(space);
+basicVocabCategories.items.push(technology);
+basicVocabCategories.items.push(sports);
 
 // class Category {
 //   constructor(title) {

@@ -128,8 +128,9 @@ body {
   padding: 10px;
   border-radius: 5px;
   background-color: var(--color-blue);
-  border: 2px solid var(--color-red);
+  border: 2px solid var(--color-yellow);
   cursor: pointer;
+  color: white;
 }
 
 .user-text {
@@ -278,7 +279,7 @@ body {
 }
 /* Testing switch */
 .switch-container {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   color: #333;
