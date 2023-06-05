@@ -18,6 +18,9 @@ const keyUpperRight = document.querySelectorAll(".key-upper-right");
 const nextButton = document.querySelector(".next-btn");
 const startLearnLink = document.querySelector(".start-learning-link");
 const bubbleContainer = document.getElementById("bubbleContainer");
+const aboutLink = document.querySelector(".about-link");
+const helpLink = document.querySelector(".help-link");
+const whyTypeLink = document.querySelector(".why-type-link");
 
 const keyBieup = document.querySelector(".key.ㅂ");
 const keyJieut = document.querySelector(".key.ㅈ");

@@ -73,8 +73,8 @@ body {
   margin-left: 10%;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  display: flex; /* Add this line */
-  flex-direction: column; /* Add this line */
+  display: flex;
+  flex-direction: column;
 }
 
 .slogan-container h3 {
@@ -88,6 +88,22 @@ body {
 .slogan-container img {
   width: 100px;
   border-radius: 50%;
+}
+
+.why-type-container {
+  font-family: var(--font-family);
+  color: white;
+  font-size: 1.35rem;
+  padding: 0px 50px;
+}
+
+.why-type-container h1 {
+  font-size: 4.5rem;
+  line-height: 1.35;
+  margin-left: 10%;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
 }
 
 .learning-container {
