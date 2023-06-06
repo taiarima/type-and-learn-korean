@@ -21,6 +21,8 @@ const bubbleContainer = document.getElementById("bubbleContainer");
 const aboutLink = document.querySelector(".about-link");
 const helpLink = document.querySelector(".help-link");
 const whyTypeLink = document.querySelector(".why-type-link");
+const whyTypeContainer = document.querySelector(".why-type-container");
+const homeContainer = document.querySelector(".home-container");
 
 const keyBieup = document.querySelector(".key.ㅂ");
 const keyJieut = document.querySelector(".key.ㅈ");
