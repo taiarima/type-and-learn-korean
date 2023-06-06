@@ -18,6 +18,8 @@
   font-family: "Aoboshi One", serif;
   color: white;
   font-size: 3rem;
+  cursor: pointer;
+  text-align: center;
 }
 .banner h1 {
   font-size: 3rem;
@@ -56,20 +58,22 @@ nav a:hover {
 body {
   background-color: var(--color-gray);
 }
-/* main {
+main {
   display: flex;
-} */
+  flex-direction: column;
+  align-items: center;
+}
 .hidden {
   display: none;
 }
 
 .slogan-container {
   font-family: var(--font-family);
+  max-width: 800px;
 }
 
-.slogan-container h1 {
+.slogan {
   font-size: 4.5rem;
-  line-height: 1.35;
   margin-left: 10%;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -90,20 +94,21 @@ body {
   border-radius: 50%;
 }
 
-.why-type-container {
+.content-container {
   font-family: var(--font-family);
   color: white;
   font-size: 1.35rem;
   padding: 0px 50px;
+  max-width: 800px;
 }
 
-.why-type-container h1 {
+.content-container h1 {
   font-size: 4.5rem;
   line-height: 1.35;
-  margin-left: 10%;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   display: flex;
+  text-align: center;
 }
 
 .learning-container {

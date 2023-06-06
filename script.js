@@ -106,15 +106,48 @@ startLearnLink.addEventListener("click", function () {
   createBubbles();
 });
 
+startDropdownLink.addEventListener("click", function () {
+  hideContainers();
+  bubbleContainer.style.display = "flex";
+  bubbleContainer.parentElement.classList.remove("hidden");
+  createBubbles();
+});
+
 aboutLink.addEventListener("click", function () {
   hideContainers();
   aboutContainer.parentElement.classList.remove("hidden");
   console.log(aboutContainer);
 });
 
+aboutDropdownLink.addEventListener("click", function () {
+  hideContainers();
+  aboutContainer.parentElement.classList.remove("hidden");
+  console.log("Clicked about dropdown");
+});
+
 whyTypeLink.addEventListener("click", function () {
   hideContainers();
   whyTypeContainer.parentElement.classList.remove("hidden");
+});
+
+whyDropdownLink.addEventListener("click", function () {
+  hideContainers();
+  whyTypeContainer.parentElement.classList.remove("hidden");
+});
+
+helpLink.addEventListener("click", function () {
+  hideContainers();
+  helpContainer.parentElement.classList.remove("hidden");
+});
+
+helpDropdownLink.addEventListener("click", function () {
+  hideContainers();
+  helpContainer.parentElement.classList.remove("hidden");
+});
+
+logo.addEventListener("click", function () {
+  hideContainers();
+  homeContainer.parentElement.classList.remove("hidden");
 });
 
 userText.addEventListener("keydown", function (event) {

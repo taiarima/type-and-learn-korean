@@ -24,16 +24,10 @@
   </head>
   <body>
     <div class="banner">
-      <h1>TALK-TALK</h1>
-      <p>Type and Learn Korean</p>
-    </div>
-    <nav>
-      <a class="start-learning-link">Start Learning</a>
-      <a class="why-type-link">Why type?</a>
-      <a class="about-link">About</a>
-      <a class="help-link">Help</a>
-    </nav>
-    <main>
+      <div class="logo">
+        <h1>TALK-TALK</h1>
+        <p>Type and Learn Korean</p>
+      </div>
       <div class="dropdown-container">
         <button class="dropdown-btn">
           <img class="hamburger-button" src="hamburgerButtonImg.png" />
@@ -45,12 +39,20 @@
           <a class="help-dropdown-link dropdown-item">Help</a>
         </div>
       </div>
-      <div class="container">
+    </div>
+    <nav>
+      <a class="start-learning-link">Start Learning</a>
+      <a class="why-type-link">Why type?</a>
+      <a class="about-link">About</a>
+      <a class="help-link">Help</a>
+    </nav>
+    <main>
+      <div class="container hidden">
         <div id="bubbleContainer"></div>
       </div>
-      <div class="container hidden">
+      <div class="container">
         <div class="home-container">
-          <section class="slogan-container">
+          <div class="slogan-container">
             <h1 class="slogan">
               Improve your Korean typing. Learn Korean while doing it. Yep.
             </h1>
@@ -59,12 +61,7 @@
               Suitable for all levels. Follow the prompts and type your answers
               in Korean. Learn Korean, improve your typing speed, or both.
             </h3>
-          </section>
-          <section class="section" id="section-1">
-            <div class="section-title"></div>
-          </section>
-          <section class="section" id="section-2"></section>
-          <section class="section" id="section-3"></section>
+          </div>
         </div>
       </div>
       <!-- <button id="theme-toggle">Toggle Theme</button> -->
@@ -90,8 +87,8 @@
           <button class="next-btn">Press enter or click to submit</button>
         </div>
       </div>
-      <div class="container">
-        <div class="why-type-container">
+      <div class="container hidden">
+        <div class="why-type-container content-container">
           <h1>Why should you type Korean anyway?</h1>
           <p>
             Typing in Korean is an essential skill for effectively using
@@ -121,7 +118,41 @@
         </div>
       </div>
       <div class="container hidden">
-        <div class="home-container"></div>
+        <div class="about-container content-container">
+          <h1>About</h1>
+          <p>
+            The goal of this application is to help you improve your Korean
+            typing speed and overall language proficiency. As it says on the
+            title page, improve your typing speed, learn Korean, or both.
+          </p>
+          <p>
+            This site and all of the content therein was created by me, Tai
+            Arima. I lived and studied in Korea, worked as Korean teacher and
+            translator, and did a lot of typing. I hope to that this tool
+            benefits your efforts to improve your Korean and/or helps you
+            improve your typing speed. If you spot any bugs, notice any errors
+            in the exercises, or have any suggestions for features or
+            improvements, please feel free to contact me via
+            <a href="mailto: taiarima0@gmail.com">email</a>.
+          </p>
+        </div>
+      </div>
+      <div class="container hidden">
+        <div class="help-container content-container">
+          <h1>Help</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+            ac finibus tellus. Phasellus fermentum vehicula tincidunt.
+            Suspendisse feugiat, enim in vulputate fermentum, lacus ligula
+            suscipit ligula, et efficitur nunc arcu id nulla. Sed ut arcu
+            vestibulum, efficitur augue in, pulvinar ex. Vestibulum in arcu
+            ante. Ut tincidunt quam vitae maximus mattis. Maecenas tempus dolor
+            ut tortor facilisis porta. Cras rutrum porttitor odio ut porttitor.
+            Curabitur sollicitudin vitae nunc nec facilisis. Suspendisse non
+            eros et sem vehicula egestas. Aenean ornare gravida orci, sed
+            pellentesque nibh fringilla sit amet.
+          </p>
+        </div>
       </div>
       <div class="container hidden">
         <div class="keyboard-container">

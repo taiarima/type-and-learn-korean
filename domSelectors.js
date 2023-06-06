@@ -23,6 +23,13 @@ const helpLink = document.querySelector(".help-link");
 const whyTypeLink = document.querySelector(".why-type-link");
 const whyTypeContainer = document.querySelector(".why-type-container");
 const homeContainer = document.querySelector(".home-container");
+const helpContainer = document.querySelector(".help-container");
+const banner = document.querySelector(".banner");
+const startDropdownLink = document.querySelector(".start-dropdown-link");
+const aboutDropdownLink = document.querySelector(".about-dropdown-link");
+const helpDropdownLink = document.querySelector(".help-dropdown-link");
+const whyDropdownLink = document.querySelector(".why-dropdown-link");
+const logo = document.querySelector(".logo");
 
 const keyBieup = document.querySelector(".key.ㅂ");
 const keyJieut = document.querySelector(".key.ㅈ");
