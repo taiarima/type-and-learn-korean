@@ -74,11 +74,11 @@ main {
 
 .slogan {
   font-size: 4.5rem;
-  margin-left: 10%;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .slogan-container h3 {
@@ -239,14 +239,6 @@ main {
   background-color: aqua;
   border: 2px solid white;
 }
-/* Testing */
-/* .dark-theme {
-  --color-gray: #333333;
-  --color-beige: #660066;
-  --color-red: #993399;
-  --color-background: #1f1f1f;
-  --color-text: #ffffff;
-} */
 
 #bubbleContainer {
   padding-top: 50px;
@@ -395,7 +387,6 @@ main {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  top: 60px;
   font-family: var(--font-family);
   right: 10%;
 }
@@ -417,6 +408,7 @@ main {
 /* Show the dropdown menu on hover */
 .dropdown-container:hover .dropdown-content {
   display: block;
+  position: absolute;
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
@@ -439,5 +431,34 @@ main {
     position: absolute;
     display: block;
     right: 0%;
+    top: 90px;
   }
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  font-family: var(--font-family);
+  color: white;
+}
+
+footer a {
+  padding: 5px 10px;
+}
+
+.footer-divider {
+  height: 1px;
+  margin: 25px 15px;
+  background-color: var(--color-red);
+  width: 80%;
+}
+
+.footer-logo {
+  font-family: "Aoboshi One", serif;
+  color: white;
+  padding: 5px;
 }

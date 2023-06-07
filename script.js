@@ -157,6 +157,7 @@ userText.addEventListener("keydown", function (event) {
 });
 
 bubbleContainer.addEventListener("click", function (event) {
+  hideContainers();
   if (event.target.classList.contains("bubble")) {
     const bubbles = Array.from(
       bubbleContainer.getElementsByClassName("bubble")

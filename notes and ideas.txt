@@ -50,3 +50,6 @@ Language learners often have a huge gap between active and passive vocabularies.
 which require recalling words and grammar from memory, you can expand your active vocabulary, enhance overall proficiency, 
 and boost confidence in the language. Not to mention, it will be great for your spelling.
 */
+
+TODO: When an exercise is in session, all links must feature a warning before any navigation takes place. 
+--> if user does decide to navigate away in the middle of a drill, a method to clear all drill info must be invoked
