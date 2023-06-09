@@ -31,6 +31,14 @@ const helpDropdownLink = document.querySelector(".help-dropdown-link");
 const whyDropdownLink = document.querySelector(".why-dropdown-link");
 const logo = document.querySelector(".logo");
 
+// Modal Window selectors
+const modalStartExercise = document.querySelector(".modal-start-exercise");
+const closeStartExercise = document.querySelector(".close-start-exercise");
+const modalAbandon = document.querySelector(".modal-abandon");
+const closeAbandon = document.querySelector(".close-abandon-btn");
+const abandonBtn = document.querySelector(".abandon-btn");
+const continueExerciseBtn = document.querySelector(".continue-btn");
+
 const keyBieup = document.querySelector(".key.ㅂ");
 const keyJieut = document.querySelector(".key.ㅈ");
 const keyDigeut = document.querySelector(".key.ㄷ");

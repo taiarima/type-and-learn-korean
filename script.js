@@ -5,33 +5,48 @@ let currentWord; // deconstructed current word
 let charCounter = 0;
 let currentList;
 let currentIndex = 0;
+let exerciseUnderway = false;
+
+// Global Constants
+const nextBtnCorrectText = "Correct! Hit space to continue.";
+const nextBtnPrompt = "Press enter or click to submit";
 
 function checkAnswer() {
   if (userText.value === prompt.textContent) {
-    console.log("Correct");
+    userText.disabled = true;
+    userText.classList.add("lightup-correct");
+    nextButton.classList.add("correct-next-btn");
+    setTimeout(() => {
+      nextButton.focus();
+    }, 50);
+    nextButton.textContent = nextBtnCorrectText;
   } else {
-    console.log("Incorrect");
+    setTimeout(() => {
+      userText.select();
+    }, 50);
   }
-  userText.blur();
-  nextButton.textContent = "Next--> (Click or press any key to proceed)";
-  // nextButton.focus();
 }
 
 nextButton.addEventListener("click", function () {
-  if (
-    nextButton.textContent === "Next--> (Click or press any key to proceed)"
-  ) {
+  if (nextButton.textContent === nextBtnCorrectText) {
     console.log(nextButton.textContent);
     currentIndex++;
     prompt.textContent = currentList[currentIndex].korean;
-    nextButton.textContent = "Press enter or click to submit";
+    nextButton.classList.remove("correct-next-btn");
+    userText.classList.remove("lightup-correct");
+    userText.disabled = false;
+    userText.focus();
+    userText.value = "";
+    nextButton.textContent = nextBtnPrompt;
   } else {
+    console.log("Should be checking answer now");
     checkAnswer;
   }
 });
 
 // I am testing fucntionality for now, clean this up later TODO
 function loadVocabList(listIndex) {
+  exerciseUnderway = true;
   const randomizedList = shuffleArray(
     basicVocabCategories.items[listIndex].items
   );
@@ -53,14 +68,12 @@ function loadVocabList(listIndex) {
 // Event listener for lighting up keys when pressed
 document.addEventListener("compositionupdate", function (event) {
   const syllable = Hangul.disassemble(String(event.data));
-  console.log(syllable);
-  console.log("Syllable length = ", syllable.length);
+  // console.log(syllable);
+  // console.log("Syllable length = ", syllable.length);
   const key = syllable[syllable.length - 1];
   let targetElement = document.querySelector(`.key.${key}`);
   if (!targetElement) {
-    console.log("This is not a valid key!");
     if (document.querySelector(`.key-upper-right.${key}`)) {
-      console.log("Found an upper-right");
       targetElement = document
         .querySelector(`.key-upper-right.${key}`)
         .closest(".key");
@@ -172,6 +185,10 @@ function hideContainers() {
 
 // Event Listeners
 startLearnLink.addEventListener("click", function () {
+  if (exerciseUnderway) {
+    modalAbandon.style.display = "block";
+    return;
+  }
   hideContainers();
   // This will have to be changed later
   bubbleContainer.style.display = "flex";
@@ -180,6 +197,10 @@ startLearnLink.addEventListener("click", function () {
 });
 
 startDropdownLink.addEventListener("click", function () {
+  if (exerciseUnderway) {
+    modalAbandon.style.display = "block";
+    return;
+  }
   hideContainers();
   bubbleContainer.style.display = "flex";
   bubbleContainer.parentElement.classList.remove("hidden");
@@ -187,38 +208,66 @@ startDropdownLink.addEventListener("click", function () {
 });
 
 aboutLink.addEventListener("click", function () {
+  if (exerciseUnderway) {
+    modalAbandon.style.display = "block";
+    return;
+  }
   hideContainers();
   aboutContainer.parentElement.classList.remove("hidden");
   console.log(aboutContainer);
 });
 
 aboutDropdownLink.addEventListener("click", function () {
+  if (exerciseUnderway) {
+    modalAbandon.style.display = "block";
+    return;
+  }
   hideContainers();
   aboutContainer.parentElement.classList.remove("hidden");
   console.log("Clicked about dropdown");
 });
 
 whyTypeLink.addEventListener("click", function () {
+  if (exerciseUnderway) {
+    modalAbandon.style.display = "block";
+    return;
+  }
   hideContainers();
   whyTypeContainer.parentElement.classList.remove("hidden");
 });
 
 whyDropdownLink.addEventListener("click", function () {
+  if (exerciseUnderway) {
+    modalAbandon.style.display = "block";
+    return;
+  }
   hideContainers();
   whyTypeContainer.parentElement.classList.remove("hidden");
 });
 
 helpLink.addEventListener("click", function () {
+  if (exerciseUnderway) {
+    modalAbandon.style.display = "block";
+    return;
+  }
   hideContainers();
   helpContainer.parentElement.classList.remove("hidden");
 });
 
 helpDropdownLink.addEventListener("click", function () {
+  if (exerciseUnderway) {
+    modalAbandon.style.display = "block";
+    return;
+  }
   hideContainers();
   helpContainer.parentElement.classList.remove("hidden");
 });
 
-logo.addEventListener("click", function () {
+banner.addEventListener("click", function () {
+  if (exerciseUnderway) {
+    modalAbandon.style.display = "block";
+    return;
+  }
   hideContainers();
   homeContainer.parentElement.classList.remove("hidden");
 });
@@ -230,8 +279,9 @@ userText.addEventListener("keydown", function (event) {
 });
 
 bubbleContainer.addEventListener("click", function (event) {
-  hideContainers();
   if (event.target.classList.contains("bubble")) {
+    modalStartExercise.style.display = "block"; // testing TODO
+    hideContainers();
     const bubbles = Array.from(
       bubbleContainer.getElementsByClassName("bubble")
     );
@@ -260,3 +310,21 @@ switchOff.addEventListener("change", function () {
     keyboardContainer.parentElement.classList.add("hidden");
   }
 });
+
+// Coding modals
+// modalStartExercise.style.display = "block";
+closeStartExercise.onclick = function () {
+  modalStartExercise.style.display = "none";
+};
+
+closeAbandon.onclick = function () {
+  modalAbandon.style.display = "none";
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+  if (event.target == modalStartExercise || event.target == modalAbandon) {
+    modalStartExercise.style.display = "none";
+    modalAbandon.style.display = "none";
+  }
+};

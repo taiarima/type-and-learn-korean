@@ -62,6 +62,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: var(--font-family);
 }
 .hidden {
   display: none;
@@ -159,6 +160,10 @@ main {
   color: white;
 }
 
+.correct-next-btn {
+  transform: scale(1.5);
+}
+
 .user-text {
   width: 300px;
   resize: none;
@@ -205,7 +210,7 @@ main {
   transition: background-color 0.5s;
 }
 
-.key.lightup-correct {
+.lightup-correct {
   background-color: #8eff80 !important;
 }
 
@@ -469,5 +474,82 @@ footer a {
 .footer-logo {
   font-family: "Aoboshi One", serif;
   color: white;
-  padding: 5px;
+  padding: 0px 5px 10px 5px;
+}
+
+/* Modal windows */
+.modal-window {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  color: black;
+}
+
+.modal-content h1 {
+  text-align: center;
+}
+
+.modal-content p {
+  text-align: justify;
+}
+
+/* Close Button */
+.close-modal-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-modal-btn:hover,
+.close-modal-btn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.abandon-modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.abandon-modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.abandon-btn {
+  background-color: red;
+}
+
+.continue-btn {
+  background-color: var(--color-blue);
+}
+
+button {
+  color: #fff;
+  border: none;
+  padding: 20px;
+  font-size: 18px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
 }
