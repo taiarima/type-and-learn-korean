@@ -82,6 +82,12 @@ main {
   text-align: center;
 }
 
+@media (max-width: 525px) {
+  .slogan {
+    font-size: 2.5rem;
+  }
+}
+
 .slogan-container h3 {
   color: white;
   font-size: 1.5rem;
@@ -380,7 +386,7 @@ main {
 .dropdown-btn {
   background-color: transparent;
   color: white;
-  padding: 16px;
+  padding: 5px;
   font-size: 16px;
   border: none;
   margin-right: 8px;
@@ -420,14 +426,32 @@ main {
 }
 
 /* Show the dropdown menu on hover */
-.dropdown-container:hover .dropdown-content {
+/* .dropdown-container:hover .dropdown-content {
   display: block;
   position: absolute;
+} */
+/* TESTING */
+
+.dropdown-container.open .dropdown-content {
+  display: block;
+}
+
+/* .dropdown-btn:hover + .dropdown-content,
+.dropdown-content:hover {
+  display: block;
+} */
+
+.dropdown-item {
+  cursor: pointer;
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown-container:hover .dropdown-btn {
+.dropdown-container:hover .dropdown-btn,
+.dropdown-container.open .dropdown-btn {
   background-color: var(--color-blue);
+}
+.dropdown-container:not(.open) .dropdown-btn {
+  background-color: var(--color-red);
 }
 
 .hamburger-button {
@@ -499,10 +523,12 @@ footer a {
   border: 1px solid #888;
   width: 60%;
   color: black;
+  font-size: 1.2rem;
 }
 
 .modal-content h1 {
-  text-align: center;
+  text-align: left;
+  margin-top: 0;
 }
 
 .modal-content p {
@@ -538,6 +564,7 @@ footer a {
 
 .abandon-btn {
   background-color: red;
+  margin: 5px;
 }
 
 .continue-btn {
@@ -545,11 +572,23 @@ footer a {
 }
 
 button {
-  color: #fff;
+  background-color: var(--color-blue);
+  color: white;
   border: none;
   padding: 20px;
   font-size: 18px;
-  margin-right: 10px;
-  margin-bottom: 10px;
   cursor: pointer;
+  display: inline-block;
+}
+
+.button-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category {
+  font-family: "Aoboshi One", serif;
+  text-transform: uppercase;
 }

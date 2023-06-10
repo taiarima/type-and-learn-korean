@@ -186,84 +186,155 @@ function hideContainers() {
 // Event Listeners
 startLearnLink.addEventListener("click", function () {
   if (exerciseUnderway) {
-    modalAbandon.style.display = "block";
-    return;
+    showModalAbandon(function (choice) {
+      if (choice === "abandon") {
+        hideContainers();
+        bubbleContainer.style.display = "flex";
+        bubbleContainer.parentElement.classList.remove("hidden");
+        createBubbles();
+      }
+    });
+  } else {
+    hideContainers();
+    bubbleContainer.style.display = "flex";
+    bubbleContainer.parentElement.classList.remove("hidden");
+    createBubbles();
   }
-  hideContainers();
-  // This will have to be changed later
-  bubbleContainer.style.display = "flex";
-  bubbleContainer.parentElement.classList.remove("hidden");
-  createBubbles();
 });
 
 startDropdownLink.addEventListener("click", function () {
   if (exerciseUnderway) {
-    modalAbandon.style.display = "block";
-    return;
+    showModalAbandon(function (choice) {
+      if (choice === "abandon") {
+        hideContainers();
+        bubbleContainer.style.display = "flex";
+        bubbleContainer.parentElement.classList.remove("hidden");
+        createBubbles();
+      }
+    });
+  } else {
+    hideContainers();
+    bubbleContainer.style.display = "flex";
+    bubbleContainer.parentElement.classList.remove("hidden");
+    createBubbles();
   }
-  hideContainers();
-  bubbleContainer.style.display = "flex";
-  bubbleContainer.parentElement.classList.remove("hidden");
-  createBubbles();
 });
 
 aboutLink.addEventListener("click", function () {
   if (exerciseUnderway) {
-    modalAbandon.style.display = "block";
-    return;
+    showModalAbandon(function (choice) {
+      if (choice === "abandon") {
+        hideContainers();
+        aboutContainer.parentElement.classList.remove("hidden");
+        console.log(aboutContainer);
+      }
+    });
+  } else {
+    hideContainers();
+    aboutContainer.parentElement.classList.remove("hidden");
+    console.log(aboutContainer);
   }
-  hideContainers();
-  aboutContainer.parentElement.classList.remove("hidden");
-  console.log(aboutContainer);
-});
-
-aboutDropdownLink.addEventListener("click", function () {
-  if (exerciseUnderway) {
-    modalAbandon.style.display = "block";
-    return;
-  }
-  hideContainers();
-  aboutContainer.parentElement.classList.remove("hidden");
-  console.log("Clicked about dropdown");
 });
 
 whyTypeLink.addEventListener("click", function () {
   if (exerciseUnderway) {
-    modalAbandon.style.display = "block";
-    return;
+    showModalAbandon(function (choice) {
+      if (choice === "abandon") {
+        hideContainers();
+        whyTypeContainer.parentElement.classList.remove("hidden");
+      }
+    });
+  } else {
+    hideContainers();
+    whyTypeContainer.parentElement.classList.remove("hidden");
   }
-  hideContainers();
-  whyTypeContainer.parentElement.classList.remove("hidden");
 });
 
 whyDropdownLink.addEventListener("click", function () {
   if (exerciseUnderway) {
-    modalAbandon.style.display = "block";
-    return;
+    showModalAbandon(function (choice) {
+      if (choice === "abandon") {
+        hideContainers();
+        whyTypeContainer.parentElement.classList.remove("hidden");
+      }
+    });
+  } else {
+    hideContainers();
+    whyTypeContainer.parentElement.classList.remove("hidden");
   }
-  hideContainers();
-  whyTypeContainer.parentElement.classList.remove("hidden");
 });
 
 helpLink.addEventListener("click", function () {
   if (exerciseUnderway) {
-    modalAbandon.style.display = "block";
-    return;
+    showModalAbandon(function (choice) {
+      if (choice === "abandon") {
+        hideContainers();
+        helpContainer.parentElement.classList.remove("hidden");
+      }
+    });
+  } else {
+    hideContainers();
+    helpContainer.parentElement.classList.remove("hidden");
   }
-  hideContainers();
-  helpContainer.parentElement.classList.remove("hidden");
 });
 
 helpDropdownLink.addEventListener("click", function () {
   if (exerciseUnderway) {
-    modalAbandon.style.display = "block";
-    return;
+    showModalAbandon(function (choice) {
+      if (choice === "abandon") {
+        hideContainers();
+        helpContainer.parentElement.classList.remove("hidden");
+      }
+    });
+  } else {
+    hideContainers();
+    helpContainer.parentElement.classList.remove("hidden");
   }
-  hideContainers();
-  helpContainer.parentElement.classList.remove("hidden");
 });
 
-banner.addEventListener("click", function () {
+aboutDropdownLink.addEventListener("click", function () {
+  if (exerciseUnderway) {
+    showModalAbandon(function (choice) {
+      if (choice === "abandon") {
+        hideContainers();
+        aboutContainer.parentElement.classList.remove("hidden");
+      }
+    });
+  } else {
+    hideContainers();
+    aboutContainer.parentElement.classList.remove("hidden");
+  }
+});
+
+function showModalAbandon(callback) {
+  modalAbandon.style.display = "block";
+
+  abandonBtn.addEventListener("click", function () {
+    modalAbandon.style.display = "none";
+    exerciseUnderway = false;
+    clearExercise();
+    callback("abandon");
+  });
+
+  continueExerciseBtn.addEventListener("click", function () {
+    modalAbandon.style.display = "none";
+    callback("continue");
+  });
+}
+
+// After a user completes or exits an exercise, this will clear all the content of the previous exercise
+// so the next one starts out fresh.
+function clearExercise() {
+  userText.value = "";
+  userText.classList.remove("lightup-correct");
+  prompt.textContent = currentList[currentIndex].korean;
+  nextButton.classList.remove("correct-next-btn");
+  userText.classList.remove("lightup-correct");
+  userText.disabled = false;
+  nextButton.textContent = nextBtnPrompt;
+}
+
+logo.addEventListener("click", function () {
   if (exerciseUnderway) {
     modalAbandon.style.display = "block";
     return;
@@ -321,6 +392,14 @@ closeAbandon.onclick = function () {
   modalAbandon.style.display = "none";
 };
 
+defaultCheckbox.addEventListener("change", function () {
+  if (defaultCheckbox.checked) {
+    exSettingsContainer.classList.add("hidden");
+  } else {
+    exSettingsContainer.classList.remove("hidden");
+  }
+});
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modalStartExercise || event.target == modalAbandon) {
@@ -328,3 +407,22 @@ window.onclick = function (event) {
     modalAbandon.style.display = "none";
   }
 };
+
+// Testing
+const dropdownItems = document.querySelectorAll(".dropdown-item");
+
+dropdownBtn.addEventListener("click", function () {
+  dropdownContainer.classList.toggle("open");
+});
+
+dropdownItems.forEach(function (item) {
+  item.addEventListener("click", function () {
+    dropdownContainer.classList.remove("open");
+  });
+});
+
+document.addEventListener("click", function (event) {
+  if (!dropdownContainer.contains(event.target)) {
+    dropdownContainer.classList.remove("open");
+  }
+});

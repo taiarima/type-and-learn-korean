@@ -35,7 +35,7 @@
         <div class="dropdown-content">
           <a class="start-dropdown-link dropdown-item">Start Learning </a>
           <a class="about-dropdown-link dropdown-item">About</a>
-          <a class="why-dropdown-link">Why type?</a>
+          <a class="why-dropdown-link dropdown-item">Why type?</a>
           <a class="help-dropdown-link dropdown-item">Help</a>
         </div>
       </div>
@@ -210,8 +210,20 @@
         <div class="modal-content">
           <span class="close-modal-btn close-start-exercise">&times;</span>
           <div class="start-exercise-text">
-            <h1>Exercise</h1>
-            <p>The user should choose their settings.</p>
+            <div class="category">Category</div>
+            <h1 class="exercise-name">Exercise Name</h1>
+            <p>Instructions: <span class="insert-instructions"></span></p>
+            <label class="accept-defaults">
+              Accept default settings?
+              <input class="default-checkbox" type="checkbox" checked>
+            </label>
+            <div class="ex-settings-container hidden">
+              <p>Choice 1</p>
+              <p>Choice 2</p>
+              <p>Choice 3</p>
+              <p>Choice 4</p>
+              <p>Choice 5</p>
+            </div>
             <br />
             <div class="button-container">
               <button class="begin-button">Start Exercise!</button>

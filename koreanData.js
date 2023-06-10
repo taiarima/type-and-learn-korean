@@ -224,7 +224,7 @@ const sea = {
     { korean: "물고기", english: "fish" },
     { korean: "조류", english: "tide" },
     { korean: "솔방울", english: "seagull" },
-    { korean: "물결", english: "surf" },
+    { korean: "파도타기", english: "surfing" },
     { korean: "바다표범", english: "sealion" },
     { korean: "저녁노을", english: "evening sunset" },
   ],

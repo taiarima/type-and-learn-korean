@@ -68,3 +68,7 @@ I should have something where people can have to show the answers if they want
 
 and accept answer as correct if they want
 I need to figure out how to light things up when the user hits backspace
+
+I should have several types of exercises, then give each exercise object a type,
+then have a type object which has all the types and their respective rules
+
