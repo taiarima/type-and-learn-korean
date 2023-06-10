@@ -8,9 +8,16 @@ let currentIndex = 0;
 let exerciseUnderway = false;
 let repetitionNumber = 2;
 
+// For calculating typing speed
+let totalCharsTyped = 0;
+let totalTimeTyped = 0;
+let totalPromptChars = 0;
+
 // Global Constants
 const nextBtnCorrectText = "Correct! Hit space to continue.";
 const nextBtnPrompt = "Press enter or click to submit";
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>> Function declarations <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
 function checkAnswer() {
   if (userText.value === prompt.textContent) {
@@ -27,28 +34,6 @@ function checkAnswer() {
     }, 50);
   }
 }
-
-nextButton.addEventListener("click", function () {
-  if (nextButton.textContent === nextBtnCorrectText) {
-    currentIndex++;
-    if (currentIndex === repetitionNumber) {
-      hideContainers();
-      congratsContainer.parentElement.classList.remove("hidden");
-      clearExercise();
-      return;
-    }
-    prompt.textContent = currentList[currentIndex].korean;
-    nextButton.classList.remove("correct-next-btn");
-    userText.classList.remove("lightup-correct");
-    userText.disabled = false;
-    userText.focus();
-    userText.value = "";
-    nextButton.textContent = nextBtnPrompt;
-  } else {
-    console.log("Should be checking answer now");
-    checkAnswer;
-  }
-});
 
 function presentResults() {
   // Show percentage correct
@@ -79,44 +64,6 @@ function loadVocabList(listIndex) {
 
   userText.focus();
 }
-
-// Event listener for lighting up keys when pressed
-document.addEventListener("compositionupdate", function (event) {
-  const syllable = Hangul.disassemble(String(event.data));
-  // console.log(syllable);
-  // console.log("Syllable length = ", syllable.length);
-  const key = syllable[syllable.length - 1];
-  let targetElement = document.querySelector(`.key.${key}`);
-  if (!targetElement) {
-    if (document.querySelector(`.key-upper-right.${key}`)) {
-      targetElement = document
-        .querySelector(`.key-upper-right.${key}`)
-        .closest(".key");
-    } else {
-      return;
-    }
-  }
-
-  // Fix this to also light up red when user has hit incorrect key
-  if (targetElement) {
-    // Remove previous animation class if any
-    const previousKey = document.querySelector(".key.lightup-correct");
-    if (previousKey) {
-      previousKey.classList.remove("lightup-correct");
-    }
-
-    // showNextKey();
-
-    // Add animation class to the target key
-    targetElement.classList.add("lightup-correct");
-    targetElement.classList.remove("activated-key");
-
-    // Reset the animation after 1 second
-    setTimeout(() => {
-      targetElement.classList.remove("lightup-correct");
-    }, 500);
-  }
-});
 
 // This is a function to show the user the next key to press by highlighting the key aqua
 // on the on-screen keyboard
@@ -194,130 +141,10 @@ function createBubbles() {
 
 // Function to call when clicking a nav link to close all other sections
 function hideContainers() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
   const containers = document.querySelectorAll(".container");
   containers.forEach((ele) => ele.classList.add("hidden"));
 }
-
-// Event Listeners
-startLearnLink.addEventListener("click", function () {
-  if (exerciseUnderway) {
-    showModalAbandon(function (choice) {
-      if (choice === "abandon") {
-        hideContainers();
-        bubbleContainer.style.display = "flex";
-        bubbleContainer.parentElement.classList.remove("hidden");
-        createBubbles();
-      }
-    });
-  } else {
-    hideContainers();
-    bubbleContainer.style.display = "flex";
-    bubbleContainer.parentElement.classList.remove("hidden");
-    createBubbles();
-  }
-});
-
-startDropdownLink.addEventListener("click", function () {
-  if (exerciseUnderway) {
-    showModalAbandon(function (choice) {
-      if (choice === "abandon") {
-        hideContainers();
-        bubbleContainer.style.display = "flex";
-        bubbleContainer.parentElement.classList.remove("hidden");
-        createBubbles();
-      }
-    });
-  } else {
-    hideContainers();
-    bubbleContainer.style.display = "flex";
-    bubbleContainer.parentElement.classList.remove("hidden");
-    createBubbles();
-  }
-});
-
-aboutLink.addEventListener("click", function () {
-  if (exerciseUnderway) {
-    showModalAbandon(function (choice) {
-      if (choice === "abandon") {
-        hideContainers();
-        aboutContainer.parentElement.classList.remove("hidden");
-      }
-    });
-  } else {
-    hideContainers();
-    aboutContainer.parentElement.classList.remove("hidden");
-  }
-});
-
-whyTypeLink.addEventListener("click", function () {
-  if (exerciseUnderway) {
-    showModalAbandon(function (choice) {
-      if (choice === "abandon") {
-        hideContainers();
-        whyTypeContainer.parentElement.classList.remove("hidden");
-      }
-    });
-  } else {
-    hideContainers();
-    whyTypeContainer.parentElement.classList.remove("hidden");
-  }
-});
-
-whyDropdownLink.addEventListener("click", function () {
-  if (exerciseUnderway) {
-    showModalAbandon(function (choice) {
-      if (choice === "abandon") {
-        hideContainers();
-        whyTypeContainer.parentElement.classList.remove("hidden");
-      }
-    });
-  } else {
-    hideContainers();
-    whyTypeContainer.parentElement.classList.remove("hidden");
-  }
-});
-
-helpLink.addEventListener("click", function () {
-  if (exerciseUnderway) {
-    showModalAbandon(function (choice) {
-      if (choice === "abandon") {
-        hideContainers();
-        helpContainer.parentElement.classList.remove("hidden");
-      }
-    });
-  } else {
-    hideContainers();
-    helpContainer.parentElement.classList.remove("hidden");
-  }
-});
-
-helpDropdownLink.addEventListener("click", function () {
-  if (exerciseUnderway) {
-    showModalAbandon(function (choice) {
-      if (choice === "abandon") {
-        hideContainers();
-        helpContainer.parentElement.classList.remove("hidden");
-      }
-    });
-  } else {
-    hideContainers();
-    helpContainer.parentElement.classList.remove("hidden");
-  }
-});
-
-aboutDropdownLink.addEventListener("click", function () {
-  if (exerciseUnderway) {
-    showModalAbandon(function (choice) {
-      if (choice === "abandon") {
-        hideContainers();
-        aboutContainer.parentElement.classList.remove("hidden");
-      }
-    });
-  } else {
-    hideContainers();
-    aboutContainer.parentElement.classList.remove("hidden");
-  }
-});
 
 function showModalAbandon(callback) {
   modalAbandon.style.display = "block";
@@ -346,6 +173,101 @@ function clearExercise() {
   userText.disabled = false;
   nextButton.textContent = nextBtnPrompt;
 }
+
+function isKoreanInput(input) {
+  const koreanRegex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
+  return koreanRegex.test(input);
+}
+
+// Function to play a warning sound
+function playWarningSound() {
+  const audio = new Audio("path/to/warning-sound.mp3");
+  audio.play();
+}
+
+// >>>>>>>>>>>>>>>>>>>>>>> Event Listeners <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+
+startLearnLinks.forEach(function (startLearnLink) {
+  startLearnLink.addEventListener("click", function () {
+    if (exerciseUnderway) {
+      showModalAbandon(function (choice) {
+        if (choice === "abandon") {
+          hideContainers();
+          bubbleContainer.style.display = "flex";
+          bubbleContainer.parentElement.classList.remove("hidden");
+          createBubbles();
+        }
+      });
+    } else {
+      hideContainers();
+      bubbleContainer.style.display = "flex";
+      bubbleContainer.parentElement.classList.remove("hidden");
+      createBubbles();
+    }
+  });
+});
+
+aboutLinks.forEach(function (aboutLink) {
+  aboutLink.addEventListener("click", function () {
+    if (exerciseUnderway) {
+      showModalAbandon(function (choice) {
+        if (choice === "abandon") {
+          hideContainers();
+          aboutContainer.parentElement.classList.remove("hidden");
+        }
+      });
+    } else {
+      hideContainers();
+      aboutContainer.parentElement.classList.remove("hidden");
+    }
+  });
+});
+
+whyTypeLinks.forEach(function (whyTypeLink) {
+  whyTypeLink.addEventListener("click", function () {
+    if (exerciseUnderway) {
+      showModalAbandon(function (choice) {
+        if (choice === "abandon") {
+          hideContainers();
+          whyTypeContainer.parentElement.classList.remove("hidden");
+        }
+      });
+    } else {
+      hideContainers();
+      whyTypeContainer.parentElement.classList.remove("hidden");
+    }
+  });
+});
+
+helpLinks.forEach(function (helpLink) {
+  helpLink.addEventListener("click", function () {
+    if (exerciseUnderway) {
+      showModalAbandon(function (choice) {
+        if (choice === "abandon") {
+          hideContainers();
+          helpContainer.parentElement.classList.remove("hidden");
+        }
+      });
+    } else {
+      hideContainers();
+      helpContainer.parentElement.classList.remove("hidden");
+    }
+  });
+});
+
+homeLink.addEventListener("click", function () {
+  if (exerciseUnderway) {
+    showModalAbandon(function (choice) {
+      if (choice === "abandon") {
+        hideContainers();
+        homeContainer.parentElement.classList.remove("hidden");
+      }
+    });
+  } else {
+    hideContainers();
+    homeContainer.parentElement.classList.remove("hidden");
+  }
+});
 
 logo.addEventListener("click", function () {
   if (exerciseUnderway) {
@@ -378,10 +300,6 @@ bubbleContainer.addEventListener("click", function (event) {
     loadVocabList(bubbleIndex);
   }
 });
-
-// Keyboard Switch
-const switchOn = document.getElementById("switch-on");
-const switchOff = document.getElementById("switch-off");
 
 switchOn.addEventListener("change", function () {
   if (this.checked) {
@@ -422,7 +340,6 @@ window.onclick = function (event) {
 };
 
 // Testing
-const dropdownItems = document.querySelectorAll(".dropdown-item");
 
 dropdownBtn.addEventListener("click", function () {
   dropdownContainer.classList.toggle("open");
@@ -449,4 +366,85 @@ generateResultsBtn.addEventListener("click", function () {
   presentResults();
   hideContainers();
   resultsContainer.parentElement.classList.remove("hidden");
+});
+
+nextButton.addEventListener("click", function () {
+  if (nextButton.textContent === nextBtnCorrectText) {
+    currentIndex++;
+    if (currentIndex === repetitionNumber) {
+      hideContainers();
+      congratsContainer.parentElement.classList.remove("hidden");
+      clearExercise();
+      return;
+    }
+    prompt.textContent = currentList[currentIndex].korean;
+    nextButton.classList.remove("correct-next-btn");
+    userText.classList.remove("lightup-correct");
+    userText.disabled = false;
+    userText.focus();
+    userText.value = "";
+    nextButton.textContent = nextBtnPrompt;
+  } else {
+    console.log("Should be checking answer now");
+    checkAnswer;
+  }
+});
+
+document.addEventListener("compositionupdate", function (event) {
+  const syllable = Hangul.disassemble(String(event.data));
+  // console.log(syllable);
+  // console.log("Syllable length = ", syllable.length);
+  const key = syllable[syllable.length - 1];
+  let targetElement = document.querySelector(`.key.${key}`);
+  if (!targetElement) {
+    if (document.querySelector(`.key-upper-right.${key}`)) {
+      targetElement = document
+        .querySelector(`.key-upper-right.${key}`)
+        .closest(".key");
+    } else {
+      return;
+    }
+  }
+
+  // Fix this to also light up red when user has hit incorrect key
+  if (targetElement) {
+    // Remove previous animation class if any
+    const previousKey = document.querySelector(".key.lightup-correct");
+    if (previousKey) {
+      previousKey.classList.remove("lightup-correct");
+    }
+
+    // showNextKey();
+
+    // Add animation class to the target key
+    targetElement.classList.add("lightup-correct");
+    targetElement.classList.remove("activated-key");
+
+    // Reset the animation after 1 second
+    setTimeout(() => {
+      targetElement.classList.remove("lightup-correct");
+    }, 500);
+  }
+});
+
+// Event listener which prevents user from typing non-Korean characters
+userText.addEventListener("input", function () {
+  const userInput = userText.value;
+  const koreanFlag = document.querySelector(".warning-flag");
+
+  if (userInput && !isKoreanInput(userInput)) {
+    userText.value = "";
+    if (koreanFlag.style.display !== "block") {
+      koreanFlag.style.display = "block";
+      // playWarningSound(); TODO --> Make a sound for this
+    } else {
+      koreanFlag.classList.add("warning-flag-flash");
+      setTimeout(function () {
+        koreanFlag.classList.remove("warning-flag-flash");
+      }, 1000); 
+    }
+  } else {
+    koreanFlag.style.display = "none";
+    koreanFlag.classList.remove("flash");
+  }
 });

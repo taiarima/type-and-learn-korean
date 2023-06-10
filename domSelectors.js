@@ -16,19 +16,15 @@ const keyRowBottom = document.querySelectorAll(".row-bottom");
 const keyFiller = document.querySelectorAll(".filler");
 const keyUpperRight = document.querySelectorAll(".key-upper-right");
 const nextButton = document.querySelector(".next-btn");
-const startLearnLink = document.querySelector(".start-learning-link");
+const startLearnLinks = document.querySelectorAll(".start-learning-link");
 const bubbleContainer = document.getElementById("bubbleContainer");
-const aboutLink = document.querySelector(".about-link");
-const helpLink = document.querySelector(".help-link");
-const whyTypeLink = document.querySelector(".why-type-link");
+const aboutLinks = document.querySelectorAll(".about-link");
+const helpLinks = document.querySelectorAll(".help-link");
+const whyTypeLinks = document.querySelectorAll(".why-type-link");
 const whyTypeContainer = document.querySelector(".why-type-container");
 const homeContainer = document.querySelector(".home-container");
 const helpContainer = document.querySelector(".help-container");
 const banner = document.querySelector(".banner");
-const startDropdownLink = document.querySelector(".start-dropdown-link");
-const aboutDropdownLink = document.querySelector(".about-dropdown-link");
-const helpDropdownLink = document.querySelector(".help-dropdown-link");
-const whyDropdownLink = document.querySelector(".why-dropdown-link");
 const logo = document.querySelector(".logo");
 const dropdownContent = document.querySelector(".dropdown-content");
 const dropdownBtn = document.querySelector(".dropdown-btn");
@@ -36,6 +32,8 @@ const dropdownContainer = document.querySelector(".dropdown-container");
 const congratsContainer = document.querySelector(".congrats-container");
 const resultsContainer = document.querySelector(".results-container");
 const generateResultsBtn = document.querySelector(".generate-results-btn");
+const dropdownItems = document.querySelectorAll(".dropdown-item");
+const homeLink = document.querySelector(".home-link");
 
 // Modal Window selectors
 const modalStartExercise = document.querySelector(".modal-start-exercise");
@@ -54,6 +52,11 @@ const defaultCheckbox = document.querySelector(".default-checkbox");
 const beginExerciseButton = document.querySelector(".begin-button");
 const exSettingsContainer = document.querySelector(".ex-settings-container");
 
+// Keyboard Switch
+const switchOn = document.getElementById("switch-on");
+const switchOff = document.getElementById("switch-off");
+
+// Keyboard keys
 const keyBieup = document.querySelector(".key.ㅂ");
 const keyJieut = document.querySelector(".key.ㅈ");
 const keyDigeut = document.querySelector(".key.ㄷ");

@@ -464,6 +464,7 @@ footer {
 
 footer a {
   padding: 5px 10px;
+  cursor: pointer;
 }
 
 .footer-divider {
@@ -595,4 +596,23 @@ button {
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.warning-flag {
+  position: relative;
+  display: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: var(--color-red);
+  color: #fff; /* white text color */
+  font-family: var(--font-family);
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.warning-flag-flash {
+  transform: scale(1.2);
+  color: red;
+  background-color: white;
+  border: solid 2px var(--color-red);
 }
