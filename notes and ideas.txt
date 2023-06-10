@@ -11,10 +11,28 @@
 
 // Make typing exercises where it highlights text as you go along
 
-// TODO: Warning if user tries to abandon current drill
-// --> make sure all things are removed from the keyboard at end of drill
-//
-//
+Next thing to do:
+CHECK        1. Complete the code to make typing the exercises work.
+2. Make an end condition for the exercise and a results display.
+3. Make a function to calculate typing speed
+CHECK        4. Make a modal that pops up to confirm settings before beginning exercise
+5. Make a settings widget to adjust settings
+6. Implement progress bar
+
+I need to remember that for fill-in-the-blank exercises, the keyboard hints have to be off, otherwise they spoil the answers
+
+I should have something where people can have to show the answers if they want
+
+and accept answer as correct if they want
+I need to figure out how to light things up when the user hits backspace
+
+I should have several types of exercises, then give each exercise object a type,
+then have a type object which has all the types and their respective rules
+
+>>COMPLETED TASKS<<<
+
+When an exercise is in session, all links must feature a warning before any navigation takes place. 
+--> if user does decide to navigate away in the middle of a drill, a method to clear all drill info must be invoked
 /*
   Why learn Korean while typing?
 
@@ -51,24 +69,4 @@ which require recalling words and grammar from memory, you can expand your activ
 and boost confidence in the language. Not to mention, it will be great for your spelling.
 */
 
-TODO: When an exercise is in session, all links must feature a warning before any navigation takes place. 
---> if user does decide to navigate away in the middle of a drill, a method to clear all drill info must be invoked
-
-Next thing to do:
 1. Complete the code to make typing the exercises work.
-2. Make an end condition for the exercise and a results display.
-3. Make a function to calculate typing speed
-4. Make a modal that pops up to confirm settings before beginning exercise
-5. Make a settings widget to adjust settings
-6. Implement progress bar
-
-I need to remember that for fill-in-the-blank exercises, the keyboard hints have to be off, otherwise they spoil the answers
-
-I should have something where people can have to show the answers if they want
-
-and accept answer as correct if they want
-I need to figure out how to light things up when the user hits backspace
-
-I should have several types of exercises, then give each exercise object a type,
-then have a type object which has all the types and their respective rules
-

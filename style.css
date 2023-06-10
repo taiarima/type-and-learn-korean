@@ -51,7 +51,6 @@ nav a {
   cursor: pointer;
 }
 nav a:hover {
-  /* transform: translate(-2px, -2px); */
   transform: scale(1.2);
 }
 
@@ -279,7 +278,6 @@ main {
   align-items: center;
   width: 150px;
   height: 150px;
-  /* background: linear-gradient(to bottom right, #a2e9ff 20%, #0999d7 80%); */
   background-color: var(--color-blue);
   color: white;
   border-radius: 30%;
@@ -310,7 +308,7 @@ main {
   transform: translate(-2px, -2px);
   background-color: var(--color-green);
 }
-/* Testing switch */
+
 .switch-container {
   display: none;
   flex-direction: column;
@@ -382,7 +380,6 @@ main {
   left: 30px;
 }
 
-/* Coding dropdown menu */
 .dropdown-btn {
   background-color: transparent;
   color: white;
@@ -392,14 +389,10 @@ main {
   margin-right: 8px;
 }
 
-/* The container <div> - needed to position the dropdown content */
 .dropdown-container {
-  /* position: relative;
-  display: inline-block; */
   display: none;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -411,7 +404,6 @@ main {
   right: 10%;
 }
 
-/* Links inside the dropdown */
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
@@ -420,32 +412,18 @@ main {
   border: 1px solid var(--color-red);
 }
 
-/* Change color of dropdown links on hover */
 .dropdown-content a:hover {
   background-color: #ddd;
 }
-
-/* Show the dropdown menu on hover */
-/* .dropdown-container:hover .dropdown-content {
-  display: block;
-  position: absolute;
-} */
-/* TESTING */
 
 .dropdown-container.open .dropdown-content {
   display: block;
 }
 
-/* .dropdown-btn:hover + .dropdown-content,
-.dropdown-content:hover {
-  display: block;
-} */
-
 .dropdown-item {
   cursor: pointer;
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown-container:hover .dropdown-btn,
 .dropdown-container.open .dropdown-btn {
   background-color: var(--color-blue);
@@ -591,4 +569,30 @@ button {
 .category {
   font-family: "Aoboshi One", serif;
   text-transform: uppercase;
+}
+
+.slide-in {
+  position: relative;
+  animation: slide-in 1s forwards;
+}
+
+@keyframes slide-in {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+.keyboard-cartoon {
+  width: 300px;
+}
+
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }

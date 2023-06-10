@@ -33,6 +33,9 @@ const logo = document.querySelector(".logo");
 const dropdownContent = document.querySelector(".dropdown-content");
 const dropdownBtn = document.querySelector(".dropdown-btn");
 const dropdownContainer = document.querySelector(".dropdown-container");
+const congratsContainer = document.querySelector(".congrats-container");
+const resultsContainer = document.querySelector(".results-container");
+const generateResultsBtn = document.querySelector(".generate-results-btn");
 
 // Modal Window selectors
 const modalStartExercise = document.querySelector(".modal-start-exercise");

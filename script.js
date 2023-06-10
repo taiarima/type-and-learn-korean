@@ -6,6 +6,7 @@ let charCounter = 0;
 let currentList;
 let currentIndex = 0;
 let exerciseUnderway = false;
+let repetitionNumber = 2;
 
 // Global Constants
 const nextBtnCorrectText = "Correct! Hit space to continue.";
@@ -29,8 +30,13 @@ function checkAnswer() {
 
 nextButton.addEventListener("click", function () {
   if (nextButton.textContent === nextBtnCorrectText) {
-    console.log(nextButton.textContent);
     currentIndex++;
+    if (currentIndex === repetitionNumber) {
+      hideContainers();
+      congratsContainer.parentElement.classList.remove("hidden");
+      clearExercise();
+      return;
+    }
     prompt.textContent = currentList[currentIndex].korean;
     nextButton.classList.remove("correct-next-btn");
     userText.classList.remove("lightup-correct");
@@ -43,6 +49,15 @@ nextButton.addEventListener("click", function () {
     checkAnswer;
   }
 });
+
+function presentResults() {
+  // Show percentage correct
+  // Typing accuracy
+  // Typing speed
+  // Review of the items of the exercise
+  // Number correct and not correct (for that type of exercise)
+  hideContainers();
+}
 
 // I am testing fucntionality for now, clean this up later TODO
 function loadVocabList(listIndex) {
@@ -226,13 +241,11 @@ aboutLink.addEventListener("click", function () {
       if (choice === "abandon") {
         hideContainers();
         aboutContainer.parentElement.classList.remove("hidden");
-        console.log(aboutContainer);
       }
     });
   } else {
     hideContainers();
     aboutContainer.parentElement.classList.remove("hidden");
-    console.log(aboutContainer);
   }
 });
 
@@ -311,7 +324,6 @@ function showModalAbandon(callback) {
 
   abandonBtn.addEventListener("click", function () {
     modalAbandon.style.display = "none";
-    exerciseUnderway = false;
     clearExercise();
     callback("abandon");
   });
@@ -325,6 +337,7 @@ function showModalAbandon(callback) {
 // After a user completes or exits an exercise, this will clear all the content of the previous exercise
 // so the next one starts out fresh.
 function clearExercise() {
+  exerciseUnderway = false;
   userText.value = "";
   userText.classList.remove("lightup-correct");
   prompt.textContent = currentList[currentIndex].korean;
@@ -425,4 +438,15 @@ document.addEventListener("click", function (event) {
   if (!dropdownContainer.contains(event.target)) {
     dropdownContainer.classList.remove("open");
   }
+});
+
+beginExerciseButton.addEventListener("click", function () {
+  // Other stuff will go here later
+  modalStartExercise.style.display = "none";
+});
+
+generateResultsBtn.addEventListener("click", function () {
+  presentResults();
+  hideContainers();
+  resultsContainer.parentElement.classList.remove("hidden");
 });
