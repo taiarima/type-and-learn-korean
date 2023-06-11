@@ -104,7 +104,7 @@ main {
   font-family: var(--font-family);
   color: white;
   font-size: 1.35rem;
-  padding: 0px 50px;
+  padding: 0px 25px;
   max-width: 800px;
   line-height: 1.5;
 }
@@ -469,7 +469,7 @@ footer a {
 
 .footer-divider {
   height: 1px;
-  margin: 25px 15px;
+  margin: 25px auto;
   background-color: var(--color-red);
   width: 80%;
 }
@@ -615,4 +615,90 @@ button {
   color: red;
   background-color: white;
   border: solid 2px var(--color-red);
+}
+
+/* Making info boxes */
+.info-flag {
+  cursor: pointer;
+  position: relative;
+  font-size: small;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.info-flag::after {
+  content: attr(data-info);
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding: 8px;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  width: 100px;
+}
+
+.info-flag:hover::after {
+  display: block;
+}
+
+.results-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.results-labels {
+  border: solid 2px var(--color-yellow);
+  padding: 0 8px;
+  background-color: var(--color-blue);
+  font-size: medium;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+.results-summary {
+  border: solid 2px var(--color-yellow);
+  padding: 10px;
+  align-items: center;
+}
+@media (min-width: 630px) {
+  .results-summary {
+    margin-left: 15px;
+  }
+}
+
+.exercise-summary {
+  resize: none;
+  overflow: auto;
+  width: 98.5%;
+  height: 150px;
+}
+
+.progress-container {
+  margin: 20px auto;
+  width: 300px;
+  background-color: #ccc;
+  height: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.progress-bar {
+  background-color: #4caf50; /* Green */
+  height: 100%;
+  width: 0%;
+}
+
+.show-english-container {
+  border: 2px solid var(--color-yellow);
+  padding: 5px;
+  margin: 5px;
 }

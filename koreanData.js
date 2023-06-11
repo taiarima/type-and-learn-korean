@@ -48,7 +48,6 @@ const countries = {
     { korean: "모로코", english: "Morocco" },
     { korean: "아프가니스탄", english: "Afghanistan" },
     { korean: "사우디아라비아", english: "Saudi Arabia" },
-    { korean: "우크라이나", english: "Ukraine" },
     { korean: "베네수엘라", english: "Venezuela" },
     { korean: "앙골라", english: "Angola" },
     { korean: "모잠비크", english: "Mozambique" },
@@ -319,8 +318,8 @@ const sports = {
     { korean: "스케이트보드", english: "skateboarding" },
     { korean: "육상 경기", english: "track and field" },
     { korean: "양궁", english: "archery" },
-    { korean: "펜싱", english: "fencing" }
-  ]
+    { korean: "펜싱", english: "fencing" },
+  ],
 };
 
 const basicVocabCategories = {

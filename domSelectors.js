@@ -4,7 +4,7 @@
 const aboutContainer = document.querySelector(".about-container");
 const sectionTitle = document.querySelector(".section-title");
 const learningContainer = document.querySelector(".learning-container");
-const prompt = document.querySelector(".prompt");
+const promptLabel = document.querySelector(".prompt");
 const userTextContainer = document.querySelector(".user-text-container");
 const userText = document.querySelector(".user-text");
 const keyboardContainer = document.querySelector(".keyboard-container");
@@ -34,6 +34,10 @@ const resultsContainer = document.querySelector(".results-container");
 const generateResultsBtn = document.querySelector(".generate-results-btn");
 const dropdownItems = document.querySelectorAll(".dropdown-item");
 const homeLink = document.querySelector(".home-link");
+const koreanFlag = document.querySelector(".warning-flag");
+const typingSpeedLabel = document.querySelector(".typing-speed");
+const typingAccuracyLabel = document.querySelector(".typing-accuracy");
+const progressBar = document.querySelector(".progress-bar");
 
 // Modal Window selectors
 const modalStartExercise = document.querySelector(".modal-start-exercise");
@@ -43,9 +47,18 @@ const closeAbandon = document.querySelector(".close-abandon-btn");
 const abandonBtn = document.querySelector(".abandon-btn");
 const continueExerciseBtn = document.querySelector(".continue-btn");
 
+// For user settings
+const showEnglishOptionsSelector = ".show-english-options";
+const calculateTypingSpeedCheckboxSelector = ".calculate-typing-speed-checkbox";
+const triesPerPromptRadio = document.querySelectorAll('input[name="triesPerPrompt"]');
+const triesPerPromptInput = document.querySelector('.tries-per-prompt-input');
+const repetitionsInputSelector = ".repetitions-input";
+const onScreenKeyboardCheckboxSelector = ".on-screen-keyboard-checkbox";
+const keyboardHintsCheckboxSelector = ".keyboard-hints-checkbox";
+
 // Start Exercise Modal Selectors
-const categoryLabel = document.querySelector(".category");
-const exerciseNameLabel = document.querySelector(".exercise-name");
+const categoryLabels = document.querySelectorAll(".category");
+const exerciseNameLabels = document.querySelectorAll(".exercise-name");
 const insertInstructions = document.querySelector(".insert-instructions");
 const acceptDefaultsText = document.querySelector(".accept-defaults");
 const defaultCheckbox = document.querySelector(".default-checkbox");

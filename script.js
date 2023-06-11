@@ -6,12 +6,17 @@ let charCounter = 0;
 let currentList;
 let currentIndex = 0;
 let exerciseUnderway = false;
-let repetitionNumber = 2;
+let repetitionNumber = 10; // 10 is the default value for reps, can be adjusted by user
+let currentCategory; // This will be stored to apply to labels on exercise start modal and results page
+let currentExerciseName; // Same as above. Is assigned in loadVocabList
 
 // For calculating typing speed
 let totalCharsTyped = 0;
 let totalTimeTyped = 0;
 let totalPromptChars = 0;
+let timerOn = false;
+let startTime = 0;
+let endTime = 0;
 
 // Global Constants
 const nextBtnCorrectText = "Correct! Hit space to continue.";
@@ -19,8 +24,19 @@ const nextBtnPrompt = "Press enter or click to submit";
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>> Function declarations <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
+function startTimer() {
+  timerOn = true;
+  startTime = new Date().getTime();
+}
+
+function stopTimer() {
+  timerOn = false;
+  endTime = new Date().getTime();
+  totalTimeTyped += (endTime - startTime) / 1000 / 60; // Update time and convert to minutes.
+}
+
 function checkAnswer() {
-  if (userText.value === prompt.textContent) {
+  if (userText.value === promptLabel.textContent) {
     userText.disabled = true;
     userText.classList.add("lightup-correct");
     nextButton.classList.add("correct-next-btn");
@@ -28,6 +44,7 @@ function checkAnswer() {
       nextButton.focus();
     }, 50);
     nextButton.textContent = nextBtnCorrectText;
+    stopTimer();
   } else {
     setTimeout(() => {
       userText.select();
@@ -35,24 +52,60 @@ function checkAnswer() {
   }
 }
 
-function presentResults() {
+function generateResults() {
   // Show percentage correct
-  // Typing accuracy
-  // Typing speed
   // Review of the items of the exercise
   // Number correct and not correct (for that type of exercise)
+
+  // Calculate and show typing speed
+  const typingSpeed = totalCharsTyped / totalTimeTyped;
+  typingSpeedLabel.textContent = `Typing speed: ${Math.floor(typingSpeed)} SPM`;
+
+  console.log(
+    `totalCharsTyped = ${totalCharsTyped}, totalTimeTyped = ${totalTimeTyped}, totalTimeTyped in seconds = ${
+      totalTimeTyped * 60
+    }`
+  );
+
+  // Calculate typing accuracy
+  const typingAccuracy = totalPromptChars / totalCharsTyped;
+  typingAccuracyLabel.textContent = `Typing Accuracy: ${Math.floor(
+    typingAccuracy * 100
+  )}%`;
+
+  // Show results container
+  clearExercise();
   hideContainers();
+  resultsContainer.parentElement.classList.remove("hidden");
 }
 
 // I am testing fucntionality for now, clean this up later TODO
 function loadVocabList(listIndex) {
+  // Bool to prevent user from accidentally navigating away during exercise
   exerciseUnderway = true;
+
+  // Initialize the progress bar to have a sliver of progress showing
+  progressBar.style.width = `${100 / repetitionNumber / 2}%`;
+
   const randomizedList = shuffleArray(
     basicVocabCategories.items[listIndex].items
   );
   currentList = randomizedList;
+  // The bottom needs to be adjusted according to the specifications of the exercise
+  // currentList.forEach((prompt) => {
+  //   const hangeulChars = Hangul.disassemble(prompt.korean);
+  //   const hangeulString = hangeulChars.join("");
+  //   totalPromptChars += hangeulString.replace(/\s/g, "").length;
+  // });
+
+  // Stand in code for testing. It should be changed to the above later
+  for (let i = 0; i < repetitionNumber; i++) {
+    const hangeulChars = Hangul.disassemble(currentList[i].korean);
+    const hangeulString = hangeulChars.join("");
+    totalPromptChars += hangeulString.replace(/\s/g, "").length;
+  }
   const firstItem = randomizedList[0].korean;
-  prompt.textContent = firstItem;
+  promptLabel.textContent = firstItem;
   currentWord = Hangul.disassemble(firstItem);
   console.log(`currentWord = ${currentWord}`);
   // This function should be invoked when appropriate to show the user the first key to be pressed
@@ -161,28 +214,100 @@ function showModalAbandon(callback) {
   });
 }
 
+function initializeExercise(callback) {
+  beginExerciseButton.addEventListener("click", function () {
+    // Other stuff will go here later
+    modalStartExercise.style.display = "none";
+    callback();
+  });
+}
+
 // After a user completes or exits an exercise, this will clear all the content of the previous exercise
 // so the next one starts out fresh.
 function clearExercise() {
+  startTime = 0;
+  totalCharsTyped = 0;
+  totalTimeTyped = 0;
+  totalPromptChars = 0;
+  startTime = 0;
+  endTime = 0;
+  currentIndex = 0;
   exerciseUnderway = false;
   userText.value = "";
   userText.classList.remove("lightup-correct");
-  prompt.textContent = currentList[currentIndex].korean;
+  promptLabel.textContent = currentList[currentIndex].korean;
   nextButton.classList.remove("correct-next-btn");
   userText.classList.remove("lightup-correct");
   userText.disabled = false;
   nextButton.textContent = nextBtnPrompt;
 }
 
+function updateProgressBar() {
+  const percentage = (currentIndex / repetitionNumber) * 100;
+  progressBar.style.width = `${percentage}%`;
+}
+
+// This function is currently not used anywhere. Delete if unnecessary.
 function isKoreanInput(input) {
   const koreanRegex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
   return koreanRegex.test(input);
+}
+
+function containsNonKorean(text) {
+  const regex = /[^\sㄱ-ㅎㅏ-ㅣ가-힣.,()0-9]/;
+  return regex.test(text);
+}
+
+function filterNonKorean(text) {
+  const regex = /[^\sㄱ-ㅎㅏ-ㅣ가-힣.,()0-9]/g;
+  return text.replace(regex, "");
 }
 
 // Function to play a warning sound
 function playWarningSound() {
   const audio = new Audio("path/to/warning-sound.mp3");
   audio.play();
+}
+
+function getUserSettings() {
+  const showEnglishOptions = document.querySelectorAll(
+    `${showEnglishOptionsSelector} input[type="radio"]`
+  );
+  const selectedShowEnglishOption = document.querySelector(
+    `${showEnglishOptionsSelector} input[type="radio"]:checked`
+  );
+  const calculateTypingSpeedCheckbox = document.querySelector(
+    calculateTypingSpeedCheckboxSelector
+  );
+  const triesPerPromptInput = document.querySelector(
+    triesPerPromptInputSelector
+  );
+  const repetitionsInput = document.querySelector(repetitionsInputSelector);
+  const onScreenKeyboardCheckbox = document.querySelector(
+    onScreenKeyboardCheckboxSelector
+  );
+  const keyboardHintsCheckbox = document.querySelector(
+    keyboardHintsCheckboxSelector
+  );
+
+  const userInput = {
+    showEnglish: selectedShowEnglishOption
+      ? selectedShowEnglishOption.value
+      : "",
+    calculateTypingSpeed: calculateTypingSpeedCheckbox
+      ? calculateTypingSpeedCheckbox.checked
+      : true,
+    triesPerPrompt: triesPerPromptInput
+      ? parseInt(triesPerPromptInput.value)
+      : 10,
+    repetitions: repetitionsInput ? parseInt(repetitionsInput.value) : 10,
+    onScreenKeyboard: onScreenKeyboardCheckbox
+      ? onScreenKeyboardCheckbox.checked
+      : true,
+    keyboardHints: keyboardHintsCheckbox ? keyboardHintsCheckbox.checked : true,
+  };
+
+  return userInput;
 }
 
 // >>>>>>>>>>>>>>>>>>>>>>> Event Listeners <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
@@ -286,18 +411,29 @@ userText.addEventListener("keydown", function (event) {
 
 bubbleContainer.addEventListener("click", function (event) {
   if (event.target.classList.contains("bubble")) {
-    modalStartExercise.style.display = "block"; // testing TODO
-    hideContainers();
+    // Determine bubble (exercise) user clicked on
     const bubbles = Array.from(
       bubbleContainer.getElementsByClassName("bubble")
     );
     const bubbleIndex = bubbles.indexOf(event.target);
 
-    console.log("Clicked bubble index:", bubbleIndex);
-    bubbleContainer.style.display = "none";
-    learningContainer.parentElement.classList.remove("hidden");
-    keyboardContainer.parentElement.classList.remove("hidden");
-    loadVocabList(bubbleIndex);
+    // Assign values for labels
+    currentCategory = basicVocabCategories.title;
+    currentExerciseName = basicVocabCategories.items[bubbleIndex].title;
+    categoryLabels.forEach((ele) => (ele.textContent = currentCategory));
+    exerciseNameLabels.forEach(
+      (ele) => (ele.textContent = currentExerciseName)
+    );
+
+    // Load pre-exercise modal. Exercise will not be initialized until begin btn pressed.
+    modalStartExercise.style.display = "block";
+
+    initializeExercise(function () {
+      hideContainers();
+      learningContainer.parentElement.classList.remove("hidden");
+      keyboardContainer.parentElement.classList.remove("hidden");
+      loadVocabList(bubbleIndex);
+    });
   }
 });
 
@@ -314,7 +450,7 @@ switchOff.addEventListener("change", function () {
 });
 
 // Coding modals
-// modalStartExercise.style.display = "block";
+
 closeStartExercise.onclick = function () {
   modalStartExercise.style.display = "none";
 };
@@ -357,27 +493,21 @@ document.addEventListener("click", function (event) {
   }
 });
 
-beginExerciseButton.addEventListener("click", function () {
-  // Other stuff will go here later
-  modalStartExercise.style.display = "none";
-});
-
 generateResultsBtn.addEventListener("click", function () {
-  presentResults();
-  hideContainers();
-  resultsContainer.parentElement.classList.remove("hidden");
+  generateResults();
 });
 
 nextButton.addEventListener("click", function () {
   if (nextButton.textContent === nextBtnCorrectText) {
     currentIndex++;
-    if (currentIndex === repetitionNumber) {
+    updateProgressBar();
+    if (currentIndex >= repetitionNumber) {
       hideContainers();
       congratsContainer.parentElement.classList.remove("hidden");
-      clearExercise();
+      generateResultsBtn.focus();
       return;
     }
-    prompt.textContent = currentList[currentIndex].korean;
+    promptLabel.textContent = currentList[currentIndex].korean;
     nextButton.classList.remove("correct-next-btn");
     userText.classList.remove("lightup-correct");
     userText.disabled = false;
@@ -405,7 +535,6 @@ document.addEventListener("compositionupdate", function (event) {
       return;
     }
   }
-
   // Fix this to also light up red when user has hit incorrect key
   if (targetElement) {
     // Remove previous animation class if any
@@ -430,21 +559,44 @@ document.addEventListener("compositionupdate", function (event) {
 // Event listener which prevents user from typing non-Korean characters
 userText.addEventListener("input", function () {
   const userInput = userText.value;
-  const koreanFlag = document.querySelector(".warning-flag");
 
-  if (userInput && !isKoreanInput(userInput)) {
-    userText.value = "";
+  if (userInput && containsNonKorean(userInput)) {
+    const koreanText = filterNonKorean(userInput);
+    userText.value = koreanText;
+
     if (koreanFlag.style.display !== "block") {
+      if (timerOn) {
+        stopTimer();
+      }
       koreanFlag.style.display = "block";
       // playWarningSound(); TODO --> Make a sound for this
     } else {
       koreanFlag.classList.add("warning-flag-flash");
       setTimeout(function () {
         koreanFlag.classList.remove("warning-flag-flash");
-      }, 1000); 
+      }, 1000);
     }
   } else {
+    if (!timerOn) {
+      startTimer();
+    }
+    totalCharsTyped++;
+
     koreanFlag.style.display = "none";
     koreanFlag.classList.remove("flash");
   }
+});
+
+userText.addEventListener("compositionend", function () {
+  totalCharsTyped--;
+});
+
+triesPerPromptRadio.forEach((radio) => {
+  radio.addEventListener("change", function () {
+    if (this.value === "limited") {
+      triesPerPromptInput.disabled = false;
+    } else {
+      triesPerPromptInput.disabled = true;
+    }
+  });
 });

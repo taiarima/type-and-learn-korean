@@ -1,9 +1,4 @@
-// Plan
-// Start a timer only when the user starts typing. Stop it when they get hit enter.
-// As they type, each decomposed hangeul string should have spaces removed, and then
-// the length of the characters for each exercise added on to a counter.
-// At the end of the exercise, I will calculate characters per minute by simply dividing the time
-// in minutes by the total of the counter.
+
 
 // I will have one modal window, which will be injected with the correct HTML depending on the exercise
 // There will be options: Show Korean, show English, Show fill in blank, show keyboard, calculate typing speed
@@ -14,10 +9,10 @@
 Next thing to do:
 CHECK        1. Complete the code to make typing the exercises work.
 CHECK        2. Make an end condition for the exercise and a results display.
-3. Make a function to calculate typing speed
+CHECK        3. Make a function to calculate typing speed
 CHECK        4. Make a modal that pops up to confirm settings before beginning exercise
 5. Make a settings widget to adjust settings
-6. Implement progress bar
+CHECK        6. Implement progress bar
 
 I need to remember that for fill-in-the-blank exercises, the keyboard hints have to be off, otherwise they spoil the answers
 
@@ -79,3 +74,10 @@ and boost confidence in the language. Not to mention, it will be great for your 
 */
 
 1. Complete the code to make typing the exercises work.
+
+// Plan
+// Start a timer only when the user starts typing. Stop it when they get hit enter.
+// As they type, each decomposed hangeul string should have spaces removed, and then
+// the length of the characters for each exercise added on to a counter.
+// At the end of the exercise, I will calculate characters per minute by simply dividing the time
+// in minutes by the total of the counter.
