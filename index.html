@@ -260,7 +260,8 @@
           <div class="start-exercise-text">
             <div class="category">Category</div>
             <h1 class="exercise-name">Exercise Name</h1>
-            <p>Instructions: <span class="insert-instructions"></span></p>
+            <p>Exercise type: <span class="exercise-type">Fill-in-the-blank</span></p>
+            <p>Instructions: <span class="insert-instructions">These will be the instructions for the exercise.</span></p>
             <label class="accept-defaults">
               Accept default settings?
               <input class="default-checkbox" type="checkbox" checked>
@@ -269,22 +270,27 @@
               <div class="show-english-container">
                 <p>Show English: </p>
                 <div class="show-english-options">
-                  <label><input type="radio" name="showEnglish" value="prompt" checked> As the prompt</label>
-                  <label><input type="radio" name="showEnglish" value="afterCorrect"> After getting exercise correct</label>
-                  <label><input type="radio" name="showEnglish" value="sameTime"> At the same time as prompt</label>
-                  <label><input type="radio" name="showEnglish" value="summary"> Only in results summary</label>
+                  <label><input type="radio" name="showEnglish" value="prompt" checked> As the prompt<span class="info-flag" data-info="You will be given a prompt in English and asked to translate into Korean. This makes the exercise more difficult, but will help improve your active vocabulary and ability to produce Korean from memory.">❔</span></label>
+                  <label><input type="radio" name="showEnglish" value="afterGrading"> After providing response graded<span class="info-flag" data-info="The English translation will only be shown for each prompt after your answer has been marked correct or incorrect.">❔</span></label>
+                  <label><input type="radio" name="showEnglish" value="sameTime"> At the same time as prompt<span class="info-flag" data-info="You will be shown each Korean prompt and its English translation at the same time.">❔</span></label>
+                  <label><input type="radio" name="showEnglish" value="withResults"> Only in results summary<span class="info-flag" data-info="You will only be shown English translations in your results summary after completing the exercise.">❔</span></label>
                   <label><input type="radio" name="showEnglish" value="none"> Not at all</label>
                 </div>
               </div>
               <p>Calculate typing speed: <input type="checkbox" class="calculate-typing-speed-checkbox" checked></p>
-              <p>Tries per prompt:
+              <p>Tries per prompt:<span class="info-flag" data-info="Amount of tries you are allowed to attempt answering a given prompt before your answer is marked incorrect.">❔</span>
+                <br/>
                 <label><input type="radio" name="triesPerPrompt" value="unlimited" checked> Unlimited</label>
+                <br/>
                 <label><input type="radio" name="triesPerPrompt" value="limited"> Limited to</label>
                 <input type="number" class="tries-per-prompt-input" min="1" max="50" value="3" disabled>
               </p>
+              <p>Require typing answer before proceeding:<span class="info-flag" data-info="If your answer is marked incorrect or you reveal the answer, you will be required to type in the correct response before being allowed to proceed.">❔</span><input type="checkbox" class="require-answer-checkbox" checked></p>
+              <p>Calculate typing speed: <input type="checkbox" class="calculate-typing-speed-checkbox" checked></p>
               <p>Repetitions: <input type="number" class="repetitions-input" min="1" max="50" value="10"></p>
               <p>On-screen Keyboard: <input type="checkbox" class="on-screen-keyboard-checkbox" checked></p>
               <p>Keyboard hints: <input type="checkbox" class="keyboard-hints-checkbox" checked></p>
+              <p>Save Settings: <input type="checkbox" class="save-settings-checkbox" checked></p>
             </div>
             <br />
             <div class="button-container">

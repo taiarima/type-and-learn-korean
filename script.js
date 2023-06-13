@@ -6,9 +6,28 @@ let charCounter = 0;
 let currentList;
 let currentIndex = 0;
 let exerciseUnderway = false;
-let repetitionNumber = 10; // 10 is the default value for reps, can be adjusted by user
 let currentCategory; // This will be stored to apply to labels on exercise start modal and results page
 let currentExerciseName; // Same as above. Is assigned in loadVocabList
+let keepDefaultSettings = true;
+let resultsSummaryItems = []; // This will hold the content of the exercise to present in results summary text area
+
+// Possible values for showing English settings
+const showEngPrompt = "prompt"; // users will be asked to translate English to Korean
+const showEngAfterGrading = "afterGrading"; // how English only on results page
+const showEngWithResults = "withResults"; // Show English only after prompt has been graded as correct/incorrect
+const showEngSameTime = "sameTime"; // Show English translation at same time as Korean prompt
+const showNoEng = "none"; // Don't provide English translations anywhere
+
+// User Settings Default Values, these can be changed by user
+let repetitionNumber = 10;
+let speedCalcOn = true;
+let maxTries = 3; // amount of tries user can attempt to answer before being shown correct response, only used when unlimitedTries == false
+let unlimitedTries = true;
+let requireResponse = true; // user will be required to type the correct response before being allowed to continue
+let keyboardOn = true;
+let keyboardHintsOn = true;
+let saveSettingsOn = true; // As long as this is checked, defaults will not be automatically be restored
+let showEngSetting = showEngAfterGrading;
 
 // For calculating typing speed
 let totalCharsTyped = 0;
@@ -24,6 +43,18 @@ const nextBtnPrompt = "Press enter or click to submit";
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>> Function declarations <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
+function restoreDefaultSettings() {
+  repetitionNumber = 10;
+  speedCalcOn = true;
+  maxTries = 3; // amount of tries user can attempt to answer before being shown correct response, only used when unlimitedTries == false
+  unlimitedTries = true;
+  requireResponse = true; // user will be required to type the correct response before being allowed to continue
+  keyboardOn = true;
+  keyboardHintsOn = true;
+  saveSettingsOn = true; // As long as this is checked, defaults will not be automatically be restored
+  showEngSetting = showEngAfterGrading;
+}
+
 function startTimer() {
   timerOn = true;
   startTime = new Date().getTime();
@@ -35,8 +66,9 @@ function stopTimer() {
   totalTimeTyped += (endTime - startTime) / 1000 / 60; // Update time and convert to minutes.
 }
 
+// Function to evluate if the user-provided response is correct according to the given prompt
 function checkAnswer() {
-  if (userText.value === promptLabel.textContent) {
+  if (userText.value.trim() === promptLabel.textContent) {
     userText.disabled = true;
     userText.classList.add("lightup-correct");
     nextButton.classList.add("correct-next-btn");
@@ -52,20 +84,27 @@ function checkAnswer() {
   }
 }
 
+// Results will be generated after the user completes an exercise
 function generateResults() {
   // Show percentage correct
-  // Review of the items of the exercise
-  // Number correct and not correct (for that type of exercise)
+
+  // Print the items from the exercise to the corresponding text area
+  resultsSummaryTextArea.value = "";
+  resultsSummaryItems.forEach((rep, index) => {
+    // resultsSummaryTextArea.value += `${index + 1}.\nKorean: ${
+    //   rep.korean
+    // }\nEnglish: ${rep.english}\nCorrect Answer: ${
+    //   rep.correctAnswer
+    // }\nYour Answer: ${rep.yourAnswer}\n`;
+
+    resultsSummaryTextArea.value += `${index + 1}.\nKorean: ${
+      rep.korean
+    }\nEnglish: ${rep.english}\n\n`;
+  });
 
   // Calculate and show typing speed
   const typingSpeed = totalCharsTyped / totalTimeTyped;
   typingSpeedLabel.textContent = `Typing speed: ${Math.floor(typingSpeed)} SPM`;
-
-  console.log(
-    `totalCharsTyped = ${totalCharsTyped}, totalTimeTyped = ${totalTimeTyped}, totalTimeTyped in seconds = ${
-      totalTimeTyped * 60
-    }`
-  );
 
   // Calculate typing accuracy
   const typingAccuracy = totalPromptChars / totalCharsTyped;
@@ -79,7 +118,8 @@ function generateResults() {
   resultsContainer.parentElement.classList.remove("hidden");
 }
 
-// I am testing fucntionality for now, clean this up later TODO
+// This loads the prompts that a user will be shown for an exercise in accordance with
+// the exercise and settings they have selected.
 function loadVocabList(listIndex) {
   // Bool to prevent user from accidentally navigating away during exercise
   exerciseUnderway = true;
@@ -107,7 +147,6 @@ function loadVocabList(listIndex) {
   const firstItem = randomizedList[0].korean;
   promptLabel.textContent = firstItem;
   currentWord = Hangul.disassemble(firstItem);
-  console.log(`currentWord = ${currentWord}`);
   // This function should be invoked when appropriate to show the user the first key to be pressed
   // showNextKey();
 
@@ -126,7 +165,6 @@ function showNextKey() {
   // one to check the keys that need to be pressed (currentWord)
   let userTypedSoFar = Hangul.disassemble(userText.value);
   if (userTypedSoFar.length === 0) {
-    console.log(currentWord[0]);
     document.querySelector(`.${currentWord[0]}`).classList.add("activated-key");
   } else {
     // check something
@@ -142,6 +180,7 @@ function showNextKey() {
   // with the current length of userTypedSoFar
 }
 
+// Used for randomizing order of prompts for exercises
 function shuffleArray(array) {
   const newArray = [...array];
   const length = newArray.length;
@@ -156,8 +195,9 @@ function shuffleArray(array) {
 
 // Creates "bubbles", which are selectable categories of exercises
 function createBubbles() {
+  bubbleContainer.style.display = "flex";
+  bubbleContainer.parentElement.classList.remove("hidden");
   const bubbleSize = 150;
-  const bubblesPerRow = 2;
 
   // Clear existing bubbles
   bubbleContainer.innerHTML = "";
@@ -168,28 +208,29 @@ function createBubbles() {
   heading.classList.add("bubble-heading");
   bubbleContainer.appendChild(heading);
 
-  // Calculate the number of rows required; this is hard-coded for basicVocabCats now, update it to take input later
-  const numRows = Math.ceil(basicVocabCategories.items.length / bubblesPerRow);
+  const containerWidth = bubbleContainer.offsetWidth;
+  const bubblesPerRow = Math.floor(containerWidth / bubbleSize);
 
-  for (let i = 0; i < numRows; i++) {
-    const row = document.createElement("div");
-    row.classList.add("bubble-row");
+  basicVocabCategories.items.forEach((item, index) => {
+    const rowNumber = Math.floor(index / bubblesPerRow);
+    let row = bubbleContainer.querySelector(
+      `.bubble-row[data-row="${rowNumber}"]`
+    );
 
-    for (let j = 0; j < bubblesPerRow; j++) {
-      const index = i * bubblesPerRow + j;
-
-      if (index < basicVocabCategories.items.length) {
-        const bubble = document.createElement("div");
-        bubble.classList.add("bubble");
-        bubble.style.width = `${bubbleSize}px`;
-        bubble.style.height = `${bubbleSize}px`;
-        bubble.textContent = basicVocabCategories.items[index].title;
-        row.appendChild(bubble);
-      }
+    if (!row) {
+      row = document.createElement("div");
+      row.classList.add("bubble-row");
+      row.setAttribute("data-row", rowNumber);
+      bubbleContainer.appendChild(row);
     }
 
-    bubbleContainer.appendChild(row);
-  }
+    const bubble = document.createElement("div");
+    bubble.classList.add("bubble");
+    bubble.style.width = `${bubbleSize}px`;
+    bubble.style.height = `${bubbleSize}px`;
+    bubble.textContent = item.title;
+    row.appendChild(bubble);
+  });
 }
 
 // Function to call when clicking a nav link to close all other sections
@@ -199,6 +240,7 @@ function hideContainers() {
   containers.forEach((ele) => ele.classList.add("hidden"));
 }
 
+// This function is for when a user attempts to navigate away during the middle of the exercise
 function showModalAbandon(callback) {
   modalAbandon.style.display = "block";
 
@@ -217,6 +259,9 @@ function showModalAbandon(callback) {
 function initializeExercise(callback) {
   beginExerciseButton.addEventListener("click", function () {
     // Other stuff will go here later
+    if (!keepDefaultSettings) {
+      applyUserSettings();
+    }
     modalStartExercise.style.display = "none";
     callback();
   });
@@ -234,12 +279,17 @@ function clearExercise() {
   currentIndex = 0;
   exerciseUnderway = false;
   userText.value = "";
+  resultsSummaryItems = [];
   userText.classList.remove("lightup-correct");
   promptLabel.textContent = currentList[currentIndex].korean;
   nextButton.classList.remove("correct-next-btn");
   userText.classList.remove("lightup-correct");
   userText.disabled = false;
   nextButton.textContent = nextBtnPrompt;
+
+  if (!saveSettingsOn) {
+    keepDefaultSettings = true;
+  }
 }
 
 function updateProgressBar() {
@@ -269,15 +319,10 @@ function playWarningSound() {
   audio.play();
 }
 
-function getUserSettings() {
-  const showEnglishOptions = document.querySelectorAll(
-    `${showEnglishOptionsSelector} input[type="radio"]`
-  );
+// Users can choose settings for their exercise
+function applyUserSettings() {
   const selectedShowEnglishOption = document.querySelector(
     `${showEnglishOptionsSelector} input[type="radio"]:checked`
-  );
-  const calculateTypingSpeedCheckbox = document.querySelector(
-    calculateTypingSpeedCheckboxSelector
   );
   const triesPerPromptInput = document.querySelector(
     triesPerPromptInputSelector
@@ -289,28 +334,71 @@ function getUserSettings() {
   const keyboardHintsCheckbox = document.querySelector(
     keyboardHintsCheckboxSelector
   );
+  const calculateTypingSpeedCheckbox = document.querySelector(
+    calculateTypingSpeedCheckboxSelector
+  );
 
-  const userInput = {
-    showEnglish: selectedShowEnglishOption
-      ? selectedShowEnglishOption.value
-      : "",
-    calculateTypingSpeed: calculateTypingSpeedCheckbox
-      ? calculateTypingSpeedCheckbox.checked
-      : true,
-    triesPerPrompt: triesPerPromptInput
-      ? parseInt(triesPerPromptInput.value)
-      : 10,
-    repetitions: repetitionsInput ? parseInt(repetitionsInput.value) : 10,
-    onScreenKeyboard: onScreenKeyboardCheckbox
-      ? onScreenKeyboardCheckbox.checked
-      : true,
-    keyboardHints: keyboardHintsCheckbox ? keyboardHintsCheckbox.checked : true,
+  requireResponse = requireAnswerCheckbox
+    ? requireAnswerCheckbox.checked
+    : true;
+
+  saveSettingsOn = saveSettingsCheckbox ? saveSettingsCheckbox.checked : true;
+
+  repetitionNumber = repetitionsInput ? parseInt(repetitionsInput.value) : 10;
+
+  speedCalcOn = calculateTypingSpeedCheckbox
+    ? calculateTypingSpeedCheckbox.checked
+    : true;
+
+  maxTries = triesPerPromptInput ? parseInt(triesPerPromptInput.value) : 3;
+  unlimitedTries = maxTries === 0;
+  requireResponse = !unlimitedTries;
+
+  keyboardOn = onScreenKeyboardCheckbox
+    ? onScreenKeyboardCheckbox.checked
+    : true;
+
+  keyboardHintsOn = keyboardHintsCheckbox
+    ? keyboardHintsCheckbox.checked
+    : true;
+
+  showEngSetting = selectedShowEnglishOption
+    ? selectedShowEnglishOption.value
+    : showEngAfterGrading;
+
+  console.log("User settings saved");
+}
+
+// Sets next prompt and puts the current rep in the results summary array
+function setNextPrompt() {
+  const currentRep = {
+    korean: currentList[currentIndex].korean,
+    english: currentList[currentIndex].english,
+    correctAnswer: currentList[currentIndex].correctAnswer
+      ? currentList[currentIndex].correctAnswer
+      : currentList[currentIndex].korean,
+    yourAnswer: userText.value.trim(),
   };
-
-  return userInput;
+  resultsSummaryItems.push(currentRep);
+  currentIndex++;
+  promptLabel.textContent = currentList[currentIndex].korean;
 }
 
 // >>>>>>>>>>>>>>>>>>>>>>> Event Listeners <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+
+function handleLinkClick(targetContainer) {
+  if (exerciseUnderway) {
+    showModalAbandon(function (choice) {
+      if (choice === "abandon") {
+        hideContainers();
+        targetContainer.parentElement.classList.remove("hidden");
+      }
+    });
+  } else {
+    hideContainers();
+    targetContainer.parentElement.classList.remove("hidden");
+  }
+}
 
 startLearnLinks.forEach(function (startLearnLink) {
   startLearnLink.addEventListener("click", function () {
@@ -318,15 +406,11 @@ startLearnLinks.forEach(function (startLearnLink) {
       showModalAbandon(function (choice) {
         if (choice === "abandon") {
           hideContainers();
-          bubbleContainer.style.display = "flex";
-          bubbleContainer.parentElement.classList.remove("hidden");
           createBubbles();
         }
       });
     } else {
       hideContainers();
-      bubbleContainer.style.display = "flex";
-      bubbleContainer.parentElement.classList.remove("hidden");
       createBubbles();
     }
   });
@@ -334,73 +418,28 @@ startLearnLinks.forEach(function (startLearnLink) {
 
 aboutLinks.forEach(function (aboutLink) {
   aboutLink.addEventListener("click", function () {
-    if (exerciseUnderway) {
-      showModalAbandon(function (choice) {
-        if (choice === "abandon") {
-          hideContainers();
-          aboutContainer.parentElement.classList.remove("hidden");
-        }
-      });
-    } else {
-      hideContainers();
-      aboutContainer.parentElement.classList.remove("hidden");
-    }
+    handleLinkClick(aboutContainer);
   });
 });
 
 whyTypeLinks.forEach(function (whyTypeLink) {
   whyTypeLink.addEventListener("click", function () {
-    if (exerciseUnderway) {
-      showModalAbandon(function (choice) {
-        if (choice === "abandon") {
-          hideContainers();
-          whyTypeContainer.parentElement.classList.remove("hidden");
-        }
-      });
-    } else {
-      hideContainers();
-      whyTypeContainer.parentElement.classList.remove("hidden");
-    }
+    handleLinkClick(whyTypeContainer);
   });
 });
 
 helpLinks.forEach(function (helpLink) {
   helpLink.addEventListener("click", function () {
-    if (exerciseUnderway) {
-      showModalAbandon(function (choice) {
-        if (choice === "abandon") {
-          hideContainers();
-          helpContainer.parentElement.classList.remove("hidden");
-        }
-      });
-    } else {
-      hideContainers();
-      helpContainer.parentElement.classList.remove("hidden");
-    }
+    handleLinkClick(helpContainer);
   });
 });
 
 homeLink.addEventListener("click", function () {
-  if (exerciseUnderway) {
-    showModalAbandon(function (choice) {
-      if (choice === "abandon") {
-        hideContainers();
-        homeContainer.parentElement.classList.remove("hidden");
-      }
-    });
-  } else {
-    hideContainers();
-    homeContainer.parentElement.classList.remove("hidden");
-  }
+  handleLinkClick(homeContainer);
 });
 
 logo.addEventListener("click", function () {
-  if (exerciseUnderway) {
-    modalAbandon.style.display = "block";
-    return;
-  }
-  hideContainers();
-  homeContainer.parentElement.classList.remove("hidden");
+  handleLinkClick(homeContainer);
 });
 
 userText.addEventListener("keydown", function (event) {
@@ -437,6 +476,28 @@ bubbleContainer.addEventListener("click", function (event) {
   }
 });
 
+// User settings listeners
+defaultCheckbox.addEventListener("change", function () {
+  if (defaultCheckbox.checked) {
+    keepDefaultSettings = true;
+    exSettingsContainer.classList.add("hidden");
+  } else {
+    keepDefaultSettings = false;
+    exSettingsContainer.classList.remove("hidden");
+  }
+});
+
+triesPerPromptRadio.forEach((radio) => {
+  radio.addEventListener("change", function () {
+    if (this.value === "limited") {
+      triesPerPromptInput.disabled = false;
+    } else {
+      triesPerPromptInput.disabled = true;
+    }
+  });
+});
+
+// Switch for turning on-screen keyboard on and off
 switchOn.addEventListener("change", function () {
   if (this.checked) {
     keyboardContainer.parentElement.classList.remove("hidden");
@@ -449,8 +510,7 @@ switchOff.addEventListener("change", function () {
   }
 });
 
-// Coding modals
-
+// Modal windows
 closeStartExercise.onclick = function () {
   modalStartExercise.style.display = "none";
 };
@@ -458,14 +518,6 @@ closeStartExercise.onclick = function () {
 closeAbandon.onclick = function () {
   modalAbandon.style.display = "none";
 };
-
-defaultCheckbox.addEventListener("change", function () {
-  if (defaultCheckbox.checked) {
-    exSettingsContainer.classList.add("hidden");
-  } else {
-    exSettingsContainer.classList.remove("hidden");
-  }
-});
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
@@ -475,8 +527,7 @@ window.onclick = function (event) {
   }
 };
 
-// Testing
-
+// Dropdown menu listeners
 dropdownBtn.addEventListener("click", function () {
   dropdownContainer.classList.toggle("open");
 });
@@ -493,21 +544,24 @@ document.addEventListener("click", function (event) {
   }
 });
 
+// Exercise listeners
 generateResultsBtn.addEventListener("click", function () {
   generateResults();
 });
 
+// This button either is used to check answer or progress to the next prompt/end exercise after rep is graded
 nextButton.addEventListener("click", function () {
   if (nextButton.textContent === nextBtnCorrectText) {
-    currentIndex++;
+    setNextPrompt();
     updateProgressBar();
+
+    // Exercise over condition.
     if (currentIndex >= repetitionNumber) {
       hideContainers();
       congratsContainer.parentElement.classList.remove("hidden");
       generateResultsBtn.focus();
       return;
     }
-    promptLabel.textContent = currentList[currentIndex].korean;
     nextButton.classList.remove("correct-next-btn");
     userText.classList.remove("lightup-correct");
     userText.disabled = false;
@@ -515,15 +569,12 @@ nextButton.addEventListener("click", function () {
     userText.value = "";
     nextButton.textContent = nextBtnPrompt;
   } else {
-    console.log("Should be checking answer now");
     checkAnswer;
   }
 });
 
 document.addEventListener("compositionupdate", function (event) {
   const syllable = Hangul.disassemble(String(event.data));
-  // console.log(syllable);
-  // console.log("Syllable length = ", syllable.length);
   const key = syllable[syllable.length - 1];
   let targetElement = document.querySelector(`.key.${key}`);
   if (!targetElement) {
@@ -587,16 +638,8 @@ userText.addEventListener("input", function () {
   }
 });
 
+// This event listener is necessary to prevent the inadvertent behavior
+// of totalCharsTyped being incremented twice upon completion of a Korean syllable
 userText.addEventListener("compositionend", function () {
   totalCharsTyped--;
-});
-
-triesPerPromptRadio.forEach((radio) => {
-  radio.addEventListener("change", function () {
-    if (this.value === "limited") {
-      triesPerPromptInput.disabled = false;
-    } else {
-      triesPerPromptInput.disabled = true;
-    }
-  });
 });

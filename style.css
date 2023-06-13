@@ -262,14 +262,9 @@ main {
 #bubbleContainer {
   padding-top: 50px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-}
-
-.bubble-row {
-  display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .bubble {
@@ -297,11 +292,16 @@ main {
   font-family: var(--font-family);
   font-weight: 900;
   background-color: var(--color-blue);
-  width: 325px;
+  width: 300px;
   margin: 0 auto;
   border-radius: 20px;
   margin-bottom: 25px;
+  margin-right: 10px;
   padding: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bubble:hover {
@@ -510,11 +510,10 @@ footer a {
   margin-top: 0;
 }
 
-.modal-content p {
+/* .modal-content p {
   text-align: justify;
-}
+} */
 
-/* Close Button */
 .close-modal-btn {
   color: #aaa;
   float: right;
@@ -631,7 +630,7 @@ button {
   display: none;
   position: absolute;
   top: 100%;
-  left: 0;
+  left: -50px;
   padding: 8px;
   background-color: white;
   color: black;
@@ -680,6 +679,8 @@ button {
   overflow: auto;
   width: 98.5%;
   height: 150px;
+  font-family: var(--font-family);
+  font-size: 1.15rem;
 }
 
 .progress-container {
@@ -698,7 +699,14 @@ button {
 }
 
 .show-english-container {
-  border: 2px solid var(--color-yellow);
+  border: 2px solid var(--color-gray);
   padding: 5px;
-  margin: 5px;
+  margin: 5px -10px;
+}
+
+.show-english-options {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  line-height: 1.5;
 }

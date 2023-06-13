@@ -14,6 +14,9 @@ CHECK        4. Make a modal that pops up to confirm settings before beginning e
 5. Make a settings widget to adjust settings
 CHECK        6. Implement progress bar
 
+7. Make it so keyboard can only be turned on if screen is big enough
+8. Make it so certain settings are disabled if they aren't relevant to exercise
+
 I need to remember that for fill-in-the-blank exercises, the keyboard hints have to be off, otherwise they spoil the answers
 
 I should have something where people can have to show the answers if they want

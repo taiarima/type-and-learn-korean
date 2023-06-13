@@ -322,8 +322,25 @@ const sports = {
   ],
 };
 
+const exerciseTypeInstructions = {
+  transcribe: [
+    "Transcription",
+    "You will be shown a prompt in Korean. Simply copy the Korean exactly as it is shown.",
+  ],
+  fillblank: [
+    "Fill-in-the-blank",
+    "You will be presented with a prompt and asked to type the missing word(s) that complete the sentence correctly. You have the option to modify the settings below, allowing you to either provide the missing word(s) or type out the entire sentence based on your preference.",
+  ],
+  typingtest: [
+    "Typing Test",
+    "You will be shown a text in Korean. Type the text exactly as shown. Your typing speed will be calculated at the end of the exercise.",
+  ],
+  grammar: ["Grammar Practice", "You will be shown a word and asked to modify the word following the instructions"],
+};
+
 const basicVocabCategories = {
   title: "Basic Vocabulary",
+  type: "transcribe",
   items: [],
 };
 basicVocabCategories.items.push(countries);
