@@ -2,6 +2,7 @@
 
 // Global Variables
 let currentWord; // deconstructed current word
+let currentAnswer; // This will be the answer the user must type in for their response to be graded correct
 let charCounter = 0;
 let currentList;
 let currentIndex = 0;
@@ -10,9 +11,10 @@ let currentCategory; // This will be stored to apply to labels on exercise start
 let currentExerciseName; // Same as above. Is assigned in loadVocabList
 let keepDefaultSettings = true;
 let resultsSummaryItems = []; // This will hold the content of the exercise to present in results summary text area
+let userTriesAmount = 0; // For each prompt, the amount of tries a user attempts will be tracked. Only relevant if maxTries != 0
 
 // Possible values for showing English settings
-const showEngPrompt = "prompt"; // users will be asked to translate English to Korean
+const showEngAsPrompt = "prompt"; // users will be asked to translate English to Korean
 const showEngAfterGrading = "afterGrading"; // how English only on results page
 const showEngWithResults = "withResults"; // Show English only after prompt has been graded as correct/incorrect
 const showEngSameTime = "sameTime"; // Show English translation at same time as Korean prompt
@@ -68,7 +70,15 @@ function stopTimer() {
 
 // Function to evluate if the user-provided response is correct according to the given prompt
 function checkAnswer() {
-  if (userText.value.trim() === promptLabel.textContent) {
+  // User entered correct answer
+  if (userText.value.trim() === currentAnswer) {
+    if (showEngSetting == showEngAfterGrading) {
+      promptLabel.innerHTML += "<br>" + currentList[currentIndex - 1].english;
+    } else if (showEngSetting == showEngAsPrompt) {
+      promptLabel.innerHTML +=
+        "<br>" + "Correct answer: " + currentList[currentIndex - 1].korean;
+    }
+
     userText.disabled = true;
     userText.classList.add("lightup-correct");
     nextButton.classList.add("correct-next-btn");
@@ -77,7 +87,9 @@ function checkAnswer() {
     }, 50);
     nextButton.textContent = nextBtnCorrectText;
     stopTimer();
-  } else {
+  }
+  // User entered incorrect answer
+  else {
     setTimeout(() => {
       userText.select();
     }, 50);
@@ -91,26 +103,25 @@ function generateResults() {
   // Print the items from the exercise to the corresponding text area
   resultsSummaryTextArea.value = "";
   resultsSummaryItems.forEach((rep, index) => {
-    // resultsSummaryTextArea.value += `${index + 1}.\nKorean: ${
-    //   rep.korean
-    // }\nEnglish: ${rep.english}\nCorrect Answer: ${
-    //   rep.correctAnswer
-    // }\nYour Answer: ${rep.yourAnswer}\n`;
-
-    resultsSummaryTextArea.value += `${index + 1}.\nKorean: ${
-      rep.korean
-    }\nEnglish: ${rep.english}\n\n`;
+    resultsSummaryTextArea.value += `\n${index + 1}.\nKorean: ${rep.korean}\n`;
+    if (showEngSetting != showNoEng) {
+      resultsSummaryTextArea.value += `English: ${rep.english}\n`;
+    }
   });
 
-  // Calculate and show typing speed
-  const typingSpeed = totalCharsTyped / totalTimeTyped;
-  typingSpeedLabel.textContent = `Typing speed: ${Math.floor(typingSpeed)} SPM`;
+  if (speedCalcOn) {
+    // Calculate and show typing speed
+    const typingSpeed = totalCharsTyped / totalTimeTyped;
+    typingSpeedLabel.textContent = `Typing speed: ${Math.floor(
+      typingSpeed
+    )} SPM`;
 
-  // Calculate typing accuracy
-  const typingAccuracy = totalPromptChars / totalCharsTyped;
-  typingAccuracyLabel.textContent = `Typing Accuracy: ${Math.floor(
-    typingAccuracy * 100
-  )}%`;
+    // Calculate typing accuracy
+    const typingAccuracy = totalPromptChars / totalCharsTyped;
+    typingAccuracyLabel.textContent = `Typing Accuracy: ${Math.floor(
+      typingAccuracy * 100
+    )}%`;
+  }
 
   // Show results container
   clearExercise();
@@ -144,9 +155,9 @@ function loadVocabList(listIndex) {
     const hangeulString = hangeulChars.join("");
     totalPromptChars += hangeulString.replace(/\s/g, "").length;
   }
-  const firstItem = randomizedList[0].korean;
-  promptLabel.textContent = firstItem;
-  currentWord = Hangul.disassemble(firstItem);
+
+  setNextPrompt();
+  currentWord = Hangul.disassemble(currentAnswer);
   // This function should be invoked when appropriate to show the user the first key to be pressed
   // showNextKey();
 
@@ -257,13 +268,15 @@ function showModalAbandon(callback) {
 }
 
 function initializeExercise(callback) {
-  beginExerciseButton.addEventListener("click", function () {
+  beginExerciseButton.addEventListener("click", function beginExercise(event) {
     // Other stuff will go here later
     if (!keepDefaultSettings) {
       applyUserSettings();
     }
     modalStartExercise.style.display = "none";
     callback();
+    // Remove the listener afterwards to prevent it doubling up later
+    event.target.removeEventListener("click", beginExercise);
   });
 }
 
@@ -286,6 +299,7 @@ function clearExercise() {
   userText.classList.remove("lightup-correct");
   userText.disabled = false;
   nextButton.textContent = nextBtnPrompt;
+  userTriesAmount = 0;
 
   if (!saveSettingsOn) {
     keepDefaultSettings = true;
@@ -324,9 +338,6 @@ function applyUserSettings() {
   const selectedShowEnglishOption = document.querySelector(
     `${showEnglishOptionsSelector} input[type="radio"]:checked`
   );
-  const triesPerPromptInput = document.querySelector(
-    triesPerPromptInputSelector
-  );
   const repetitionsInput = document.querySelector(repetitionsInputSelector);
   const onScreenKeyboardCheckbox = document.querySelector(
     onScreenKeyboardCheckboxSelector
@@ -338,29 +349,35 @@ function applyUserSettings() {
     calculateTypingSpeedCheckboxSelector
   );
 
-  requireResponse = requireAnswerCheckbox
-    ? requireAnswerCheckbox.checked
-    : true;
-
-  saveSettingsOn = saveSettingsCheckbox ? saveSettingsCheckbox.checked : true;
-
-  repetitionNumber = repetitionsInput ? parseInt(repetitionsInput.value) : 10;
-
-  speedCalcOn = calculateTypingSpeedCheckbox
-    ? calculateTypingSpeedCheckbox.checked
-    : true;
-
-  maxTries = triesPerPromptInput ? parseInt(triesPerPromptInput.value) : 3;
+  const triesPerPromptInput = document.querySelector(
+    ".tries-per-prompt-number"
+  );
+  const selectedTriesPerPrompt = document.querySelector(
+    'input[name="triesPerPrompt"]:checked'
+  ).value;
+  maxTries =
+    selectedTriesPerPrompt === "unlimited"
+      ? 0
+      : parseInt(triesPerPromptInput.value);
   unlimitedTries = maxTries === 0;
   requireResponse = !unlimitedTries;
 
-  keyboardOn = onScreenKeyboardCheckbox
-    ? onScreenKeyboardCheckbox.checked
-    : true;
+  requireResponse = requireAnswerCheckbox.checked;
 
-  keyboardHintsOn = keyboardHintsCheckbox
-    ? keyboardHintsCheckbox.checked
-    : true;
+  saveSettingsOn = saveSettingsCheckbox.checked;
+
+  repetitionNumber = repetitionsInput ? parseInt(repetitionsInput.value) : 10;
+
+  speedCalcOn = calculateTypingSpeedCheckbox.checked;
+  if (speedCalcOn) {
+    typingResults.classList.remove("hidden");
+  } else {
+    typingResults.classList.add("hidden");
+  }
+
+  keyboardOn = onScreenKeyboardCheckbox.checked;
+
+  keyboardHintsOn = keyboardHintsCheckbox.checked;
 
   showEngSetting = selectedShowEnglishOption
     ? selectedShowEnglishOption.value
@@ -371,6 +388,7 @@ function applyUserSettings() {
 
 // Sets next prompt and puts the current rep in the results summary array
 function setNextPrompt() {
+  // Save the current rep's information for results summary
   const currentRep = {
     korean: currentList[currentIndex].korean,
     english: currentList[currentIndex].english,
@@ -380,11 +398,24 @@ function setNextPrompt() {
     yourAnswer: userText.value.trim(),
   };
   resultsSummaryItems.push(currentRep);
-  currentIndex++;
-  promptLabel.textContent = currentList[currentIndex].korean;
-}
 
-// >>>>>>>>>>>>>>>>>>>>>>> Event Listeners <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+  userTriesAmount = 0;
+
+  // Actual prompt will depend on various settings, this is under construction TODO
+  if (showEngSetting == showEngAsPrompt) {
+    promptLabel.innerHTML = currentList[currentIndex].english;
+  } else {
+    promptLabel.innerHTML = currentList[currentIndex].korean;
+    if (showEngSetting == showEngSameTime) {
+      console.log("Show english at same time");
+      promptLabel.innerHTML += "<br>" + currentList[currentIndex].english;
+    }
+  }
+
+  // The current answer will change depending on settings and exercise type. For now it is just the Korean
+  currentAnswer = currentList[currentIndex].korean;
+  currentIndex++;
+}
 
 function handleLinkClick(targetContainer) {
   if (exerciseUnderway) {
@@ -399,6 +430,8 @@ function handleLinkClick(targetContainer) {
     targetContainer.parentElement.classList.remove("hidden");
   }
 }
+
+// >>>>>>>>>>>>>>>>>>>>>>> Event Listeners <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
 startLearnLinks.forEach(function (startLearnLink) {
   startLearnLink.addEventListener("click", function () {
@@ -470,7 +503,9 @@ bubbleContainer.addEventListener("click", function (event) {
     initializeExercise(function () {
       hideContainers();
       learningContainer.parentElement.classList.remove("hidden");
-      keyboardContainer.parentElement.classList.remove("hidden");
+      if (keyboardOn) {
+        keyboardContainer.parentElement.classList.remove("hidden");
+      }
       loadVocabList(bubbleIndex);
     });
   }
@@ -481,18 +516,36 @@ defaultCheckbox.addEventListener("change", function () {
   if (defaultCheckbox.checked) {
     keepDefaultSettings = true;
     exSettingsContainer.classList.add("hidden");
+
+    // onScreenKeyboardCheckboxSelector.checked = true;
+    // keyboardHintsCheckboxSelector.checked = true;
+    // saveSettingsCheckbox.checked = true;
+    // requireAnswerCheckbox.checked = true;
+    // calculateTypingSpeedCheckboxSelector.checked = true;
+
+    // repetitionsInputSelector.value = 10;
+    // showEnglishOptionsSelector.forEach((option) => {
+    //   if (option.value === "afterGrading") {
+    //     option.checked = true;
+    //   } else {
+    //     option.checked = false;
+    //   }
+    // });
+    // triesPerPromptRadio.checked = true;
+    // triesPerPromptNumber.disabled = true;
+    // triesPerPromptNumber.value = "3";
   } else {
     keepDefaultSettings = false;
     exSettingsContainer.classList.remove("hidden");
   }
 });
 
-triesPerPromptRadio.forEach((radio) => {
+triesPerPromptRadio.forEach(function (radio) {
   radio.addEventListener("change", function () {
     if (this.value === "limited") {
-      triesPerPromptInput.disabled = false;
+      triesPerPromptNumber.disabled = false;
     } else {
-      triesPerPromptInput.disabled = true;
+      triesPerPromptNumber.disabled = true;
     }
   });
 });
@@ -552,7 +605,6 @@ generateResultsBtn.addEventListener("click", function () {
 // This button either is used to check answer or progress to the next prompt/end exercise after rep is graded
 nextButton.addEventListener("click", function () {
   if (nextButton.textContent === nextBtnCorrectText) {
-    setNextPrompt();
     updateProgressBar();
 
     // Exercise over condition.
@@ -562,6 +614,7 @@ nextButton.addEventListener("click", function () {
       generateResultsBtn.focus();
       return;
     }
+    setNextPrompt();
     nextButton.classList.remove("correct-next-btn");
     userText.classList.remove("lightup-correct");
     userText.disabled = false;
@@ -615,16 +668,16 @@ userText.addEventListener("input", function () {
     const koreanText = filterNonKorean(userInput);
     userText.value = koreanText;
 
-    if (koreanFlag.style.display !== "block") {
+    if (warningFlag.style.display !== "block") {
       if (timerOn) {
         stopTimer();
       }
-      koreanFlag.style.display = "block";
+      warningFlag.style.display = "block";
       // playWarningSound(); TODO --> Make a sound for this
     } else {
-      koreanFlag.classList.add("warning-flag-flash");
+      warningFlag.classList.add("warning-flag-flash");
       setTimeout(function () {
-        koreanFlag.classList.remove("warning-flag-flash");
+        warningFlag.classList.remove("warning-flag-flash");
       }, 1000);
     }
   } else {
@@ -633,8 +686,8 @@ userText.addEventListener("input", function () {
     }
     totalCharsTyped++;
 
-    koreanFlag.style.display = "none";
-    koreanFlag.classList.remove("flash");
+    warningFlag.style.display = "none";
+    warningFlag.classList.remove("flash");
   }
 });
 

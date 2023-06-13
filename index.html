@@ -66,6 +66,15 @@
               in Korean. Learn Korean, improve your typing speed, or both.
             </h3>
           </div>
+          <div class="content-container">
+            <h2>Features</h2>
+            <ul>
+              <li>A wide variety of exercises for improving reading, grammar, and vocabulary, including course materials with comprehensible input </li>
+              <li>Customizable settings -- Take complete control of all exercise parameters</li>
+              <li>No forced learning path -- Start wherever you want, select any exercise you want</li>
+              <li>Constantly expanding library of content</li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="container hidden">
@@ -85,7 +94,7 @@
           </div>
           <div class="prompt-container">
             <p class="prompt-instructions">Type the following in Korean:</p>
-            <p class="prompt">Test</p>
+            <p class="prompt-label">Test</p>
           </div>
           <div class="warning-flag">
             <div class="warning-flag-text">❗You must type your response in Hangeul❗</div>
@@ -116,16 +125,17 @@
           </div>
           <div class="results-summary">
             <h2>Your results:</h2>
-            <p>
-              <span class="typing-speed">Typing speed: 200 CPM</span>
-              <span class="typing-speed-info info-flag" data-info="SPM (Strokes Per Minute) is a measure of Korean typing speed, similar to CPM (Characters Per Minute) or WPM (Words Per Minute) in other languages.">❔</span>
-            </p> 
-            <p>
-              <span class="typing-accuracy">Typing Accuracy: 68% Accurate</span>
-              <span class="typing-accuracy-info info-flag" data-info="Total characters in the exercise divided by total characters you typed.">❔</span>
-            </p> 
+            <div class="typing-results hidden">
+              <p>
+                <span class="typing-speed">Typing speed: 200 CPM</span>
+                <span class="typing-speed-info info-flag" data-info="SPM (Strokes Per Minute) is a measure of Korean typing speed, similar to CPM (Characters Per Minute) or WPM (Words Per Minute) in other languages.">❔</span>
+              </p> 
+              <p>
+                <span class="typing-accuracy">Typing Accuracy: 68% Accurate</span>
+                <span class="typing-accuracy-info info-flag" data-info="Total characters in the exercise divided by total characters you typed.">❔</span>
+              </p> 
+            </div>
             <p class="exercise-performance">Exercise performance: 8/10 correct</p>
-  
             <p>Review exercise content:</p>
             <textarea class="exercise-summary" readonly>한국 Korea</textarea> 
           </div>
@@ -137,7 +147,7 @@
           <p>
             Typing in Korean is an essential skill for effectively using
             computers and mobile devices in the Korean language. Unlike most
-            languages that follow QWERTY layouts, Korean has its unique keyboard
+            languages that follow QWERTY layouts, Korean has a unique keyboard
             layout. This means you essentially have to learn how to type again
             from scratch.
           </p>
@@ -192,16 +202,16 @@
         <div class="help-container content-container">
           <h1>Help</h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            ac finibus tellus. Phasellus fermentum vehicula tincidunt.
-            Suspendisse feugiat, enim in vulputate fermentum, lacus ligula
-            suscipit ligula, et efficitur nunc arcu id nulla. Sed ut arcu
-            vestibulum, efficitur augue in, pulvinar ex. Vestibulum in arcu
-            ante. Ut tincidunt quam vitae maximus mattis. Maecenas tempus dolor
-            ut tortor facilisis porta. Cras rutrum porttitor odio ut porttitor.
-            Curabitur sollicitudin vitae nunc nec facilisis. Suspendisse non
-            eros et sem vehicula egestas. Aenean ornare gravida orci, sed
-            pellentesque nibh fringilla sit amet.
+            Your success in learning Korean is my top priority! However, I understand that sometimes bugs creep in, errors occur, or 
+            incorrect information may find its way into this app. As a one-person team, I've developed this app out of pure love for the language and 
+            a desire to assist Korean learners like yourself.
+            </p><p>
+            If you encounter any issues, have suggestions for improvement, or come across any inaccuracies, please don't hesitate to reach out to me. 
+            Your feedback is invaluable and greatly appreciated! You can send me an <a href="mailto:taiarima0@gmail.com">email</a> 
+            or visit my <a href="https://github.com/taiarima/type-and-learn-korean">GitHub</a> page to submit an issue or pull request.
+          </p><p>
+            Together, let's make this the best resource online for learning Korean. Your input and contributions play a vital role in achieving that goal. 
+            Thank you for your support and dedication to mastering the Korean language!
           </p>
         </div>
       </div>
@@ -270,24 +280,21 @@
               <div class="show-english-container">
                 <p>Show English: </p>
                 <div class="show-english-options">
-                  <label><input type="radio" name="showEnglish" value="prompt" checked> As the prompt<span class="info-flag" data-info="You will be given a prompt in English and asked to translate into Korean. This makes the exercise more difficult, but will help improve your active vocabulary and ability to produce Korean from memory.">❔</span></label>
-                  <label><input type="radio" name="showEnglish" value="afterGrading"> After providing response graded<span class="info-flag" data-info="The English translation will only be shown for each prompt after your answer has been marked correct or incorrect.">❔</span></label>
+                  <label><input type="radio" name="showEnglish" value="afterGrading" checked> After response graded<span class="info-flag" data-info="The English translation will only be shown for each prompt after your answer has been marked correct or incorrect.">❔</span></label>
+                  <label><input type="radio" name="showEnglish" value="prompt" > As the prompt<span class="info-flag" data-info="You will be given a prompt in English and asked to translate into Korean. This makes the exercise more difficult, but will help improve your active vocabulary and ability to produce Korean from memory.">❔</span></label>
                   <label><input type="radio" name="showEnglish" value="sameTime"> At the same time as prompt<span class="info-flag" data-info="You will be shown each Korean prompt and its English translation at the same time.">❔</span></label>
                   <label><input type="radio" name="showEnglish" value="withResults"> Only in results summary<span class="info-flag" data-info="You will only be shown English translations in your results summary after completing the exercise.">❔</span></label>
                   <label><input type="radio" name="showEnglish" value="none"> Not at all</label>
                 </div>
               </div>
-              <p>Calculate typing speed: <input type="checkbox" class="calculate-typing-speed-checkbox" checked></p>
-              <p>Tries per prompt:<span class="info-flag" data-info="Amount of tries you are allowed to attempt answering a given prompt before your answer is marked incorrect.">❔</span>
-                <br/>
-                <label><input type="radio" name="triesPerPrompt" value="unlimited" checked> Unlimited</label>
-                <br/>
-                <label><input type="radio" name="triesPerPrompt" value="limited"> Limited to</label>
-                <input type="number" class="tries-per-prompt-input" min="1" max="50" value="3" disabled>
-              </p>
+              <p>Tries per prompt:<span class="info-flag" data-info="Amount of tries you are allowed to attempt answering a given prompt before your answer is marked incorrect.">❔</span></p>
+<label><input type="radio" name="triesPerPrompt" value="unlimited" checked> Unlimited</label>
+<br/>
+<label><input type="radio" name="triesPerPrompt" value="limited"> Limited to</label>
+<input type="number" class="tries-per-prompt-number" min="1" max="50" value="3" disabled>
               <p>Require typing answer before proceeding:<span class="info-flag" data-info="If your answer is marked incorrect or you reveal the answer, you will be required to type in the correct response before being allowed to proceed.">❔</span><input type="checkbox" class="require-answer-checkbox" checked></p>
               <p>Calculate typing speed: <input type="checkbox" class="calculate-typing-speed-checkbox" checked></p>
-              <p>Repetitions: <input type="number" class="repetitions-input" min="1" max="50" value="10"></p>
+              <p>Repetitions:<span class="info-flag" data-info="This is how many prompts you will be given before the exercise is over.">❔</span> <input type="number" class="repetitions-input" min="1" max="50" value="10"></p>
               <p>On-screen Keyboard: <input type="checkbox" class="on-screen-keyboard-checkbox" checked></p>
               <p>Keyboard hints: <input type="checkbox" class="keyboard-hints-checkbox" checked></p>
               <p>Save Settings: <input type="checkbox" class="save-settings-checkbox" checked></p>

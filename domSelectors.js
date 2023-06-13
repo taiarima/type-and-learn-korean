@@ -4,7 +4,7 @@
 const aboutContainer = document.querySelector(".about-container");
 const sectionTitle = document.querySelector(".section-title");
 const learningContainer = document.querySelector(".learning-container");
-const promptLabel = document.querySelector(".prompt");
+const promptLabel = document.querySelector(".prompt-label");
 const userTextContainer = document.querySelector(".user-text-container");
 const userText = document.querySelector(".user-text");
 const keyboardContainer = document.querySelector(".keyboard-container");
@@ -34,11 +34,12 @@ const resultsContainer = document.querySelector(".results-container");
 const generateResultsBtn = document.querySelector(".generate-results-btn");
 const dropdownItems = document.querySelectorAll(".dropdown-item");
 const homeLink = document.querySelector(".home-link");
-const koreanFlag = document.querySelector(".warning-flag");
+const warningFlag = document.querySelector(".warning-flag");
 const typingSpeedLabel = document.querySelector(".typing-speed");
 const typingAccuracyLabel = document.querySelector(".typing-accuracy");
 const progressBar = document.querySelector(".progress-bar");
 const resultsSummaryTextArea = document.querySelector(".exercise-summary");
+const typingResults = document.querySelector(".typing-results");
 
 // Modal Window selectors
 const modalStartExercise = document.querySelector(".modal-start-exercise");
@@ -54,7 +55,7 @@ const calculateTypingSpeedCheckboxSelector = ".calculate-typing-speed-checkbox";
 const triesPerPromptRadio = document.querySelectorAll(
   'input[name="triesPerPrompt"]'
 );
-const triesPerPromptInputSelector = ".tries-per-prompt-input";
+const triesPerPromptNumber = document.querySelector(".tries-per-prompt-number");
 const repetitionsInputSelector = ".repetitions-input";
 const onScreenKeyboardCheckboxSelector = ".on-screen-keyboard-checkbox";
 const keyboardHintsCheckboxSelector = ".keyboard-hints-checkbox";
