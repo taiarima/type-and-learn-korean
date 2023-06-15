@@ -79,16 +79,6 @@
       </div>
       <div class="container hidden">
         <div class="learning-container">
-          <div class="switch-container">
-            <div class="switch-label">Show Keyboard</div>
-            <div class="switch">
-              <input type="radio" id="switch-on" name="switch" checked />
-              <label for="switch-on">ON</label>
-              <input type="radio" id="switch-off" name="switch" />
-              <label for="switch-off">OFF</label>
-              <!-- <span class="slider"></span> -->
-            </div>
-          </div>
           <div class="progress-container">
             <div class="progress-bar"></div>
           </div>
@@ -103,6 +93,7 @@
             <textarea class="user-text" placeholder="Type here..."></textarea>
           </div>
           <button class="next-btn">Press enter or click to submit</button>
+          
         </div>
       </div>
       <div class="container hidden">
@@ -216,6 +207,16 @@
         </div>
       </div>
       <div class="container hidden">
+        <div class="keyboard-checkboxes">
+          <label class="checkbox-container">
+            <span class="checkbox-label">Show on-screen keyboard</span>
+            <input type="checkbox" class="show-keyboard-checkbox" checked>
+          </label>
+          <label class="checkbox-container">
+            <span class="checkbox-label">Show keyboard hints</span>
+            <input type="checkbox" class="show-hints-checkbox" checked>
+          </label>
+        </div>
         <div class="keyboard-container">
           <div class="keyboard">
             <div class="key row-top ㅂ">
@@ -288,15 +289,16 @@
                 </div>
               </div>
               <p>Tries per prompt:<span class="info-flag" data-info="Amount of tries you are allowed to attempt answering a given prompt before your answer is marked incorrect.">❔</span></p>
-<label><input type="radio" name="triesPerPrompt" value="unlimited" checked> Unlimited</label>
+<label><input type="radio" name="triesPerPrompt" value="unlimited"> Unlimited</label>
 <br/>
-<label><input type="radio" name="triesPerPrompt" value="limited"> Limited to</label>
-<input type="number" class="tries-per-prompt-number" min="1" max="50" value="3" disabled>
+<label><input type="radio" name="triesPerPrompt" value="limited" checked> Limited to</label>
+<input type="number" class="tries-per-prompt-number" min="1" max="50" value="3">
               <p>Require typing answer before proceeding:<span class="info-flag" data-info="If your answer is marked incorrect or you reveal the answer, you will be required to type in the correct response before being allowed to proceed.">❔</span><input type="checkbox" class="require-answer-checkbox" checked></p>
               <p>Calculate typing speed: <input type="checkbox" class="calculate-typing-speed-checkbox" checked></p>
               <p>Repetitions:<span class="info-flag" data-info="This is how many prompts you will be given before the exercise is over.">❔</span> <input type="number" class="repetitions-input" min="1" max="50" value="10"></p>
-              <p>On-screen Keyboard: <input type="checkbox" class="on-screen-keyboard-checkbox" checked></p>
-              <p>Keyboard hints: <input type="checkbox" class="keyboard-hints-checkbox" checked></p>
+              <div class="keyboard-options"><p>On-screen Keyboard: <input type="checkbox" class="on-screen-keyboard-checkbox" checked></p>
+                <p>Keyboard hints: <input type="checkbox" class="keyboard-hints-checkbox" checked></p>
+              </div>
               <p>Save Settings: <input type="checkbox" class="save-settings-checkbox" checked></p>
             </div>
             <br />

@@ -12,6 +12,7 @@ let currentExerciseName; // Same as above. Is assigned in loadVocabList
 let keepDefaultSettings = true;
 let resultsSummaryItems = []; // This will hold the content of the exercise to present in results summary text area
 let userTriesAmount = 0; // For each prompt, the amount of tries a user attempts will be tracked. Only relevant if maxTries != 0
+let correctResponsesCounter = 0;
 
 // Possible values for showing English settings
 const showEngAsPrompt = "prompt"; // users will be asked to translate English to Korean
@@ -41,7 +42,11 @@ let endTime = 0;
 
 // Global Constants
 const nextBtnCorrectText = "Correct! Hit space to continue.";
+const nextBtnIncorrectText =
+  "Sorry, that's incorrect 😅. Hit space to continue";
+const nextBtnReponseRequired = "There you go! Hit space to continue.";
 const nextBtnPrompt = "Press enter or click to submit";
+const nextBtnTryAgainText = "That's incorrect. Try again!";
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>> Function declarations <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
@@ -72,28 +77,90 @@ function stopTimer() {
 function checkAnswer() {
   // User entered correct answer
   if (userText.value.trim() === currentAnswer) {
+    gradeCorrect();
+  }
+  // User entered incorrect answer
+  else {
+    gradeIncorrect();
+  }
+}
+
+// This will be executed when the user has entered the correct response
+function gradeCorrect() {
+  if (!promptContainer.classList.contains("lightup-incorrect")) {
     if (showEngSetting == showEngAfterGrading) {
       promptLabel.innerHTML += "<br>" + currentList[currentIndex - 1].english;
     } else if (showEngSetting == showEngAsPrompt) {
       promptLabel.innerHTML +=
         "<br>" + "Correct answer: " + currentList[currentIndex - 1].korean;
     }
+    nextBtn.textContent = nextBtnCorrectText;
+    correctResponsesCounter++;
+  } else {
+    nextBtn.textContent = nextBtnReponseRequired;
+  }
 
-    userText.disabled = true;
-    userText.classList.add("lightup-correct");
-    nextButton.classList.add("correct-next-btn");
+  // Maybe this will say something later. For now I will just clear the string
+  promptInstructions.textContent = "Correct answer:";
+
+  userText.disabled = true;
+  userText.classList.add("lightup-correct");
+  nextBtn.classList.add("bigger-next-btn");
+  setTimeout(() => {
+    nextBtn.focus();
+  }, 50);
+
+  speedCalcOn && stopTimer();
+}
+
+// Executes when user has entered an incorrect response
+function gradeIncorrect() {
+  setTimeout(() => {
+    userText.select();
+  }, 50);
+  if (maxTries && userTriesAmount < maxTries) {
+    userTriesAmount++;
+    userText.classList.add("lightup-incorrect");
+    nextBtn.classList.add("bigger-next-btn");
+    nextBtn.textContent = nextBtnTryAgainText;
     setTimeout(() => {
-      nextButton.focus();
-    }, 50);
-    nextButton.textContent = nextBtnCorrectText;
-    stopTimer();
+      userText.classList.remove("lightup-incorrect");
+      nextBtn.classList.remove("bigger-next-btn");
+      nextBtn.textContent = nextBtnPrompt;
+    }, 700);
   }
-  // User entered incorrect answer
-  else {
-    setTimeout(() => {
-      userText.select();
-    }, 50);
+
+  // promptLabel.innerHTML += currentAnswer;
+
+  // This block only relevant if maxTries is limited
+  if (maxTries && userTriesAmount >= maxTries) {
+    // Reveal correct answer and English if necessary
+    if (!promptContainer.classList.contains("lightup-incorrect")) {
+      if (showEngSetting == showEngAfterGrading) {
+        promptLabel.innerHTML += "<br>" + currentList[currentIndex - 1].english;
+      } else if (showEngSetting == showEngAsPrompt) {
+        promptLabel.innerHTML +=
+          "<br>" + "Correct answer: " + currentList[currentIndex - 1].korean;
+      }
+      promptContainer.classList.add("lightup-incorrect");
+    }
+
+    if (requireResponse) {
+      // Set message to "You have run out of tries. Type the correct answer to continue"
+      promptInstructions.textContent =
+        "You have run out of tries. Type the correct answer to continue";
+    } else {
+      userText.disabled = true;
+      setTimeout(() => {
+        nextBtn.focus();
+      }, 50);
+      nextBtn.textContent = nextBtnIncorrectText;
+      nextBtn.classList.add("bigger-next-btn");
+      calcSpeedOn && stopTimer();
+    }
   }
+
+  // Show visible feedback that user's answer was inccorect.
 }
 
 // Results will be generated after the user completes an exercise
@@ -108,6 +175,11 @@ function generateResults() {
       resultsSummaryTextArea.value += `English: ${rep.english}\n`;
     }
   });
+
+  // Write string to show how many answers user got correct
+  exercisePerformanceLabel.textContent = `Exercise performance: ${
+    (correctResponsesCounter / repetitionNumber) * 100
+  }% correct`;
 
   if (speedCalcOn) {
     // Calculate and show typing speed
@@ -171,6 +243,9 @@ function loadVocabList(listIndex) {
 // This is a function to show the user the next key to press by highlighting the key aqua
 // on the on-screen keyboard
 function showNextKey() {
+  if (!keyboardOn || !keyboardHintsOn) {
+    return;
+  }
   // There need to be two arrays
   // One to track the current keys that have been pressed
   // one to check the keys that need to be pressed (currentWord)
@@ -295,11 +370,12 @@ function clearExercise() {
   resultsSummaryItems = [];
   userText.classList.remove("lightup-correct");
   promptLabel.textContent = currentList[currentIndex].korean;
-  nextButton.classList.remove("correct-next-btn");
+  nextBtn.classList.remove("bigger-next-btn");
   userText.classList.remove("lightup-correct");
   userText.disabled = false;
-  nextButton.textContent = nextBtnPrompt;
+  nextBtn.textContent = nextBtnPrompt;
   userTriesAmount = 0;
+  correctResponsesCounter = 0;
 
   if (!saveSettingsOn) {
     keepDefaultSettings = true;
@@ -360,7 +436,6 @@ function applyUserSettings() {
       ? 0
       : parseInt(triesPerPromptInput.value);
   unlimitedTries = maxTries === 0;
-  requireResponse = !unlimitedTries;
 
   requireResponse = requireAnswerCheckbox.checked;
 
@@ -375,7 +450,11 @@ function applyUserSettings() {
     typingResults.classList.add("hidden");
   }
 
-  keyboardOn = onScreenKeyboardCheckbox.checked;
+  if (window.innerWidth < 500) {
+    keyboardOn = false;
+  } else {
+    keyboardOn = onScreenKeyboardCheckbox.checked;
+  }
 
   keyboardHintsOn = keyboardHintsCheckbox.checked;
 
@@ -400,6 +479,9 @@ function setNextPrompt() {
   resultsSummaryItems.push(currentRep);
 
   userTriesAmount = 0;
+
+  //This will be customized according to exercise type in the future.
+  promptInstructions.textContent = "Type the following in Korean:";
 
   // Actual prompt will depend on various settings, this is under construction TODO
   if (showEngSetting == showEngAsPrompt) {
@@ -477,7 +559,12 @@ logo.addEventListener("click", function () {
 
 userText.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    checkAnswer();
+    event.preventDefault(); // Prevents the cursor from going to next line
+    if (userText.value.trim() == "") {
+      userText.value = "";
+    } else {
+      checkAnswer();
+    }
   }
 });
 
@@ -550,19 +637,6 @@ triesPerPromptRadio.forEach(function (radio) {
   });
 });
 
-// Switch for turning on-screen keyboard on and off
-switchOn.addEventListener("change", function () {
-  if (this.checked) {
-    keyboardContainer.parentElement.classList.remove("hidden");
-  }
-});
-
-switchOff.addEventListener("change", function () {
-  if (this.checked) {
-    keyboardContainer.parentElement.classList.add("hidden");
-  }
-});
-
 // Modal windows
 closeStartExercise.onclick = function () {
   modalStartExercise.style.display = "none";
@@ -603,8 +677,12 @@ generateResultsBtn.addEventListener("click", function () {
 });
 
 // This button either is used to check answer or progress to the next prompt/end exercise after rep is graded
-nextButton.addEventListener("click", function () {
-  if (nextButton.textContent === nextBtnCorrectText) {
+nextBtn.addEventListener("click", function () {
+  if (
+    nextBtn.textContent === nextBtnCorrectText ||
+    nextBtn.textContent === nextBtnIncorrectText ||
+    nextBtn.textContent === nextBtnReponseRequired
+  ) {
     updateProgressBar();
 
     // Exercise over condition.
@@ -615,18 +693,23 @@ nextButton.addEventListener("click", function () {
       return;
     }
     setNextPrompt();
-    nextButton.classList.remove("correct-next-btn");
+    nextBtn.classList.remove("bigger-next-btn");
+    promptContainer.classList.remove("lightup-incorrect");
     userText.classList.remove("lightup-correct");
     userText.disabled = false;
     userText.focus();
     userText.value = "";
-    nextButton.textContent = nextBtnPrompt;
+    nextBtn.textContent = nextBtnPrompt;
   } else {
     checkAnswer;
   }
 });
 
-document.addEventListener("compositionupdate", function (event) {
+// Light up the key that the user is currently typing
+userText.addEventListener("compositionupdate", function (event) {
+  if (!keyboardOn) {
+    return;
+  }
   const syllable = Hangul.disassemble(String(event.data));
   const key = syllable[syllable.length - 1];
   let targetElement = document.querySelector(`.key.${key}`);
@@ -681,7 +764,8 @@ userText.addEventListener("input", function () {
       }, 1000);
     }
   } else {
-    if (!timerOn) {
+    // Timer for calculating typing speed only turns on if calc enabled and user typing Hangeul
+    if (speedCalcOn && !timerOn) {
       startTimer();
     }
     totalCharsTyped++;
@@ -695,4 +779,24 @@ userText.addEventListener("input", function () {
 // of totalCharsTyped being incremented twice upon completion of a Korean syllable
 userText.addEventListener("compositionend", function () {
   totalCharsTyped--;
+});
+
+showKeyboardCheckbox.addEventListener("change", function () {
+  if (showKeyboardCheckbox.checked) {
+    keyboardContainer.style.display = "flex";
+    keyboardOn = true;
+    showHintsCheckbox.disabled = false;
+  } else {
+    keyboardContainer.style.display = "none"; 
+    keyboardOn = false;
+    showHintsCheckbox.disabled = true;
+  }
+});
+
+showHintsCheckbox.addEventListener("change", function () {
+  if (showHintsCheckbox.checked) {
+    keyboardHintsOn = true;
+  } else {
+    keyboardHintsOn = false;
+  }
 });

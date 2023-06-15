@@ -5,6 +5,7 @@ const aboutContainer = document.querySelector(".about-container");
 const sectionTitle = document.querySelector(".section-title");
 const learningContainer = document.querySelector(".learning-container");
 const promptLabel = document.querySelector(".prompt-label");
+const promptContainer = document.querySelector(".prompt-container");
 const userTextContainer = document.querySelector(".user-text-container");
 const userText = document.querySelector(".user-text");
 const keyboardContainer = document.querySelector(".keyboard-container");
@@ -15,7 +16,7 @@ const keyRowMiddle = document.querySelectorAll(".row-middle");
 const keyRowBottom = document.querySelectorAll(".row-bottom");
 const keyFiller = document.querySelectorAll(".filler");
 const keyUpperRight = document.querySelectorAll(".key-upper-right");
-const nextButton = document.querySelector(".next-btn");
+const nextBtn = document.querySelector(".next-btn");
 const startLearnLinks = document.querySelectorAll(".start-learning-link");
 const bubbleContainer = document.getElementById("bubbleContainer");
 const aboutLinks = document.querySelectorAll(".about-link");
@@ -40,6 +41,12 @@ const typingAccuracyLabel = document.querySelector(".typing-accuracy");
 const progressBar = document.querySelector(".progress-bar");
 const resultsSummaryTextArea = document.querySelector(".exercise-summary");
 const typingResults = document.querySelector(".typing-results");
+const promptInstructions = document.querySelector(".prompt-instructions");
+const exercisePerformanceLabel = document.querySelector(
+  ".exercise-performance"
+);
+const showKeyboardCheckbox = document.querySelector(".show-keyboard-checkbox");
+const showHintsCheckbox = document.querySelector(".show-hints-checkbox");
 
 // Modal Window selectors
 const modalStartExercise = document.querySelector(".modal-start-exercise");
@@ -72,10 +79,6 @@ const acceptDefaultsText = document.querySelector(".accept-defaults");
 const defaultCheckbox = document.querySelector(".default-checkbox");
 const beginExerciseButton = document.querySelector(".begin-button");
 const exSettingsContainer = document.querySelector(".ex-settings-container");
-
-// Keyboard Switch
-const switchOn = document.getElementById("switch-on");
-const switchOff = document.getElementById("switch-off");
 
 // Keyboard keys
 const keyBieup = document.querySelector(".key.ㅂ");

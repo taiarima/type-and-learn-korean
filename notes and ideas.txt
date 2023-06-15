@@ -1,9 +1,5 @@
 
 
-// I will have one modal window, which will be injected with the correct HTML depending on the exercise
-// There will be options: Show Korean, show English, Show fill in blank, show keyboard, calculate typing speed
-// How many reps to do. <-- that can be an option for certain exercises
-
 // Make typing exercises where it highlights text as you go along
 
 Next thing to do:
@@ -11,10 +7,9 @@ CHECK        1. Complete the code to make typing the exercises work.
 CHECK        2. Make an end condition for the exercise and a results display.
 CHECK        3. Make a function to calculate typing speed
 CHECK        4. Make a modal that pops up to confirm settings before beginning exercise
-5. Make a settings widget to adjust settings
 CHECK        6. Implement progress bar
 
-7. Make it so keyboard can only be turned on if screen is big enough
+CHECK  7. Make it so keyboard can only be turned on if screen is big enough
 8. Make it so certain settings are disabled if they aren't relevant to exercise
 
 I need to remember that for fill-in-the-blank exercises, the keyboard hints have to be off, otherwise they spoil the answers
