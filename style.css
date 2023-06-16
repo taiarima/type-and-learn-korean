@@ -167,6 +167,12 @@ main {
 
 .bigger-next-btn {
   transform: scale(1.5);
+  width: 100%;
+  max-width: 200px;
+  margin: 10px 5px;
+  box-sizing: border-box;
+  white-space: normal;
+  text-align: center;
 }
 
 .user-text {
@@ -363,6 +369,7 @@ main {
   text-decoration: none;
   display: block;
   border: 1px solid var(--color-red);
+  font-size: 2rem;
 }
 
 .dropdown-content a:hover {

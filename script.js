@@ -1,7 +1,6 @@
 "use strict";
 
 // Global Variables
-let currentWord; // deconstructed current word
 let currentAnswer; // This will be the answer the user must type in for their response to be graded correct
 let charCounter = 0;
 let currentList;
@@ -13,6 +12,8 @@ let keepDefaultSettings = true;
 let resultsSummaryItems = []; // This will hold the content of the exercise to present in results summary text area
 let userTriesAmount = 0; // For each prompt, the amount of tries a user attempts will be tracked. Only relevant if maxTries != 0
 let correctResponsesCounter = 0;
+let deconstructedCorrectAnswer = []; // used for keyboard hints
+let deconstructedUserInput = [];
 
 // Possible values for showing English settings
 const showEngAsPrompt = "prompt"; // users will be asked to translate English to Korean
@@ -29,7 +30,7 @@ let unlimitedTries = true;
 let requireResponse = true; // user will be required to type the correct response before being allowed to continue
 let keyboardOn = true;
 let keyboardHintsOn = true;
-let saveSettingsOn = true; // As long as this is checked, defaults will not be automatically be restored
+// let saveSettingsOn = true; // As long as this is checked, defaults will not be automatically be restored;; Disabling this functionality for now
 let showEngSetting = showEngAfterGrading;
 
 // For calculating typing speed
@@ -41,9 +42,9 @@ let startTime = 0;
 let endTime = 0;
 
 // Global Constants
-const nextBtnCorrectText = "Correct! Hit space to continue.";
+const nextBtnCorrectText = "Correct! Click or hit space to continue.";
 const nextBtnIncorrectText =
-  "Sorry, that's incorrect 😅. Hit space to continue";
+  "Sorry, that's incorrect 😅. Click or press space to continue";
 const nextBtnReponseRequired = "There you go! Hit space to continue.";
 const nextBtnPrompt = "Press enter or click to submit";
 const nextBtnTryAgainText = "That's incorrect. Try again!";
@@ -58,7 +59,7 @@ function restoreDefaultSettings() {
   requireResponse = true; // user will be required to type the correct response before being allowed to continue
   keyboardOn = true;
   keyboardHintsOn = true;
-  saveSettingsOn = true; // As long as this is checked, defaults will not be automatically be restored
+  // saveSettingsOn = true; // As long as this is checked, defaults will not be automatically be restored
   showEngSetting = showEngAfterGrading;
 }
 
@@ -229,13 +230,9 @@ function loadVocabList(listIndex) {
   }
 
   setNextPrompt();
-  currentWord = Hangul.disassemble(currentAnswer);
-  // This function should be invoked when appropriate to show the user the first key to be pressed
-  // showNextKey();
 
-  // document
-  //   .querySelector(`.${currentWord[charCounter]}`)
-  //   .classList.add("activated-key");
+  // This function should be invoked when appropriate to show the user the first key to be pressed
+  showNextKey();
 
   userText.focus();
 }
@@ -246,24 +243,57 @@ function showNextKey() {
   if (!keyboardOn || !keyboardHintsOn) {
     return;
   }
-  // There need to be two arrays
-  // One to track the current keys that have been pressed
-  // one to check the keys that need to be pressed (currentWord)
-  let userTypedSoFar = Hangul.disassemble(userText.value);
-  if (userTypedSoFar.length === 0) {
-    document.querySelector(`.${currentWord[0]}`).classList.add("activated-key");
+
+  let keyIndex = -1;
+  // const deconstructedUserInput = Hangul.disassemble(userText.value);
+  console.log(`deconstructedUserInput = ${deconstructedUserInput}`);
+  // There are five possible scenarios:
+  // 1. The user has typed only correct characters but has not completed the answer yet
+  // ----> Function should light up next key
+  // 2. The user has typed one or more incorrect characters
+  // -----> The function should show the next correct character, and show a message showing the user should hit backspace
+  /// 3. The user has typed the entire answer correctly
+  // -----> No further hints should be shown
+  // 4. The user has typed the entire correct answer, but also additional characters which are unncessary
+  // -----> A message should be shown that the user has typed too many characters, no hints should be shown
+  // 5. The user hasn't typed anything yet
+  // ---> The hint should be for the first character
+
+  // Show the first character in deconstructedCorrectAnswer if userText is empty
+  if (!userText.value) {
+    keyIndex = 0;
+  }
+  // Make sure all characters are same. keyIndex should equal -1 if they're the same
+  // or the index of the first mismatched character.
+  else if (deconstructedUserInput.length <= deconstructedCorrectAnswer.length) {
+    for (let i = 0; i < deconstructedUserInput.length; i++) {
+      if (deconstructedUserInput[i] !== deconstructedCorrectAnswer[i]) {
+        keyIndex = i;
+        break;
+      }
+    }
+    if (keyIndex !== -1) {
+      // show a message to hit backspace
+    } else if (deconstructedUserInput.length < deconstructedCorrectAnswer) {
+      keyIndex = deconstructedUserInput.length;
+    }
   } else {
-    // check something
-    document
-      .querySelector(`.${currentWord[++charCounter]}`)
-      .classList.add("activated-key");
+    // Show message that user has typed too many characters
   }
 
-  // The next key should only be activated in two instances:
-  // 1. It's the first key
-  // 2. Everything typed up until now is correct
-  // Check this by splicing the currentWord (This should be current answer or something)
-  // with the current length of userTypedSoFar
+  // The user has completely typed the correct answer
+  if (keyIndex == -1) {
+    document
+      .querySelector(
+        `.${deconstructedCorrectAnswer[deconstructedCorrectAnswer.length - 1]}`
+      )
+      .classList.remove("activated-key");
+    return;
+  }
+
+  const keyToPress = deconstructedCorrectAnswer[keyIndex];
+  console.log(`keyToPress = ${keyToPress} and keyIndex = ${keyIndex}`);
+  document.querySelector(`.${keyToPress}`).classList.add("activated-key");
 }
 
 // Used for randomizing order of prompts for exercises
@@ -372,14 +402,15 @@ function clearExercise() {
   promptLabel.textContent = currentList[currentIndex].korean;
   nextBtn.classList.remove("bigger-next-btn");
   userText.classList.remove("lightup-correct");
+  promptContainer.classList.remove("lightup-incorrect");
   userText.disabled = false;
   nextBtn.textContent = nextBtnPrompt;
   userTriesAmount = 0;
   correctResponsesCounter = 0;
 
-  if (!saveSettingsOn) {
-    keepDefaultSettings = true;
-  }
+  // if (!saveSettingsOn) {
+  //   keepDefaultSettings = true;
+  // }
 }
 
 function updateProgressBar() {
@@ -439,7 +470,7 @@ function applyUserSettings() {
 
   requireResponse = requireAnswerCheckbox.checked;
 
-  saveSettingsOn = saveSettingsCheckbox.checked;
+  // saveSettingsOn = saveSettingsCheckbox.checked;
 
   repetitionNumber = repetitionsInput ? parseInt(repetitionsInput.value) : 10;
 
@@ -496,6 +527,7 @@ function setNextPrompt() {
 
   // The current answer will change depending on settings and exercise type. For now it is just the Korean
   currentAnswer = currentList[currentIndex].korean;
+  deconstructedCorrectAnswer = Hangul.disassemble(currentAnswer);
   currentIndex++;
 }
 
@@ -604,23 +636,48 @@ defaultCheckbox.addEventListener("change", function () {
     keepDefaultSettings = true;
     exSettingsContainer.classList.add("hidden");
 
-    // onScreenKeyboardCheckboxSelector.checked = true;
-    // keyboardHintsCheckboxSelector.checked = true;
-    // saveSettingsCheckbox.checked = true;
-    // requireAnswerCheckbox.checked = true;
-    // calculateTypingSpeedCheckboxSelector.checked = true;
+    const selectedShowEnglishOption = document.querySelectorAll(
+      `${showEnglishOptionsSelector} input[type="radio"]`
+    );
+    const repetitionsInput = document.querySelector(repetitionsInputSelector);
+    const onScreenKeyboardCheckbox = document.querySelector(
+      onScreenKeyboardCheckboxSelector
+    );
+    const keyboardHintsCheckbox = document.querySelector(
+      keyboardHintsCheckboxSelector
+    );
+    const calculateTypingSpeedCheckbox = document.querySelector(
+      calculateTypingSpeedCheckboxSelector
+    );
 
-    // repetitionsInputSelector.value = 10;
-    // showEnglishOptionsSelector.forEach((option) => {
-    //   if (option.value === "afterGrading") {
-    //     option.checked = true;
-    //   } else {
-    //     option.checked = false;
-    //   }
-    // });
-    // triesPerPromptRadio.checked = true;
-    // triesPerPromptNumber.disabled = true;
-    // triesPerPromptNumber.value = "3";
+    const triesPerPromptInput = document.querySelector(
+      ".tries-per-prompt-number"
+    );
+    const selectedTriesPerPrompt = document.querySelector(
+      'input[name="triesPerPrompt"]:checked'
+    ).value;
+
+    onScreenKeyboardCheckbox.checked = true;
+    keyboardHintsCheckbox.checked = true;
+    // saveSettingsCheckbox.checked = true;
+    requireAnswerCheckbox.checked = true;
+    calculateTypingSpeedCheckbox.checked = true;
+
+    repetitionsInput.value = 10;
+    selectedShowEnglishOption.forEach((option) => {
+      if (option.value === "afterGrading") {
+        option.checked = true;
+      } else {
+        option.checked = false;
+      }
+    });
+    const unlimitedRadio = document.querySelector(".unlimited-tries");
+    const limitedRadio = document.querySelector(".limited-tries");
+    unlimitedRadio.checked = false;
+    limitedRadio.checked = true;
+    triesPerPromptNumber.disabled = false;
+
+    triesPerPromptInput.value = "3";
   } else {
     keepDefaultSettings = false;
     exSettingsContainer.classList.remove("hidden");
@@ -701,7 +758,7 @@ nextBtn.addEventListener("click", function () {
     userText.value = "";
     nextBtn.textContent = nextBtnPrompt;
   } else {
-    checkAnswer;
+    checkAnswer();
   }
 });
 
@@ -713,6 +770,7 @@ userText.addEventListener("compositionupdate", function (event) {
   const syllable = Hangul.disassemble(String(event.data));
   const key = syllable[syllable.length - 1];
   let targetElement = document.querySelector(`.key.${key}`);
+
   if (!targetElement) {
     if (document.querySelector(`.key-upper-right.${key}`)) {
       targetElement = document
@@ -730,11 +788,10 @@ userText.addEventListener("compositionupdate", function (event) {
       previousKey.classList.remove("lightup-correct");
     }
 
-    // showNextKey();
+    showNextKey();
 
     // Add animation class to the target key
     targetElement.classList.add("lightup-correct");
-    targetElement.classList.remove("activated-key");
 
     // Reset the animation after 1 second
     setTimeout(() => {
@@ -787,7 +844,7 @@ showKeyboardCheckbox.addEventListener("change", function () {
     keyboardOn = true;
     showHintsCheckbox.disabled = false;
   } else {
-    keyboardContainer.style.display = "none"; 
+    keyboardContainer.style.display = "none";
     keyboardOn = false;
     showHintsCheckbox.disabled = true;
   }

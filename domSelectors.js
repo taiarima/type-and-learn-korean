@@ -69,7 +69,7 @@ const keyboardHintsCheckboxSelector = ".keyboard-hints-checkbox";
 const requireAnswerCheckbox = document.querySelector(
   ".require-answer-checkbox"
 );
-const saveSettingsCheckbox = document.querySelector(".save-settings-checkbox");
+// const saveSettingsCheckbox = document.querySelector(".save-settings-checkbox");
 
 // Start Exercise Modal Selectors
 const categoryLabels = document.querySelectorAll(".category");

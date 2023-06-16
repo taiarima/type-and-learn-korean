@@ -20,7 +20,7 @@ const countries = {
     { korean: "필리핀", english: "Philippines" },
     { korean: "이집트", english: "Egypt" },
     { korean: "베트남", english: "Vietnam" },
-    { korean: "콩고민주공화국", english: "Democratic Republic of the Congo" },
+    { korean: "콩고 민주 공화국", english: "Democratic Republic of the Congo" },
     { korean: "터키", english: "Turkey" },
     { korean: "이란", english: "Iran" },
     { korean: "독일", english: "Germany" },

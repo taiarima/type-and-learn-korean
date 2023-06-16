@@ -193,8 +193,8 @@
         <div class="help-container content-container">
           <h1>Help</h1>
           <p>
-            Your success in learning Korean is my top priority! However, I understand that sometimes bugs creep in, errors occur, or 
-            incorrect information may find its way into this app. As a one-person team, I've developed this app out of pure love for the language and 
+            Your success in learning Korean is my top priority! Unfortunately, sometimes bugs creep in, errors occur, or 
+            incorrect information may find its way into this app. As a one-person team, I've developed this site out of pure love for the language and 
             a desire to assist Korean learners like yourself.
             </p><p>
             If you encounter any issues, have suggestions for improvement, or come across any inaccuracies, please don't hesitate to reach out to me. 
@@ -289,17 +289,21 @@
                 </div>
               </div>
               <p>Tries per prompt:<span class="info-flag" data-info="Amount of tries you are allowed to attempt answering a given prompt before your answer is marked incorrect.">❔</span></p>
-<label><input type="radio" name="triesPerPrompt" value="unlimited"> Unlimited</label>
-<br/>
-<label><input type="radio" name="triesPerPrompt" value="limited" checked> Limited to</label>
-<input type="number" class="tries-per-prompt-number" min="1" max="50" value="3">
+              <label>
+                <input type="radio" name="triesPerPrompt" value="unlimited" class="unlimited-tries"> Unlimited
+              </label>
+              <br/>
+              <label>
+                <input type="radio" name="triesPerPrompt" value="limited" class="limited-tries" checked> Limited to
+              </label>
+              <input type="number" class="tries-per-prompt-number" min="1" max="50" value="3">
               <p>Require typing answer before proceeding:<span class="info-flag" data-info="If your answer is marked incorrect or you reveal the answer, you will be required to type in the correct response before being allowed to proceed.">❔</span><input type="checkbox" class="require-answer-checkbox" checked></p>
               <p>Calculate typing speed: <input type="checkbox" class="calculate-typing-speed-checkbox" checked></p>
               <p>Repetitions:<span class="info-flag" data-info="This is how many prompts you will be given before the exercise is over.">❔</span> <input type="number" class="repetitions-input" min="1" max="50" value="10"></p>
               <div class="keyboard-options"><p>On-screen Keyboard: <input type="checkbox" class="on-screen-keyboard-checkbox" checked></p>
                 <p>Keyboard hints: <input type="checkbox" class="keyboard-hints-checkbox" checked></p>
               </div>
-              <p>Save Settings: <input type="checkbox" class="save-settings-checkbox" checked></p>
+              <!-- <p>Save Settings: <input type="checkbox" class="save-settings-checkbox" checked></p> -->
             </div>
             <br />
             <div class="button-container">
