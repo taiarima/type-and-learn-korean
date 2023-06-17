@@ -14,6 +14,7 @@ let userTriesAmount = 0; // For each prompt, the amount of tries a user attempts
 let correctResponsesCounter = 0;
 let deconstructedCorrectAnswer = []; // used for keyboard hints
 let deconstructedUserInput = [];
+let previousUpdateLength = 0;
 
 // Possible values for showing English settings
 const showEngAsPrompt = "prompt"; // users will be asked to translate English to Korean
@@ -231,9 +232,6 @@ function loadVocabList(listIndex) {
 
   setNextPrompt();
 
-  // This function should be invoked when appropriate to show the user the first key to be pressed
-  showNextKey();
-
   userText.focus();
 }
 
@@ -244,9 +242,11 @@ function showNextKey() {
     return;
   }
 
+  // Remove previously activated key if relevant
+  document.querySelector(".activated-key")?.classList.remove("activated-key");
+
   let keyIndex = -1;
-  // const deconstructedUserInput = Hangul.disassemble(userText.value);
-  console.log(`deconstructedUserInput = ${deconstructedUserInput}`);
+
   // There are five possible scenarios:
   // 1. The user has typed only correct characters but has not completed the answer yet
   // ----> Function should light up next key
@@ -260,25 +260,38 @@ function showNextKey() {
   // ---> The hint should be for the first character
 
   // Show the first character in deconstructedCorrectAnswer if userText is empty
-  if (!userText.value) {
+  if (deconstructedUserInput.length == 0) {
     keyIndex = 0;
   }
+
   // Make sure all characters are same. keyIndex should equal -1 if they're the same
   // or the index of the first mismatched character.
-  else if (deconstructedUserInput.length <= deconstructedCorrectAnswer.length) {
-    for (let i = 0; i < deconstructedUserInput.length; i++) {
+  else {
+    const shorterLength = Math.min(
+      deconstructedCorrectAnswer.length,
+      deconstructedUserInput.length
+    );
+    for (let i = 0; i < shorterLength; i++) {
       if (deconstructedUserInput[i] !== deconstructedCorrectAnswer[i]) {
         keyIndex = i;
         break;
       }
     }
+    // User has typed an incorrect character
     if (keyIndex !== -1) {
       // show a message to hit backspace
-    } else if (deconstructedUserInput.length < deconstructedCorrectAnswer) {
-      keyIndex = deconstructedUserInput.length;
     }
-  } else {
-    // Show message that user has typed too many characters
+
+    // All characters correct so far, but word not complete
+    else if (
+      deconstructedUserInput.length < deconstructedCorrectAnswer.length
+    ) {
+      keyIndex = deconstructedUserInput.length;
+    } else if (
+      deconstructedUserInput.length > deconstructedCorrectAnswer.length
+    ) {
+      // Show message that user has typed too many characters
+    }
   }
 
   // The user has completely typed the correct answer
@@ -292,7 +305,7 @@ function showNextKey() {
   }
 
   const keyToPress = deconstructedCorrectAnswer[keyIndex];
-  console.log(`keyToPress = ${keyToPress} and keyIndex = ${keyIndex}`);
+  // TODO : Add functionality to account for a space.
   document.querySelector(`.${keyToPress}`).classList.add("activated-key");
 }
 
@@ -401,12 +414,12 @@ function clearExercise() {
   userText.classList.remove("lightup-correct");
   promptLabel.textContent = currentList[currentIndex].korean;
   nextBtn.classList.remove("bigger-next-btn");
-  userText.classList.remove("lightup-correct");
   promptContainer.classList.remove("lightup-incorrect");
   userText.disabled = false;
   nextBtn.textContent = nextBtnPrompt;
   userTriesAmount = 0;
   correctResponsesCounter = 0;
+  document.querySelector(".activated-key")?.classList.remove("activated-key");
 
   // if (!saveSettingsOn) {
   //   keepDefaultSettings = true;
@@ -487,13 +500,16 @@ function applyUserSettings() {
     keyboardOn = onScreenKeyboardCheckbox.checked;
   }
 
-  keyboardHintsOn = keyboardHintsCheckbox.checked;
+  if (keyboardHintsCheckbox.checked) {
+    keyboardHintsOn = true;
+  } else {
+    keyboardHintsOn = false;
+    showHintsCheckbox.checked = false;
+  }
 
   showEngSetting = selectedShowEnglishOption
     ? selectedShowEnglishOption.value
     : showEngAfterGrading;
-
-  console.log("User settings saved");
 }
 
 // Sets next prompt and puts the current rep in the results summary array
@@ -520,7 +536,6 @@ function setNextPrompt() {
   } else {
     promptLabel.innerHTML = currentList[currentIndex].korean;
     if (showEngSetting == showEngSameTime) {
-      console.log("Show english at same time");
       promptLabel.innerHTML += "<br>" + currentList[currentIndex].english;
     }
   }
@@ -529,6 +544,9 @@ function setNextPrompt() {
   currentAnswer = currentList[currentIndex].korean;
   deconstructedCorrectAnswer = Hangul.disassemble(currentAnswer);
   currentIndex++;
+
+  // This function should be invoked when appropriate to show the user the first key to be pressed
+  showNextKey();
 }
 
 function handleLinkClick(targetContainer) {
@@ -542,6 +560,55 @@ function handleLinkClick(targetContainer) {
   } else {
     hideContainers();
     targetContainer.parentElement.classList.remove("hidden");
+  }
+}
+
+function keyToKoreanLetter(keyCode, isShiftPressed) {
+  const koreanMapping = {
+    KeyA: "ㅁ",
+    KeyB: "ㅠ",
+    KeyC: "ㅊ",
+    KeyD: "ㅇ",
+    KeyE: "ㄷ",
+    KeyF: "ㄹ",
+    KeyG: "ㅎ",
+    KeyH: "ㅗ",
+    KeyI: "ㅑ",
+    KeyJ: "ㅓ",
+    KeyK: "ㅏ",
+    KeyL: "ㅣ",
+    KeyM: "ㅡ",
+    KeyN: "ㅜ",
+    KeyO: "ㅐ",
+    KeyP: "ㅔ",
+    KeyQ: "ㅂ",
+    KeyR: "ㄱ",
+    KeyS: "ㄴ",
+    KeyT: "ㅅ",
+    KeyU: "ㅕ",
+    KeyV: "ㅍ",
+    KeyW: "ㅈ",
+    KeyX: "ㅌ",
+    KeyY: "ㅛ",
+    KeyZ: "ㅋ",
+  };
+
+  const shiftedCharacters = {
+    KeyQ: "ㅃ",
+    KeyW: "ㅉ",
+    KeyE: "ㄸ",
+    KeyR: "ㄲ",
+    KeyT: "ㅆ",
+  };
+
+  if (keyCode in koreanMapping) {
+    if (isShiftPressed && keyCode in shiftedCharacters) {
+      return shiftedCharacters[keyCode];
+    } else {
+      return koreanMapping[keyCode];
+    }
+  } else {
+    return null;
   }
 }
 
@@ -589,6 +656,7 @@ logo.addEventListener("click", function () {
   handleLinkClick(homeContainer);
 });
 
+// Listener for submitting answer
 userText.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     event.preventDefault(); // Prevents the cursor from going to next line
@@ -596,6 +664,17 @@ userText.addEventListener("keydown", function (event) {
       userText.value = "";
     } else {
       checkAnswer();
+    }
+
+    const previousKey = document.querySelector(".key.lightup-correct");
+    const previousIncorrectKey = document.querySelector(
+      ".key.lightup-incorrect"
+    );
+    if (previousKey) {
+      previousKey.classList.remove("lightup-correct");
+    }
+    if (previousIncorrectKey) {
+      previousIncorrectKey.classList.remove("lightup-incorrect");
     }
   }
 });
@@ -762,43 +841,102 @@ nextBtn.addEventListener("click", function () {
   }
 });
 
-// Light up the key that the user is currently typing
-userText.addEventListener("compositionupdate", function (event) {
-  if (!keyboardOn) {
-    return;
-  }
-  const syllable = Hangul.disassemble(String(event.data));
-  const key = syllable[syllable.length - 1];
+// Event listener to light up the correct key.
+userText.addEventListener("keydown", function (event) {
+  const key = keyToKoreanLetter(event.code);
+
   let targetElement = document.querySelector(`.key.${key}`);
 
-  if (!targetElement) {
-    if (document.querySelector(`.key-upper-right.${key}`)) {
-      targetElement = document
-        .querySelector(`.key-upper-right.${key}`)
-        .closest(".key");
+  // console.log(`syllable = ${syllable} and key = ${key}`);
+
+  // if (!targetElement) {
+  //   if (document.querySelector(`.key-upper-right.${key}`)) {
+  //     targetElement = document
+  //       .querySelector(`.key-upper-right.${key}`)
+  //       .closest(".key");
+  //   } else {
+  //     return;
+  //   }
+  // }
+
+  // Remove previous lightup class if any
+  const previousKey = document.querySelector(".key.lightup-correct");
+  const previousIncorrectKey = document.querySelector(".key.lightup-incorrect");
+  if (previousKey) {
+    previousKey.classList.remove("lightup-correct");
+  }
+  if (previousIncorrectKey) {
+    previousIncorrectKey.classList.remove("lightup-incorrect");
+  }
+
+  // Add lightup class to the target key
+  if (keyboardHintsOn) {
+    if (targetElement?.classList.contains("activated-key")) {
+      targetElement?.classList.add("lightup-correct");
     } else {
-      return;
+      targetElement?.classList.add("lightup-incorrect");
     }
+  } else {
+    targetElement?.classList.add("lightup-correct");
   }
-  // Fix this to also light up red when user has hit incorrect key
-  if (targetElement) {
-    // Remove previous animation class if any
-    const previousKey = document.querySelector(".key.lightup-correct");
-    if (previousKey) {
-      previousKey.classList.remove("lightup-correct");
-    }
 
-    showNextKey();
-
-    // Add animation class to the target key
-    targetElement.classList.add("lightup-correct");
-
-    // Reset the animation after 1 second
-    setTimeout(() => {
-      targetElement.classList.remove("lightup-correct");
-    }, 500);
-  }
+  // Reset the animation after 1 second
+  setTimeout(() => {
+    targetElement?.classList.remove("lightup-correct");
+    targetElement?.classList.remove("lightup-incorrect");
+  }, 500);
 });
+
+// Disabling temporarily to test new approach // THE ABOVE SEEMS TO HAVE SOLVED THE ISSUE SO PROLLY CAN DELETETHIS GARBAGE
+// Light up the key that the user is currently typing
+// userText.addEventListener("compositionupdate", function (event) {
+//   if (!keyboardOn) {
+//     return;
+//   }
+
+//   const syllable = Hangul.disassemble(String(event.data));
+//   const key = syllable[syllable.length - 1];
+//   let targetElement = document.querySelector(`.key.${key}`);
+
+//   console.log(`syllable = ${syllable} and key = ${key}`);
+
+//   if (!targetElement) {
+//     if (document.querySelector(`.key-upper-right.${key}`)) {
+//       targetElement = document
+//         .querySelector(`.key-upper-right.${key}`)
+//         .closest(".key");
+//     } else {
+//       return;
+//     }
+//   }
+
+//   // Remove previous lightup class if any
+//   const previousKey = document.querySelector(".key.lightup-correct");
+//   const previousIncorrectKey = document.querySelector(".key.lightup-incorrect");
+//   if (previousKey) {
+//     previousKey.classList.remove("lightup-correct");
+//   }
+//   if (previousIncorrectKey) {
+//     previousIncorrectKey.classList.remove("lightup-incorrect");
+//   }
+
+//   // Add lightup class to the target key
+//   if (keyboardHintsOn) {
+//     if (targetElement.classList.contains("activated-key")) {
+//       targetElement.classList.add("lightup-correct");
+//     } else {
+//       targetElement.classList.add("lightup-incorrect");
+//     }
+//   } else {
+//     targetElement.classList.add("lightup-correct");
+//   }
+
+//   // Reset the animation after 1 second
+//   setTimeout(() => {
+//     targetElement.classList.remove("lightup-correct");
+//     targetElement.classList.remove("lightup-incorrect");
+//   }, 500);
+// });
 
 // Event listener which prevents user from typing non-Korean characters
 userText.addEventListener("input", function () {
@@ -856,4 +994,24 @@ showHintsCheckbox.addEventListener("change", function () {
   } else {
     keyboardHintsOn = false;
   }
+});
+
+// For tracking what key needs to be lit up next for hints
+userText.addEventListener("input", function () {
+  if (!keyboardOn || !keyboardHintsOn) {
+    return;
+  }
+
+  const userInput = userText.value;
+
+  // Convert the user input into a deconstructed array
+  const deconstructedInput = userInput
+    .split("")
+    .map((char) => Hangul.disassemble(char))
+    .flat();
+
+  // Update deconstructedUserInput
+  deconstructedUserInput = deconstructedInput;
+
+  setTimeout(() => showNextKey(), 10);
 });
