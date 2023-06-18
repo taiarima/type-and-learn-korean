@@ -52,7 +52,7 @@
           <h1>Start learning</h1>
           <h3>Choose your category:</h3>
         </div>
-        <div id="bubbleContainer"></div>
+        <div class="bubble-container"></div>
       </div>
       <div class="container">
         <div class="home-container">
@@ -81,6 +81,13 @@
         <div class="learning-container">
           <div class="progress-container">
             <div class="progress-bar"></div>
+          </div>
+          <div class="tries-reveal-container">
+            <div class="tries-container">
+              <p class="tries-label">Tries remaining: 3</p>
+              <div class="tries-emojis">❤️❤️❤️</div>
+            </div>
+            <button class="reveal-btn">Reveal answer (Hotkey: `)</button>
           </div>
           <div class="prompt-container">
             <p class="prompt-instructions">Type the following in Korean:</p>
@@ -296,10 +303,10 @@
               <label>
                 <input type="radio" name="triesPerPrompt" value="limited" class="limited-tries" checked> Limited to
               </label>
-              <input type="number" class="tries-per-prompt-number" min="1" max="50" value="3">
+              <input type="number" class="tries-per-prompt-number" min="1" max="10" value="3">
               <p>Require typing answer before proceeding:<span class="info-flag" data-info="If your answer is marked incorrect or you reveal the answer, you will be required to type in the correct response before being allowed to proceed.">❔</span><input type="checkbox" class="require-answer-checkbox" checked></p>
               <p>Calculate typing speed: <input type="checkbox" class="calculate-typing-speed-checkbox" checked></p>
-              <p>Repetitions:<span class="info-flag" data-info="This is how many prompts you will be given before the exercise is over.">❔</span> <input type="number" class="repetitions-input" min="1" max="50" value="10"></p>
+              <p>Repetitions:<span class="info-flag" data-info="This is how many prompts you will be given before the exercise is over.">❔</span> <input type="number" class="repetitions-input" min="10" max="50" value="10"></p>
               <div class="keyboard-options"><p>On-screen Keyboard: <input type="checkbox" class="on-screen-keyboard-checkbox" checked></p>
                 <p>Keyboard hints: <input type="checkbox" class="keyboard-hints-checkbox" checked></p>
               </div>

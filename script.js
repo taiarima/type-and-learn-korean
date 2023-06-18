@@ -14,7 +14,7 @@ let userTriesAmount = 0; // For each prompt, the amount of tries a user attempts
 let correctResponsesCounter = 0;
 let deconstructedCorrectAnswer = []; // used for keyboard hints
 let deconstructedUserInput = [];
-let previousUpdateLength = 0;
+let answerRevealed = false;
 
 // Possible values for showing English settings
 const showEngAsPrompt = "prompt"; // users will be asked to translate English to Korean
@@ -102,7 +102,6 @@ function gradeCorrect() {
     nextBtn.textContent = nextBtnReponseRequired;
   }
 
-  // Maybe this will say something later. For now I will just clear the string
   promptInstructions.textContent = "Correct answer:";
 
   userText.disabled = true;
@@ -120,11 +119,13 @@ function gradeIncorrect() {
   setTimeout(() => {
     userText.select();
   }, 50);
-  if (maxTries && userTriesAmount < maxTries) {
-    userTriesAmount++;
-    userText.classList.add("lightup-incorrect");
+  if (!maxTries || (userTriesAmount < maxTries && !answerRevealed)) {
     nextBtn.classList.add("bigger-next-btn");
     nextBtn.textContent = nextBtnTryAgainText;
+    userTriesAmount++;
+    updateTriesUI();
+    userText.classList.add("lightup-incorrect");
+
     setTimeout(() => {
       userText.classList.remove("lightup-incorrect");
       nextBtn.classList.remove("bigger-next-btn");
@@ -135,7 +136,7 @@ function gradeIncorrect() {
   // promptLabel.innerHTML += currentAnswer;
 
   // This block only relevant if maxTries is limited
-  if (maxTries && userTriesAmount >= maxTries) {
+  if (maxTries && (userTriesAmount >= maxTries || answerRevealed)) {
     // Reveal correct answer and English if necessary
     if (!promptContainer.classList.contains("lightup-incorrect")) {
       if (showEngSetting == showEngAfterGrading) {
@@ -148,9 +149,13 @@ function gradeIncorrect() {
     }
 
     if (requireResponse) {
-      // Set message to "You have run out of tries. Type the correct answer to continue"
-      promptInstructions.textContent =
-        "You have run out of tries. Type the correct answer to continue";
+      if (answerRevealed) {
+        promptInstructions.textContent =
+          "You chose to reveal the answer. Type the correct answer to continue.";
+      } else {
+        promptInstructions.textContent =
+          "You have run out of tries. Type the correct answer to continue.";
+      }
     } else {
       userText.disabled = true;
       setTimeout(() => {
@@ -161,8 +166,6 @@ function gradeIncorrect() {
       calcSpeedOn && stopTimer();
     }
   }
-
-  // Show visible feedback that user's answer was inccorect.
 }
 
 // Results will be generated after the user completes an exercise
@@ -287,7 +290,9 @@ function showNextKey() {
       deconstructedUserInput.length < deconstructedCorrectAnswer.length
     ) {
       keyIndex = deconstructedUserInput.length;
-    } else if (
+    }
+    // User has typed everything correctly, but has typed too many chars
+    else if (
       deconstructedUserInput.length > deconstructedCorrectAnswer.length
     ) {
       // Show message that user has typed too many characters
@@ -420,7 +425,9 @@ function clearExercise() {
   userTriesAmount = 0;
   correctResponsesCounter = 0;
   document.querySelector(".activated-key")?.classList.remove("activated-key");
+  answerRevealed = false;
 
+  // I haven't decided how I'm going to handle this yet
   // if (!saveSettingsOn) {
   //   keepDefaultSettings = true;
   // }
@@ -447,7 +454,7 @@ function filterNonKorean(text) {
   return text.replace(regex, "");
 }
 
-// Function to play a warning sound
+// Function to play a warning sound, haven't got a sound file for it yet
 function playWarningSound() {
   const audio = new Audio("path/to/warning-sound.mp3");
   audio.play();
@@ -483,6 +490,7 @@ function applyUserSettings() {
 
   requireResponse = requireAnswerCheckbox.checked;
 
+  // Haven't decided how to handle this yet
   // saveSettingsOn = saveSettingsCheckbox.checked;
 
   repetitionNumber = repetitionsInput ? parseInt(repetitionsInput.value) : 10;
@@ -507,9 +515,7 @@ function applyUserSettings() {
     showHintsCheckbox.checked = false;
   }
 
-  showEngSetting = selectedShowEnglishOption
-    ? selectedShowEnglishOption.value
-    : showEngAfterGrading;
+  showEngSetting = selectedShowEnglishOption.value;
 }
 
 // Sets next prompt and puts the current rep in the results summary array
@@ -525,7 +531,11 @@ function setNextPrompt() {
   };
   resultsSummaryItems.push(currentRep);
 
-  userTriesAmount = 0;
+  if (maxTries) {
+    userTriesAmount = 0;
+    updateTriesUI();
+  }
+  answerRevealed = false;
 
   //This will be customized according to exercise type in the future.
   promptInstructions.textContent = "Type the following in Korean:";
@@ -547,6 +557,22 @@ function setNextPrompt() {
 
   // This function should be invoked when appropriate to show the user the first key to be pressed
   showNextKey();
+}
+
+function updateTriesUI() {
+  // Clear the previous emojis
+  triesEmojisContainer.innerHTML = "";
+
+  // Calculate the number of remaining tries
+  const remainingTries = maxTries - userTriesAmount;
+  triesLabel.textContent = `Tries remaining: ${remainingTries}`;
+
+  // Add emojis for each remaining try
+  for (let i = 0; i < remainingTries; i++) {
+    const emoji = document.createElement("span");
+    emoji.textContent = "❤️";
+    triesEmojisContainer.appendChild(emoji);
+  }
 }
 
 function handleLinkClick(targetContainer) {
@@ -599,6 +625,8 @@ function keyToKoreanLetter(keyCode, isShiftPressed) {
     KeyE: "ㄸ",
     KeyR: "ㄲ",
     KeyT: "ㅆ",
+    KeyO: "ㅒ",
+    KeyP: "ㅖ",
   };
 
   if (keyCode in koreanMapping) {
@@ -697,6 +725,14 @@ bubbleContainer.addEventListener("click", function (event) {
 
     // Load pre-exercise modal. Exercise will not be initialized until begin btn pressed.
     modalStartExercise.style.display = "block";
+
+    // Set max amount of repetitions to be the amount of items in the list
+    const repsNumberEle = document.querySelector(repetitionsInputSelector);
+    const maxValue = basicVocabCategories.items[bubbleIndex].items.length;
+    repsNumberEle.setAttribute("max", maxValue);
+    if (repsNumberEle.value > maxValue) {
+      repsNumberEle.value = maxValue;
+    }
 
     initializeExercise(function () {
       hideContainers();
@@ -887,60 +923,15 @@ userText.addEventListener("keydown", function (event) {
   }, 500);
 });
 
-// Disabling temporarily to test new approach // THE ABOVE SEEMS TO HAVE SOLVED THE ISSUE SO PROLLY CAN DELETETHIS GARBAGE
-// Light up the key that the user is currently typing
-// userText.addEventListener("compositionupdate", function (event) {
-//   if (!keyboardOn) {
-//     return;
-//   }
-
-//   const syllable = Hangul.disassemble(String(event.data));
-//   const key = syllable[syllable.length - 1];
-//   let targetElement = document.querySelector(`.key.${key}`);
-
-//   console.log(`syllable = ${syllable} and key = ${key}`);
-
-//   if (!targetElement) {
-//     if (document.querySelector(`.key-upper-right.${key}`)) {
-//       targetElement = document
-//         .querySelector(`.key-upper-right.${key}`)
-//         .closest(".key");
-//     } else {
-//       return;
-//     }
-//   }
-
-//   // Remove previous lightup class if any
-//   const previousKey = document.querySelector(".key.lightup-correct");
-//   const previousIncorrectKey = document.querySelector(".key.lightup-incorrect");
-//   if (previousKey) {
-//     previousKey.classList.remove("lightup-correct");
-//   }
-//   if (previousIncorrectKey) {
-//     previousIncorrectKey.classList.remove("lightup-incorrect");
-//   }
-
-//   // Add lightup class to the target key
-//   if (keyboardHintsOn) {
-//     if (targetElement.classList.contains("activated-key")) {
-//       targetElement.classList.add("lightup-correct");
-//     } else {
-//       targetElement.classList.add("lightup-incorrect");
-//     }
-//   } else {
-//     targetElement.classList.add("lightup-correct");
-//   }
-
-//   // Reset the animation after 1 second
-//   setTimeout(() => {
-//     targetElement.classList.remove("lightup-correct");
-//     targetElement.classList.remove("lightup-incorrect");
-//   }, 500);
-// });
-
 // Event listener which prevents user from typing non-Korean characters
 userText.addEventListener("input", function () {
   const userInput = userText.value;
+
+  // Backtick is used as a hotkey to reveal answer, so it has a special case here
+  if (userInput && containsNonKorean(userInput) && userInput.includes("`")) {
+    userText.value = userInput.replace("`", "");
+    return;
+  }
 
   if (userInput && containsNonKorean(userInput)) {
     const koreanText = filterNonKorean(userInput);
@@ -973,7 +964,7 @@ userText.addEventListener("input", function () {
 // This event listener is necessary to prevent the inadvertent behavior
 // of totalCharsTyped being incremented twice upon completion of a Korean syllable
 userText.addEventListener("compositionend", function () {
-  totalCharsTyped--;
+  totalCharsTyped--; // this might be unnecessay now TODO
 });
 
 showKeyboardCheckbox.addEventListener("change", function () {
@@ -1015,3 +1006,24 @@ userText.addEventListener("input", function () {
 
   setTimeout(() => showNextKey(), 10);
 });
+
+// Event listener for the "Reveal answer" button
+revealBtn.addEventListener("click", () => {
+  revealAnswer();
+});
+
+// Event listener for the backtick (`) key press
+document.addEventListener("keydown", (event) => {
+  if (event.key === "`") {
+    revealAnswer();
+  }
+});
+
+// Function to handle the reveal answer action
+function revealAnswer() {
+  if (answerRevealed) {
+    return;
+  }
+  answerRevealed = true;
+  gradeIncorrect();
+}

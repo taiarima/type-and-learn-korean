@@ -169,7 +169,7 @@ main {
   transform: scale(1.5);
   width: 100%;
   max-width: 200px;
-  margin: 10px 5px;
+  margin: 10px 5px;F
   box-sizing: border-box;
   white-space: normal;
   text-align: center;
@@ -275,7 +275,7 @@ main {
   border: 2px solid white;
 }
 
-#bubbleContainer {
+.bubble-container {
   padding-top: 50px;
   display: flex;
   flex-direction: row;
@@ -669,4 +669,47 @@ button {
   justify-content: space-around;
   flex-direction: column;
   line-height: 1.5;
+}
+
+
+/* Adding reveal button and tries remaining */
+.tries-reveal-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.tries-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 45px;
+  margin-top: -15px;
+  color: white;
+  font-family: var(--font-family);
+}
+
+.tries-emojis {
+  font-size: 24px;
+  margin-top: -10px;
+}
+
+.reveal-btn {
+  padding: 10px 10px;
+  background-color: var(--color-red);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: small;
+  margin-top: 10px;
+}
+
+.reveal-btn:hover {
+  background-color: darkred;
+}
+
+.reveal-btn:active {
+  background-color: maroon;
 }

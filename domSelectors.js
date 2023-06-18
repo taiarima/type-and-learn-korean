@@ -18,7 +18,7 @@ const keyFiller = document.querySelectorAll(".filler");
 const keyUpperRight = document.querySelectorAll(".key-upper-right");
 const nextBtn = document.querySelector(".next-btn");
 const startLearnLinks = document.querySelectorAll(".start-learning-link");
-const bubbleContainer = document.getElementById("bubbleContainer");
+const bubbleContainer = document.querySelector(".bubble-container");
 const aboutLinks = document.querySelectorAll(".about-link");
 const helpLinks = document.querySelectorAll(".help-link");
 const whyTypeLinks = document.querySelectorAll(".why-type-link");
@@ -47,6 +47,10 @@ const exercisePerformanceLabel = document.querySelector(
 );
 const showKeyboardCheckbox = document.querySelector(".show-keyboard-checkbox");
 const showHintsCheckbox = document.querySelector(".show-hints-checkbox");
+const revealBtn = document.querySelector(".reveal-btn");
+const triesContainer = document.querySelector(".tries-container");
+const triesEmojisContainer = document.querySelector(".tries-emojis");
+const triesLabel = document.querySelector(".tries-label");
 
 // Modal Window selectors
 const modalStartExercise = document.querySelector(".modal-start-exercise");

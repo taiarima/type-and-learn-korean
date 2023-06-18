@@ -322,6 +322,41 @@ const sports = {
   ],
 };
 
+const objectMarkers = {
+  title: "The Object Marker 을/를",
+  items: [
+    { sentenceWithBlank: "저는 매일 김밥__ 먹어요", english: "I eat kimbab every day", blankAnswer: "을", fullAnswer: "저는 매일 김밥을 먹어요" },
+    { sentenceWithBlank: "그는 사과__ 먹었어요", english: "He ate an apple", blankAnswer: "를", fullAnswer: "그는 사과를 먹었어요" },
+    { sentenceWithBlank: "나는 책__ 읽어요", english: "I read a book", blankAnswer: "을", fullAnswer: "나는 책을 읽어요" },
+    { sentenceWithBlank: "우리는 노래__ 부르겠어요", english: "We will sing a song", blankAnswer: "를", fullAnswer: "우리는 노래를 부르겠어요" },
+    { sentenceWithBlank: "그녀는 커피__ 마셨어요", english: "She drank coffee", blankAnswer: "를", fullAnswer: "그녀는 커피를 마셨어요" },
+    { sentenceWithBlank: "나는 수학__ 공부해요", english: "I study mathematics", blankAnswer: "을", fullAnswer: "나는 수학을 공부해요" },
+    { sentenceWithBlank: "그는 자전거__ 탔어요", english: "He rode a bicycle", blankAnswer: "를", fullAnswer: "그는 자전거를 탔어요" },
+    { sentenceWithBlank: "우리는 영화__ 봤어요", english: "We watched a movie", blankAnswer: "를", fullAnswer: "우리는 영화를 봤어요" },
+    { sentenceWithBlank: "너는 음식__ 만들었어요", english: "You cooked food", blankAnswer: "을", fullAnswer: "너는 음식을 만들었어요" },
+    { sentenceWithBlank: "그들은 공원__ 산책했어요", english: "They took a walk in the park", blankAnswer: "을", fullAnswer: "그들은 공원을 산책했어요" },
+    { sentenceWithBlank: "나는 친구__ 만났어요", english: "I met a friend", blankAnswer: "를", fullAnswer: "나는 친구를 만났어요" },
+    { sentenceWithBlank: "그녀는 음악__ 들었어요", english: "She listened to music", blankAnswer: "을", fullAnswer: "그녀는 음악을 들었어요" },
+    { sentenceWithBlank: "나는 한국어__ 배워요", english: "I learn Korean", blankAnswer: "를", fullAnswer: "나는 한국어를 배워요" },
+    { sentenceWithBlank: "우리는 사진__ 찍었어요", english: "We took a photo", blankAnswer: "을", fullAnswer: "우리는 사진을 찍었어요" },
+    { sentenceWithBlank: "그는 강아지__ 키웠어요", english: "He raised a dog", blankAnswer: "를", fullAnswer: "그는 강아지를 키웠어요" },
+    { sentenceWithBlank: "저는 과일__ 먹었어요", english: "I ate fruit", blankAnswer: "을", fullAnswer: "저는 과일을 먹었어요" },
+    { sentenceWithBlank: "그는 책__ 읽었어요", english: "He read a book", blankAnswer: "을", fullAnswer: "그는 책을 읽었어요" },
+    { sentenceWithBlank: "나는 영화__ 보았어요", english: "I watched a movie", blankAnswer: "를", fullAnswer: "나는 영화를 보았어요" },
+    { sentenceWithBlank: "우리는 음식__ 먹었어요", english: "We ate food", blankAnswer: "을", fullAnswer: "우리는 음식을 먹었어요" },
+    { sentenceWithBlank: "그녀는 도서관__ 봤어요", english: "She saw the library", blankAnswer: "을", fullAnswer: "그녀는 도서관을 봤어요" },
+    { sentenceWithBlank: "나는 공원__ 찾았어요", english: "I looked for the park", blankAnswer: "을", fullAnswer: "나는 공원을 찾았어요" },
+    { sentenceWithBlank: "우리는 축구__ 했어요", english: "We played soccer", blankAnswer: "를", fullAnswer: "우리는 축구를 했어요" },
+    { sentenceWithBlank: "너는 음악__ 들었어요", english: "You listened to music", blankAnswer: "을", fullAnswer: "너는 음악을 들었어요" },
+    { sentenceWithBlank: "그는 쇼핑__ 갔어요", english: "He went shopping", blankAnswer: "을", fullAnswer: "그는 쇼핑을 갔어요" },
+    { sentenceWithBlank: "나는 산__ 올라갔어요", english: "I climbed a mountain", blankAnswer: "을", fullAnswer: "나는 산을 올라갔어요" },
+    { sentenceWithBlank: "우리는 여행__ 갔어요", english: "We went on a trip", blankAnswer: "을", fullAnswer: "우리는 여행을 갔어요" },
+    { sentenceWithBlank: "그녀는 사진__ 찍었어요", english: "She took a photo", blankAnswer: "을", fullAnswer: "그녀는 사진을 찍었어요" },
+    { sentenceWithBlank: "나는 건물__ 들어갔어요", english: "I entered a building", blankAnswer: "을", fullAnswer: "나는 건물을 들어갔어요" },
+    { sentenceWithBlank: "우리는 동물원__ 가요", english: "We go to the zoo", blankAnswer: "을", fullAnswer: "우리는 동물원을 가요" },
+  ]
+};
+
 const exerciseTypeInstructions = {
   transcribe: [
     "Transcription",
