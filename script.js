@@ -15,6 +15,7 @@ let correctResponsesCounter = 0;
 let deconstructedCorrectAnswer = []; // used for keyboard hints
 let deconstructedUserInput = [];
 let answerRevealed = false;
+let keyboardMessage;
 
 // Possible values for showing English settings
 const showEngAsPrompt = "prompt"; // users will be asked to translate English to Korean
@@ -49,6 +50,8 @@ const nextBtnIncorrectText =
 const nextBtnReponseRequired = "There you go! Hit space to continue.";
 const nextBtnPrompt = "Press enter or click to submit";
 const nextBtnTryAgainText = "That's incorrect. Try again!";
+const keyboardMessageContent =
+  "This is an on-screen keyboard. It's here to help guide your typing. Not for you to click on... 😅";
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>> Function declarations <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
@@ -89,6 +92,9 @@ function checkAnswer() {
 
 // This will be executed when the user has entered the correct response
 function gradeCorrect() {
+  revealBtn.disabled = true;
+  revealBtn.classList.add("disabled-button");
+
   if (!promptContainer.classList.contains("lightup-incorrect")) {
     if (showEngSetting == showEngAfterGrading) {
       promptLabel.innerHTML += "<br>" + currentList[currentIndex - 1].english;
@@ -135,8 +141,10 @@ function gradeIncorrect() {
 
   // promptLabel.innerHTML += currentAnswer;
 
-  // This block only relevant if maxTries is limited
+  // In the case user is out of tries or reveals answer
   if (maxTries && (userTriesAmount >= maxTries || answerRevealed)) {
+    revealBtn.disabled = true;
+    revealBtn.classList.add("disabled-button");
     // Reveal correct answer and English if necessary
     if (!promptContainer.classList.contains("lightup-incorrect")) {
       if (showEngSetting == showEngAfterGrading) {
@@ -170,8 +178,6 @@ function gradeIncorrect() {
 
 // Results will be generated after the user completes an exercise
 function generateResults() {
-  // Show percentage correct
-
   // Print the items from the exercise to the corresponding text area
   resultsSummaryTextArea.value = "";
   resultsSummaryItems.forEach((rep, index) => {
@@ -241,12 +247,11 @@ function loadVocabList(listIndex) {
 // This is a function to show the user the next key to press by highlighting the key aqua
 // on the on-screen keyboard
 function showNextKey() {
+  // Remove previously activated key if relevant
+  document.querySelector(".activated-key")?.classList.remove("activated-key");
   if (!keyboardOn || !keyboardHintsOn) {
     return;
   }
-
-  // Remove previously activated key if relevant
-  document.querySelector(".activated-key")?.classList.remove("activated-key");
 
   let keyIndex = -1;
 
@@ -309,7 +314,10 @@ function showNextKey() {
     return;
   }
 
-  const keyToPress = deconstructedCorrectAnswer[keyIndex];
+  let keyToPress = deconstructedCorrectAnswer[keyIndex];
+  if (keyToPress === " ") {
+    keyToPress = "space-bar";
+  }
   // TODO : Add functionality to account for a space.
   document.querySelector(`.${keyToPress}`).classList.add("activated-key");
 }
@@ -395,6 +403,12 @@ function initializeExercise(callback) {
     // Other stuff will go here later
     if (!keepDefaultSettings) {
       applyUserSettings();
+    }
+    // Reveal typing results as necessary
+    if (speedCalcOn) {
+      typingResults.classList.remove("hidden");
+    } else {
+      typingResults.classList.add("hidden");
     }
     modalStartExercise.style.display = "none";
     callback();
@@ -496,20 +510,18 @@ function applyUserSettings() {
   repetitionNumber = repetitionsInput ? parseInt(repetitionsInput.value) : 10;
 
   speedCalcOn = calculateTypingSpeedCheckbox.checked;
-  if (speedCalcOn) {
-    typingResults.classList.remove("hidden");
-  } else {
-    typingResults.classList.add("hidden");
-  }
 
-  if (window.innerWidth < 500) {
-    keyboardOn = false;
+  if (onScreenKeyboardCheckbox.checked) {
+    keyboardOn = true;
+    showKeyboardCheckbox.checked = true;
   } else {
-    keyboardOn = onScreenKeyboardCheckbox.checked;
+    keyboardOn = false;
+    showKeyboardCheckbox.checked = false;
   }
 
   if (keyboardHintsCheckbox.checked) {
     keyboardHintsOn = true;
+    showHintsCheckbox.checked = true;
   } else {
     keyboardHintsOn = false;
     showHintsCheckbox.checked = false;
@@ -520,6 +532,10 @@ function applyUserSettings() {
 
 // Sets next prompt and puts the current rep in the results summary array
 function setNextPrompt() {
+  // Restore reveal button
+  revealBtn.disabled = false;
+  revealBtn.classList.remove("disabled-button");
+
   // Save the current rep's information for results summary
   const currentRep = {
     korean: currentList[currentIndex].korean,
@@ -617,6 +633,7 @@ function keyToKoreanLetter(keyCode, isShiftPressed) {
     KeyX: "ㅌ",
     KeyY: "ㅛ",
     KeyZ: "ㅋ",
+    Space: "space-bar",
   };
 
   const shiftedCharacters = {
@@ -638,6 +655,15 @@ function keyToKoreanLetter(keyCode, isShiftPressed) {
   } else {
     return null;
   }
+}
+
+// Function to handle the reveal answer action
+function revealAnswer() {
+  if (answerRevealed) {
+    return;
+  }
+  answerRevealed = true;
+  gradeIncorrect();
 }
 
 // >>>>>>>>>>>>>>>>>>>>>>> Event Listeners <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
@@ -737,6 +763,7 @@ bubbleContainer.addEventListener("click", function (event) {
     initializeExercise(function () {
       hideContainers();
       learningContainer.parentElement.classList.remove("hidden");
+      keyboardCheckboxes.parentElement.classList.remove("hidden");
       if (keyboardOn) {
         keyboardContainer.parentElement.classList.remove("hidden");
       }
@@ -873,7 +900,11 @@ nextBtn.addEventListener("click", function () {
     userText.value = "";
     nextBtn.textContent = nextBtnPrompt;
   } else {
-    checkAnswer();
+    if (userText.value.trim() == "") {
+      userText.value = "";
+    } else {
+      checkAnswer();
+    }
   }
 });
 
@@ -969,11 +1000,14 @@ userText.addEventListener("compositionend", function () {
 
 showKeyboardCheckbox.addEventListener("change", function () {
   if (showKeyboardCheckbox.checked) {
-    keyboardContainer.style.display = "flex";
+    keyboardContainer.parentElement.classList.remove("hidden");
     keyboardOn = true;
     showHintsCheckbox.disabled = false;
+    if (showHintsCheckbox.checked) {
+      showNextKey();
+    }
   } else {
-    keyboardContainer.style.display = "none";
+    keyboardContainer.parentElement.classList.add("hidden");
     keyboardOn = false;
     showHintsCheckbox.disabled = true;
   }
@@ -985,14 +1019,11 @@ showHintsCheckbox.addEventListener("change", function () {
   } else {
     keyboardHintsOn = false;
   }
+  showNextKey();
 });
 
 // For tracking what key needs to be lit up next for hints
 userText.addEventListener("input", function () {
-  if (!keyboardOn || !keyboardHintsOn) {
-    return;
-  }
-
   const userInput = userText.value;
 
   // Convert the user input into a deconstructed array
@@ -1019,11 +1050,31 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// Function to handle the reveal answer action
-function revealAnswer() {
-  if (answerRevealed) {
-    return;
+keyboard.addEventListener("click", (event) => {
+  if (keyboardMessage) {
+    keyboardMessage.remove();
+    keyboardMessage = null;
   }
-  answerRevealed = true;
-  gradeIncorrect();
-}
+  keyboardMessage = document.createElement("div");
+  keyboardMessage.classList.add("keyboard-message");
+  keyboardMessage.textContent = keyboardMessageContent;
+
+  keyboardMessage.style.left = event.clientX + "px";
+  keyboardMessage.style.top = event.clientY + "px";
+
+  document.body.appendChild(keyboardMessage);
+
+  setTimeout(() => {
+    if (keyboardMessage) {
+      keyboardMessage.remove();
+      keyboardMessage = null;
+    }
+  }, 5000);
+});
+
+document.addEventListener("click", (event) => {
+  if (keyboardMessage && !keyboard.contains(event.target)) {
+    keyboardMessage.remove();
+    keyboardMessage = null;
+  }
+});

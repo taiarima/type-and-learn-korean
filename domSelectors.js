@@ -51,6 +51,7 @@ const revealBtn = document.querySelector(".reveal-btn");
 const triesContainer = document.querySelector(".tries-container");
 const triesEmojisContainer = document.querySelector(".tries-emojis");
 const triesLabel = document.querySelector(".tries-label");
+const keyboardCheckboxes = document.querySelector(".keyboard-checkboxes");
 
 // Modal Window selectors
 const modalStartExercise = document.querySelector(".modal-start-exercise");

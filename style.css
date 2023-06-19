@@ -169,7 +169,7 @@ main {
   transform: scale(1.5);
   width: 100%;
   max-width: 200px;
-  margin: 10px 5px;F
+  margin: 10px 5px;
   box-sizing: border-box;
   white-space: normal;
   text-align: center;
@@ -194,12 +194,23 @@ main {
   margin-right: auto;
 }
 
-@media screen and (max-width: 500px) {
+.keyboard-checkboxes {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 525px) {
   .keyboard-container {
     display: none;
   }
 
   .keyboard-options {
+    display: none;
+  }
+
+  .keyboard-checkboxes {
     display: none;
   }
 }
@@ -210,6 +221,7 @@ main {
   grid-template-columns: repeat(10, 1fr);
   grid-gap: 5px;
   margin-top: 10px;
+  user-select: none;
 }
 
 .key {
@@ -220,15 +232,20 @@ main {
   background-color: #f9f9f9;
   padding: 10px;
   font-size: 14px;
-  cursor: pointer;
+  cursor: default;
   border-radius: 5px;
   position: relative;
   font-family: "Sunflower", sans-serif;
   font-weight: 90;
   font-size: 1.55rem;
   box-shadow: 0 10px 6px rgba(0, 0, 0, 0.2);
-  box-shadow: #ccc;
   transition: background-color 0.5s;
+}
+
+.space-bar {
+  width: 150px;
+  height: 10px;
+  margin-top: 4px;
 }
 
 .lightup-correct {
@@ -323,13 +340,6 @@ main {
 .bubble:hover {
   transform: translate(-2px, -2px);
   background-color: var(--color-green);
-}
-
-.keyboard-checkboxes {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 10px;
 }
 
 .checkbox-container {
@@ -519,6 +529,11 @@ button {
   display: inline-block;
 }
 
+.disabled-button {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .button-container {
   margin-top: 10px;
   display: flex;
@@ -653,7 +668,7 @@ button {
 }
 
 .progress-bar {
-  background-color: #4caf50; /* Green */
+  background-color: #4caf50;
   height: 100%;
   width: 0%;
 }
@@ -670,7 +685,6 @@ button {
   flex-direction: column;
   line-height: 1.5;
 }
-
 
 /* Adding reveal button and tries remaining */
 .tries-reveal-container {
@@ -712,4 +726,13 @@ button {
 
 .reveal-btn:active {
   background-color: maroon;
+}
+
+.keyboard-message {
+  position: absolute;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid black;
+  font-family: var(--font-family);
+  width: 100px;
 }
