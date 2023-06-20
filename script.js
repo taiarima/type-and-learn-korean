@@ -256,16 +256,16 @@ function showNextKey() {
   let keyIndex = -1;
 
   // There are five possible scenarios:
-  // 1. The user has typed only correct characters but has not completed the answer yet
-  // ----> Function should light up next key
-  // 2. The user has typed one or more incorrect characters
-  // -----> The function should show the next correct character, and show a message showing the user should hit backspace
-  /// 3. The user has typed the entire answer correctly
-  // -----> No further hints should be shown
-  // 4. The user has typed the entire correct answer, but also additional characters which are unncessary
-  // -----> A message should be shown that the user has typed too many characters, no hints should be shown
-  // 5. The user hasn't typed anything yet
+  // 1. The user hasn't typed anything yet
   // ---> The hint should be for the first character
+  // 2. The user has typed only correct characters but has not completed the answer yet
+  // ----> Function should light up next key
+  // 3. The user has typed one or more incorrect characters
+  // -----> The function should show the next correct character, and show a message showing the user should hit backspace
+  // 4. The user has typed the entire answer correctly
+  // -----> No further hints should be shown
+  // 5. The user has typed the entire correct answer, but also additional characters which are unncessary
+  // -----> A message should be shown that the user has typed too many characters, no hints should be shown
 
   // Show the first character in deconstructedCorrectAnswer if userText is empty
   if (deconstructedUserInput.length == 0) {
@@ -318,7 +318,6 @@ function showNextKey() {
   if (keyToPress === " ") {
     keyToPress = "space-bar";
   }
-  // TODO : Add functionality to account for a space.
   document.querySelector(`.${keyToPress}`).classList.add("activated-key");
 }
 

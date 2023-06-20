@@ -1,6 +1,5 @@
 // TODO
-// I need to fix the behavior for the buttons showing the keyboard
-// and the calculation of typing speed
+
 // I need to make an applyDefaultSettings funciton that takes the type of exercise as an arg
 // and then changes settings accordingly
 // This should also shift what the appearance of the default settings are when someone
@@ -18,13 +17,7 @@
 // Make typing exercises where it highlights text as you go along
 
 Next thing to do:
-CHECK        1. Complete the code to make typing the exercises work.
-CHECK        2. Make an end condition for the exercise and a results display.
-CHECK        3. Make a function to calculate typing speed
-CHECK        4. Make a modal that pops up to confirm settings before beginning exercise
-CHECK        6. Implement progress bar
 
-CHECK  7. Make it so keyboard can only be turned on if screen is big enough
 8. Make it so certain settings are disabled if they aren't relevant to exercise
 
 I need to remember that for fill-in-the-blank exercises, the keyboard hints have to be off, otherwise they spoil the answers
@@ -32,7 +25,7 @@ I need to remember that for fill-in-the-blank exercises, the keyboard hints have
 
 
 and accept answer as correct if they want
-I need to figure out how to light things up when the user hits backspace
+
 
 I should have several types of exercises, then give each exercise object a type,
 then have a type object which has all the types and their respective rules
@@ -47,6 +40,19 @@ then have a type object which has all the types and their respective rules
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+I need to figure out how to light things up when the user hits backspace
+
+CHECK        1. Complete the code to make typing the exercises work.
+CHECK        2. Make an end condition for the exercise and a results display.
+CHECK        3. Make a function to calculate typing speed
+CHECK        4. Make a modal that pops up to confirm settings before beginning exercise
+CHECK        6. Implement progress bar
+
+CHECK  7. Make it so keyboard can only be turned on if screen is big enough
+
+// I need to fix the behavior for the buttons showing the keyboard
+// and the calculation of typing speed
 
 I should have something where people can have to show the answers if they want
 
