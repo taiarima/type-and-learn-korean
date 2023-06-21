@@ -1,31 +1,27 @@
 "use strict";
 
-// !! TODO !! Results and settings and, uhh.... reveal answer and some other things need to be fixed with respect to exercise type
-// Reveal answer button should be disabled for transcription exercises. Turn off keyboard hints except for transcription. Turn on if reveal.
-
 // Global Variables
 let currentAnswer; // This will be the answer the user must type in for their response to be graded correct
-let charCounter = 0;
-let currentList;
+let currentList; // List of vocabulary for current exercise
 let currentIndex = 0;
-let exerciseUnderway = false;
+let exerciseUnderway = false; // Boolean to indicate exercise is underway/in progress
 let currentCategory = rootCategoryContainer; // This will be stored to apply to labels on exercise start modal and results page
 let previousCategory; // this will be used for when user hits back button
 let currentExerciseName; // Same as above. Is assigned in loadVocabList
 let keepDefaultSettings = true;
-let resultsSummaryItems = []; // This will hold the content of the exercise to present in results summary text area
 let userTriesAmount = 0; // For each prompt, the amount of tries a user attempts will be tracked. Only relevant if maxTries != 0
 let correctResponsesCounter = 0;
 let deconstructedCorrectAnswer = []; // used for keyboard hints
-let deconstructedUserInput = [];
+let deconstructedUserInput = []; // keeps track of what user has typed to see what their next keyboard hint should be
 let answerRevealed = false;
 let keyboardMessage;
-let currentAnswerType;
+let currentAnswerType; // Depending on exercise and settings, the type of answer and prompt will be different
 let currentPromptType;
-let currentExercise;
+let currentExercise; // this is the current exercise object, whereas currentList only contains contents of items array
+let currentPromptInstructions;
 
 // Possible values for showing English settings
-const showEngAsPrompt = "prompt"; // users will be asked to translate English to Korean
+//* Think I'll remove this setting-->const showEngAsPrompt = "prompt"; // users will be asked to translate English to Korean
 const showEngAfterGrading = "afterGrading"; // how English only on results page
 const showEngWithResults = "withResults"; // Show English only after prompt has been graded as correct/incorrect
 const showEngSameTime = "sameTime"; // Show English translation at same time as Korean prompt
@@ -41,6 +37,43 @@ let keyboardOn = true;
 let keyboardHintsOn = true;
 // let saveSettingsOn = true; // As long as this is checked, defaults will not be automatically be restored;; Disabling this functionality for now
 let showEngSetting = showEngAfterGrading;
+let requireFullSentence = false;
+let hintsAllowed = true;
+
+const exerciseTypeConfig = {
+  transcribe: {
+    repetitions: 10,
+    showEnglish: "afterGrading",
+    showKeyboardHints: true,
+    requireFullSentence: false,
+    showEnglishOption: true,
+    showHints: true,
+  },
+  fillblank: {
+    repetitions: 15,
+    showEnglish: "afterGrading",
+    showKeyboardHints: false,
+    requireFullSentence: false,
+    showEnglishOption: false,
+    showHints: false,
+  },
+  grammar: {
+    repetitions: 10,
+    showEnglish: "afterGrading",
+    showKeyboardHints: false,
+    requireFullSentence: false,
+    showEnglishOption: true,
+    showHints: false,
+  },
+  jumble: {
+    repetitions: 10,
+    showEnglish: "afterGrading",
+    showKeyboardHints: false,
+    requireFullSentence: false,
+    showEnglishOption: true,
+    showHints: false,
+  },
+};
 
 // For calculating typing speed
 let totalCharsTyped = 0;
@@ -105,9 +138,6 @@ function gradeCorrect() {
   if (!promptContainer.classList.contains("lightup-incorrect")) {
     if (showEngSetting == showEngAfterGrading) {
       promptLabel.innerHTML += "<br>" + currentList[currentIndex - 1].english;
-    } else if (showEngSetting == showEngAsPrompt) {
-      promptLabel.innerHTML +=
-        "<br>" + "Correct answer: " + currentList[currentIndex - 1].korean;
     }
     nextBtn.textContent = nextBtnCorrectText;
     correctResponsesCounter++;
@@ -125,6 +155,21 @@ function gradeCorrect() {
   }, 50);
 
   speedCalcOn && stopTimer();
+}
+
+function setAnswerText() {
+  promptLabel.innerHTML = `Answer: ${
+    currentList[currentIndex - 1][currentAnswerType]
+  }`;
+
+  if (currentAnswerType == "blankAnswer") {
+    promptLabel.innerHTML +=
+      "<br>" + currentList[currentIndex - 1].sentenceWithBlank;
+  }
+
+  if (showEngSetting == showEngAfterGrading) {
+    promptLabel.innerHTML += "<br>" + currentList[currentIndex - 1].english;
+  }
 }
 
 // Executes when user has entered an incorrect response
@@ -154,12 +199,7 @@ function gradeIncorrect() {
     revealBtn.classList.add("disabled-button");
     // Reveal correct answer and English if necessary
     if (!promptContainer.classList.contains("lightup-incorrect")) {
-      if (showEngSetting == showEngAfterGrading) {
-        promptLabel.innerHTML += "<br>" + currentList[currentIndex - 1].english;
-      } else if (showEngSetting == showEngAsPrompt) {
-        promptLabel.innerHTML +=
-          "<br>" + "Correct answer: " + currentList[currentIndex - 1].korean;
-      }
+      setAnswerText();
       promptContainer.classList.add("lightup-incorrect");
     }
 
@@ -182,22 +222,31 @@ function gradeIncorrect() {
     }
   }
 }
+function printExerciseSummary() {
+  exerciseSummaryTextArea.value = "";
+
+  currentList.forEach((item, index) => {
+    exerciseSummaryTextArea.value += `\n${index + 1}.\nPrompt: ${
+      item[currentPromptType]
+    }\n`;
+    exerciseSummaryTextArea.value += `Answer: ${item[currentAnswerType]}\n`;
+    if (showEngSetting != showNoEng) {
+      exerciseSummaryTextArea.value += `English: ${item.english}\n`;
+    }
+  });
+
+  exerciseSummaryTextArea.scrollTop = 0;
+}
 
 // Results will be generated after the user completes an exercise
 function generateResults() {
   // Print the items from the exercise to the corresponding text area
-  resultsSummaryTextArea.value = "";
-  resultsSummaryItems.forEach((rep, index) => {
-    resultsSummaryTextArea.value += `\n${index + 1}.\nKorean: ${rep.korean}\n`;
-    if (showEngSetting != showNoEng) {
-      resultsSummaryTextArea.value += `English: ${rep.english}\n`;
-    }
-  });
+  printExerciseSummary();
 
   // Write string to show how many answers user got correct
-  exercisePerformanceLabel.textContent = `Exercise performance: ${
+  exercisePerformanceLabel.textContent = `Exercise performance: ${Math.floor(
     (correctResponsesCounter / repetitionNumber) * 100
-  }% correct`;
+  )}% correct`;
 
   if (speedCalcOn) {
     // Calculate and show typing speed
@@ -221,40 +270,35 @@ function generateResults() {
 
 // This loads the prompts that a user will be shown for an exercise in accordance with
 // the exercise and settings they have selected.
-function loadVocabList(listIndex) {
+function loadVocabList() {
   // Bool to prevent user from accidentally navigating away during exercise
   exerciseUnderway = true;
 
   // Initialize the progress bar to have a sliver of progress showing
   progressBar.style.width = `${100 / repetitionNumber / 2}%`;
-  currentExercise = currentCategory.items[listIndex];
+
+  // Make the list of prompts for the exercise
   const randomizedList = shuffleArray(currentExercise.items);
-  currentList = randomizedList;
-  currentAnswerType = determineAnswerType(currentExercise.type, false);
-  currentPromptType =
-    showEngSetting === showEngAsPrompt
-      ? "english"
-      : exerciseTypeController[currentExercise.type].promptType;
-  // The bottom needs to be adjusted according to the specifications of the exercise
-  // currentList.forEach((prompt) => {
-  //   const hangeulChars = Hangul.disassemble(prompt.korean);
-  //   const hangeulString = hangeulChars.join("");
-  //   totalPromptChars += hangeulString.replace(/\s/g, "").length;
-  // });
+  currentList = randomizedList.slice(0, repetitionNumber);
+  currentAnswerType = determineAnswerType(
+    currentExercise.type,
+    requireFullSentence
+  );
+  currentPromptType = exerciseTypeController[currentExercise.type].promptType;
+  currentPromptInstructions = setPromptInstructions();
 
-  // Stand in code for testing. It should be changed to the above later
-
-  // This needs to be changed for the type of exercise
-  // answerType --> check exercise type, then check settings
-  for (let i = 0; i < repetitionNumber; i++) {
-    const hangeulChars = Hangul.disassemble(currentList[i][currentAnswerType]);
-    const hangeulString = hangeulChars.join("");
-    totalPromptChars += hangeulString.replace(/\s/g, "").length;
+  // This is for the purpose of calculating typing speed
+  if (speedCalcOn) {
+    for (let i = 0; i < repetitionNumber; i++) {
+      const hangeulChars = Hangul.disassemble(
+        currentList[i][currentAnswerType]
+      );
+      const hangeulString = hangeulChars.join("");
+      totalPromptChars += hangeulString.replace(/\s/g, "").length;
+    }
   }
 
   setNextPrompt();
-
-  userText.focus();
 }
 
 // This is a function to show the user the next key to press by highlighting the key aqua
@@ -345,48 +389,9 @@ function shuffleArray(array) {
   return newArray;
 }
 
-// Creates "bubbles", which are selectable categories of exercises
-function createBubbles() {
-  bubbleContainer.style.display = "flex";
-  bubbleContainer.parentElement.classList.remove("hidden");
-  const bubbleSize = 150;
-
-  // Clear existing bubbles
-  bubbleContainer.innerHTML = "";
-
-  // Create heading element
-  const heading = document.createElement("h2");
-  heading.textContent = currentCategory.title;
-  heading.classList.add("bubble-heading");
-  bubbleContainer.appendChild(heading);
-
-  const containerWidth = bubbleContainer.offsetWidth;
-  const bubblesPerRow = Math.floor(containerWidth / bubbleSize);
-
-  basicVocabCategories.items.forEach((item, index) => {
-    const rowNumber = Math.floor(index / bubblesPerRow);
-    let row = bubbleContainer.querySelector(
-      `.bubble-row[data-row="${rowNumber}"]`
-    );
-
-    if (!row) {
-      row = document.createElement("div");
-      row.classList.add("bubble-row");
-      row.setAttribute("data-row", rowNumber);
-      bubbleContainer.appendChild(row);
-    }
-
-    const bubble = document.createElement("div");
-    bubble.classList.add("bubble");
-    bubble.style.width = `${bubbleSize}px`;
-    bubble.style.height = `${bubbleSize}px`;
-    bubble.textContent = item.title;
-    row.appendChild(bubble);
-  });
-}
-
-// Modifying createBubbles function to have more versatility
-function createBubblesNeo(category) {
+// A "bubble" is a selectable box which is either an exercise category or an exercise
+// This function is called when user clicks on start learning or an exercise category
+function createBubbles(category) {
   previousCategory = currentCategory;
   currentCategory = category;
   if (currentCategory == rootCategoryContainer) {
@@ -462,9 +467,7 @@ function showModalAbandon(callback) {
 function initializeExercise(callback) {
   beginExerciseButton.addEventListener("click", function beginExercise(event) {
     // Other stuff will go here later
-    if (!keepDefaultSettings) {
-      applyUserSettings();
-    }
+    applyUserSettings(currentExercise.type);
     // Reveal typing results as necessary
     if (speedCalcOn) {
       typingResults.classList.remove("hidden");
@@ -490,7 +493,7 @@ function clearExercise() {
   currentIndex = 0;
   exerciseUnderway = false;
   userText.value = "";
-  resultsSummaryItems = [];
+  exerciseSummaryItems = [];
   userText.classList.remove("lightup-correct");
   promptLabel.textContent = currentList[currentIndex].korean;
   nextBtn.classList.remove("bigger-next-btn");
@@ -535,8 +538,9 @@ function playWarningSound() {
   audio.play();
 }
 
-// Users can choose settings for their exercise
-function applyUserSettings() {
+// Function to apply user settings, now taking into account exercise type
+function applyUserSettings(exerciseType) {
+  // Settings shared by all exercise types
   const selectedShowEnglishOption = document.querySelector(
     `${showEnglishOptionsSelector} input[type="radio"]:checked`
   );
@@ -550,45 +554,41 @@ function applyUserSettings() {
   const calculateTypingSpeedCheckbox = document.querySelector(
     calculateTypingSpeedCheckboxSelector
   );
-
   const triesPerPromptInput = document.querySelector(
     ".tries-per-prompt-number"
   );
   const selectedTriesPerPrompt = document.querySelector(
     'input[name="triesPerPrompt"]:checked'
   ).value;
+  const requireFullSentenceCheckbox = document.querySelector(
+    requireFullSentenceSelector
+  );
+
+  // Apply common settings
   maxTries =
     selectedTriesPerPrompt === "unlimited"
       ? 0
       : parseInt(triesPerPromptInput.value);
-  unlimitedTries = maxTries === 0;
+  unlimitedTries = maxTries === 0; // I don't think I user unlimitedTries anywhere...
 
   requireResponse = requireAnswerCheckbox.checked;
-
-  // Haven't decided how to handle this yet
-  // saveSettingsOn = saveSettingsCheckbox.checked;
-
   repetitionNumber = repetitionsInput ? parseInt(repetitionsInput.value) : 10;
-
   speedCalcOn = calculateTypingSpeedCheckbox.checked;
 
-  if (onScreenKeyboardCheckbox.checked) {
-    keyboardOn = true;
-    showKeyboardCheckbox.checked = true;
-  } else {
-    keyboardOn = false;
-    showKeyboardCheckbox.checked = false;
+  keyboardOn = onScreenKeyboardCheckbox.checked;
+  showKeyboardCheckbox.checked = keyboardOn;
+  keyboardHintsOn = keyboardHintsCheckbox.checked;
+  showHintsCheckbox.checked = keyboardHintsOn;
+
+  // The following settings are not applicable to all exercise types
+  if (exerciseType !== "fillblank") {
+    showEngSetting = selectedShowEnglishOption.value;
   }
 
-  if (keyboardHintsCheckbox.checked) {
-    keyboardHintsOn = true;
-    showHintsCheckbox.checked = true;
-  } else {
-    keyboardHintsOn = false;
-    showHintsCheckbox.checked = false;
+  // The following setting is not applicable to "transcribe" and "jumble"
+  if (exerciseType !== "transcribe" && exerciseType !== "jumble") {
+    requireFullSentence = requireFullSentenceCheckbox.checked;
   }
-
-  showEngSetting = selectedShowEnglishOption.value;
 }
 
 // Sets next prompt and puts the current rep in the results summary array
@@ -597,16 +597,14 @@ function setNextPrompt() {
   revealBtn.disabled = false;
   revealBtn.classList.remove("disabled-button");
 
-  // Save the current rep's information for results summary
-  const currentRep = {
-    korean: currentList[currentIndex].korean,
-    english: currentList[currentIndex].english,
-    correctAnswer: currentList[currentIndex].correctAnswer
-      ? currentList[currentIndex].correctAnswer
-      : currentList[currentIndex].korean,
-    yourAnswer: userText.value.trim(),
-  };
-  resultsSummaryItems.push(currentRep);
+  // Restore other GUI elements
+  nextBtn.classList.remove("bigger-next-btn");
+  promptContainer.classList.remove("lightup-incorrect");
+  userText.classList.remove("lightup-correct");
+  userText.disabled = false;
+  userText.focus();
+  userText.value = "";
+  nextBtn.textContent = nextBtnPrompt;
 
   if (maxTries) {
     userTriesAmount = 0;
@@ -614,17 +612,12 @@ function setNextPrompt() {
   }
   answerRevealed = false;
 
-  //This will be customized according to exercise type in the future.
-  promptInstructions.textContent = "Type the following in Korean:";
+  promptInstructions.textContent = currentPromptInstructions;
 
   // Actual prompt will depend on various settings, this is under construction TODO
-  if (showEngSetting == showEngAsPrompt) {
-    promptLabel.innerHTML = currentList[currentIndex].english;
-  } else {
-    promptLabel.innerHTML = currentList[currentIndex][currentPromptType];
-    if (showEngSetting == showEngSameTime) {
-      promptLabel.innerHTML += "<br>" + currentList[currentIndex].english;
-    }
+  promptLabel.innerHTML = currentList[currentIndex][currentPromptType];
+  if (showEngSetting == showEngSameTime) {
+    promptLabel.innerHTML += "<br>" + currentList[currentIndex].english;
   }
 
   // The current answer will change depending on settings and exercise type. For now it is just the Korean
@@ -634,6 +627,21 @@ function setNextPrompt() {
 
   // This function should be invoked when appropriate to show the user the first key to be pressed
   showNextKey();
+}
+
+function setPromptInstructions() {
+  let instructions = "";
+  if (currentExercise.type === "grammar") {
+    instructions = currentExercise.promptLabel;
+  } else {
+    if (requireFullSentence) {
+      instructions =
+        exerciseTypeController[currentExercise.type].altPromptLabel;
+    } else {
+      instructions = exerciseTypeController[currentExercise.type].promptLabel;
+    }
+  }
+  return instructions;
 }
 
 function updateTriesUI() {
@@ -737,6 +745,81 @@ function determineAnswerType(exerciseType, altAnswer) {
     : exerciseTypeController[exerciseType].answerType;
 }
 
+function applyDefaultSettingsByType(exerciseType) {
+  //Selectors for changing settings
+  const selectedShowEnglishOption = document.querySelectorAll(
+    `${showEnglishOptionsSelector} input[type="radio"]`
+  );
+  const repetitionsInput = document.querySelector(repetitionsInputSelector);
+  const onScreenKeyboardCheckbox = document.querySelector(
+    onScreenKeyboardCheckboxSelector
+  );
+  const keyboardHintsCheckbox = document.querySelector(
+    keyboardHintsCheckboxSelector
+  );
+  const calculateTypingSpeedCheckbox = document.querySelector(
+    calculateTypingSpeedCheckboxSelector
+  );
+  const triesPerPromptInput = document.querySelector(
+    ".tries-per-prompt-number"
+  );
+  const unlimitedRadio = document.querySelector(".unlimited-tries");
+  const limitedRadio = document.querySelector(".limited-tries");
+  const requireFullSentenceCheckbox = document.querySelector(
+    requireFullSentenceSelector
+  );
+
+  // There are 8 total settings, currently only 5, 6, 7, and 8 are unique
+
+  // 1. Tries per prompt Setting (unlimited, limited number) // SAME FOR ALL //
+  unlimitedRadio.checked = false;
+  limitedRadio.checked = true;
+  triesPerPromptNumber.disabled = false;
+  triesPerPromptInput.value = "3";
+
+  // 2. Require answer setting (on/off) // SAME FOR ALL //
+  requireAnswerCheckbox.checked = true;
+
+  // 3. Calculate typing speed setting (on/off) // SAME FOR ALL //
+  calculateTypingSpeedCheckbox.checked = true;
+
+  // 4. On-screen keyboard (on/off) // SAME FOR ALL //
+  onScreenKeyboardCheckbox.checked = true;
+
+  // 5. Require full sentence // Default is false for all, but some options disable it
+  requireFullSentenceCheckbox.checked = false;
+
+  // Get the configuration for the current exercise type
+  const config = exerciseTypeConfig[exerciseType];
+
+  // 6. Show English Setting (4 choices)
+  selectedShowEnglishOption.forEach((option) => {
+    if (config.showEnglishOption) {
+      showEnglishOptionsContainer.classList.remove("hidden");
+      if (option.value === config.showEnglish) {
+        option.checked = true;
+      } else {
+        option.checked = false;
+      }
+    } else {
+      showEnglishOptionsContainer.classList.add("hidden");
+    }
+  });
+
+  // 7. Repetitions setting (number)
+  repetitionsInput.value = config.repetitions;
+
+  // 8. Keyboard hints (on/off)
+  hintsAllowed = keyboardHintsCheckbox.checked = config.showKeyboardHints;
+  showHintsCheckbox.disabled = !config.showHints;
+  showHintsLabel.classList[config.showHints ? "remove" : "add"]("hidden");
+
+  // 5. Require full sentence disabled or no
+  requireFullSentenceLabel.classList[
+    config.requireFullSentence ? "remove" : "add"
+  ]("hidden");
+}
+
 // >>>>>>>>>>>>>>>>>>>>>>> Event Listeners <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
 startLearnLinks.forEach(function (startLearnLink) {
@@ -745,12 +828,12 @@ startLearnLinks.forEach(function (startLearnLink) {
       showModalAbandon(function (choice) {
         if (choice === "abandon") {
           hideContainers();
-          createBubblesNeo(rootCategoryContainer);
+          createBubbles(rootCategoryContainer);
         }
       });
     } else {
       hideContainers();
-      createBubblesNeo(rootCategoryContainer);
+      createBubbles(rootCategoryContainer);
     }
   });
 });
@@ -812,16 +895,12 @@ bubbleContainer.addEventListener("click", function (event) {
     );
     const bubbleIndex = bubbles.indexOf(event.target);
 
-    // Assign values for labels
-    // Experimenting with new functionality. Saving this in case of failure.
-    // currentCategory = basicVocabCategories.title;
-    // currentExerciseName = basicVocabCategories.items[bubbleIndex].title;
-
     const currentSelection = currentCategory.items[bubbleIndex];
     if (currentSelection instanceof ExerciseCategory) {
-      createBubblesNeo(currentSelection);
+      createBubbles(currentSelection);
     } else {
       currentExercise = currentSelection;
+      applyDefaultSettingsByType(currentExercise.type);
 
       // Set the instructions and type of exercise for modal
       insertInstructions.textContent = currentExercise?.specialInstructions
@@ -856,7 +935,7 @@ bubbleContainer.addEventListener("click", function (event) {
         if (keyboardOn) {
           keyboardContainer.parentElement.classList.remove("hidden");
         }
-        loadVocabList(bubbleIndex);
+        loadVocabList();
       });
     }
   }
@@ -867,49 +946,7 @@ defaultCheckbox.addEventListener("change", function () {
   if (defaultCheckbox.checked) {
     keepDefaultSettings = true;
     exSettingsContainer.classList.add("hidden");
-
-    const selectedShowEnglishOption = document.querySelectorAll(
-      `${showEnglishOptionsSelector} input[type="radio"]`
-    );
-    const repetitionsInput = document.querySelector(repetitionsInputSelector);
-    const onScreenKeyboardCheckbox = document.querySelector(
-      onScreenKeyboardCheckboxSelector
-    );
-    const keyboardHintsCheckbox = document.querySelector(
-      keyboardHintsCheckboxSelector
-    );
-    const calculateTypingSpeedCheckbox = document.querySelector(
-      calculateTypingSpeedCheckboxSelector
-    );
-
-    const triesPerPromptInput = document.querySelector(
-      ".tries-per-prompt-number"
-    );
-    const selectedTriesPerPrompt = document.querySelector(
-      'input[name="triesPerPrompt"]:checked'
-    ).value;
-
-    onScreenKeyboardCheckbox.checked = true;
-    keyboardHintsCheckbox.checked = true;
-    // saveSettingsCheckbox.checked = true;
-    requireAnswerCheckbox.checked = true;
-    calculateTypingSpeedCheckbox.checked = true;
-
-    repetitionsInput.value = 10;
-    selectedShowEnglishOption.forEach((option) => {
-      if (option.value === "afterGrading") {
-        option.checked = true;
-      } else {
-        option.checked = false;
-      }
-    });
-    const unlimitedRadio = document.querySelector(".unlimited-tries");
-    const limitedRadio = document.querySelector(".limited-tries");
-    unlimitedRadio.checked = false;
-    limitedRadio.checked = true;
-    triesPerPromptNumber.disabled = false;
-
-    triesPerPromptInput.value = "3";
+    applyDefaultSettingsByType(currentExercise.type);
   } else {
     keepDefaultSettings = false;
     exSettingsContainer.classList.remove("hidden");
@@ -985,13 +1022,6 @@ nextBtn.addEventListener("click", function () {
       return;
     }
     setNextPrompt();
-    nextBtn.classList.remove("bigger-next-btn");
-    promptContainer.classList.remove("lightup-incorrect");
-    userText.classList.remove("lightup-correct");
-    userText.disabled = false;
-    userText.focus();
-    userText.value = "";
-    nextBtn.textContent = nextBtnPrompt;
   } else {
     if (userText.value.trim() == "") {
       userText.value = "";
@@ -1095,7 +1125,9 @@ showKeyboardCheckbox.addEventListener("change", function () {
   if (showKeyboardCheckbox.checked) {
     keyboardContainer.parentElement.classList.remove("hidden");
     keyboardOn = true;
-    showHintsCheckbox.disabled = false;
+    if (hintsAllowed) {
+      showHintsCheckbox.disabled = false;
+    }
     if (showHintsCheckbox.checked) {
       showNextKey();
     }
@@ -1173,5 +1205,5 @@ document.addEventListener("click", (event) => {
 });
 
 backArrow.addEventListener("click", function () {
-  createBubblesNeo(previousCategory);
+  createBubbles(previousCategory);
 });

@@ -292,12 +292,13 @@
                 <p>Show English: </p>
                 <div class="show-english-options">
                   <label><input type="radio" name="showEnglish" value="afterGrading" checked> After response graded<span class="info-flag" data-info="The English translation will only be shown for each prompt after your answer has been marked correct or incorrect.">❔</span></label>
-                  <label><input type="radio" name="showEnglish" value="prompt" > As the prompt<span class="info-flag" data-info="You will be given a prompt in English and asked to translate into Korean. This makes the exercise more difficult, but will help improve your active vocabulary and ability to produce Korean from memory.">❔</span></label>
+                  <!-- <label><input type="radio" name="showEnglish" value="prompt" > As the prompt<span class="info-flag" data-info="You will be given a prompt in English and asked to translate into Korean. This makes the exercise more difficult, but will help improve your active vocabulary and ability to produce Korean from memory.">❔</span></label> -->
                   <label><input type="radio" name="showEnglish" value="sameTime"> At the same time as prompt<span class="info-flag" data-info="You will be shown each Korean prompt and its English translation at the same time.">❔</span></label>
                   <label><input type="radio" name="showEnglish" value="withResults"> Only in results summary<span class="info-flag" data-info="You will only be shown English translations in your results summary after completing the exercise.">❔</span></label>
                   <label><input type="radio" name="showEnglish" value="none"> Not at all</label>
                 </div>
               </div>
+              <p class="require-full-sentence-label">Require full sentence for answer:<span class="info-flag" data-info="Check this box to type the complete sentence with the missing word filled for the answer, rather than just the word that fills the blank.">❔</span> <input type="checkbox" class="require-full-sentence"></p>
               <p>Tries per prompt:<span class="info-flag" data-info="Amount of tries you are allowed to attempt answering a given prompt before your answer is marked incorrect.">❔</span></p>
               <label>
                 <input type="radio" name="triesPerPrompt" value="unlimited" class="unlimited-tries"> Unlimited
@@ -311,7 +312,7 @@
               <p>Calculate typing speed: <input type="checkbox" class="calculate-typing-speed-checkbox" checked></p>
               <p>Repetitions:<span class="info-flag" data-info="This is how many prompts you will be given before the exercise is over.">❔</span> <input type="number" class="repetitions-input" min="10" max="50" value="10"></p>
               <div class="keyboard-options"><p>On-screen Keyboard: <input type="checkbox" class="on-screen-keyboard-checkbox" checked></p>
-                <p>Keyboard hints: <input type="checkbox" class="keyboard-hints-checkbox" checked></p>
+                <p class="hints-label">Keyboard hints: <input type="checkbox" class="keyboard-hints-checkbox" checked></p>
               </div>
               <!-- <p>Save Settings: <input type="checkbox" class="save-settings-checkbox" checked></p> -->
             </div>

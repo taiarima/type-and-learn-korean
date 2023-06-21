@@ -39,7 +39,7 @@ const warningFlag = document.querySelector(".warning-flag");
 const typingSpeedLabel = document.querySelector(".typing-speed");
 const typingAccuracyLabel = document.querySelector(".typing-accuracy");
 const progressBar = document.querySelector(".progress-bar");
-const resultsSummaryTextArea = document.querySelector(".exercise-summary");
+const exerciseSummaryTextArea = document.querySelector(".exercise-summary");
 const typingResults = document.querySelector(".typing-results");
 const promptInstructions = document.querySelector(".prompt-instructions");
 const exercisePerformanceLabel = document.querySelector(
@@ -65,6 +65,13 @@ const continueExerciseBtn = document.querySelector(".continue-btn");
 
 // For user settings
 const showEnglishOptionsSelector = ".show-english-options";
+const showEnglishOptionsContainer = document.querySelector(
+  ".show-english-container"
+);
+const requireFullSentenceLabel = document.querySelector(
+  ".require-full-sentence-label"
+);
+const requireFullSentenceSelector = ".require-full-sentence";
 const calculateTypingSpeedCheckboxSelector = ".calculate-typing-speed-checkbox";
 const triesPerPromptRadio = document.querySelectorAll(
   'input[name="triesPerPrompt"]'
@@ -76,6 +83,7 @@ const keyboardHintsCheckboxSelector = ".keyboard-hints-checkbox";
 const requireAnswerCheckbox = document.querySelector(
   ".require-answer-checkbox"
 );
+const showHintsLabel = document.querySelector(".hints-label");
 // const saveSettingsCheckbox = document.querySelector(".save-settings-checkbox");
 
 // Start Exercise Modal Selectors

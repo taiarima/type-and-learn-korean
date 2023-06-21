@@ -486,7 +486,7 @@ const hobbiesWordChoice = {
       fullAnswer: "저는 요리를 좋아해요",
     },
     {
-      sentenceWithBlank: "이소영씨는 __를 즐깁니다",
+      sentenceWithBlank: "이소영씨는 __을 즐깁니다",
       english: "Ms. Lee Soyoung enjoys hiking",
       blankAnswer: "등산",
       fullAnswer: "이소영씨는 등산을 즐깁니다",
@@ -762,6 +762,7 @@ const objectMarkers = {
 const simplePresentConjugation = {
   title: "Simple Present 아요/어요 Conjugation",
   type: "grammar",
+  promptLabel: "Change the verb shown to its 아요/어요 present tense form.",
   items: [
     {
       sentenceWithBlank: "김선생님은 학생들에게 ___. (가르치다)",
@@ -919,6 +920,7 @@ const simplePresentConjugation = {
 const simplePastConjugations = {
   title: "Simple Past Tense 아요/어요",
   type: "grammar",
+  promptLabel: "Change the verb shown to its 아요/어요 past tense form.",
   items: [
     {
       sentenceWithBlank: "나은씨는 언제 일어___? (나다)",
@@ -1039,7 +1041,8 @@ const simplePastConjugations = {
 
 const placeMarkers = {
   title: "Particles 에 and 에서",
-  type: "fillblank",
+  type: "grammar",
+  promptLabel: "Fill the blank with 에 or 에서!",
   specialInstructions:
     "You will be shown sentences with a blank indicating the missing particle. Fill in the blank with the appropriate particle 에 or 에서!",
   items: [
@@ -1123,9 +1126,9 @@ const placeMarkers = {
     },
     {
       sentenceWithBlank: "우리는 슈퍼마켓__ 장을 봤어요",
-      english: "We went shopping at the supermarket",
-      blankAnswer: "에",
-      fullAnswer: "우리는 슈퍼마켓에 장을 봤어요",
+      english: "We shopped at the supermarket",
+      blankAnswer: "에서",
+      fullAnswer: "우리는 슈퍼마켓에서 장을 봤어요",
     },
     {
       sentenceWithBlank: "저는 카페__ 책을 읽었어요",
@@ -1211,7 +1214,7 @@ const transportationJumble = {
     },
     {
       correctSentence: "우리는 도보로 공원에 갔어요.",
-      jumbleSentence: "갔어요 공원에 도보로 우리는 .",
+      jumbleSentence: "공원에 갔어요 도보로 우리는 .",
       english: "We went to the park on foot.",
     },
     {
@@ -1226,72 +1229,72 @@ const transportationJumble = {
     },
     {
       correctSentence: "그 사람은 어떤 차를 운전해요?",
-      jumbleSentence: "운전해요 차를 어떤 그 사람은 ?",
+      jumbleSentence: "차를 어떤 운전해요 그 사람은 ?",
       english: "What car does that person drive?",
     },
     {
       correctSentence: "저는 버스 정류장에서 기다렸어요.",
-      jumbleSentence: "기다렸어요 정류장에서 버스 저는 .",
+      jumbleSentence: "정류장에서 기다렸어요 버스 저는 .",
       english: "I waited at the bus stop.",
     },
     {
       correctSentence: "지하철은 언제 출발해요?",
-      jumbleSentence: "출발해요 언제 지하철은 ?",
+      jumbleSentence: "언제 출발해요 지하철은 ?",
       english: "When does the subway depart?",
     },
     {
       correctSentence: "지은씨는 어디서 하차하셨나요?",
-      jumbleSentence: "하차하셨나요 어디서 지은씨는 ?",
+      jumbleSentence: "어디서 하차하셨나요 지은씨는 ?",
       english: "Where did you get off, Jieun?",
     },
     {
       correctSentence: "우리는 배를 타고 여행을 갔어요.",
-      jumbleSentence: "갔어요 여행을 타고 배를 우리는 .",
+      jumbleSentence: " 여행을 타고 배를 우리는 갔어요 .",
       english: "We went on a trip by boat.",
     },
     {
       correctSentence: "저는 버스를 놓쳤어요.",
-      jumbleSentence: "놓쳤어요 버스를 저는 .",
+      jumbleSentence: "버스를 놓쳤어요 저는 .",
       english: "I missed the bus.",
     },
     {
       correctSentence: "승현씨는 어떤 비행기를 탔나요?",
-      jumbleSentence: "탔나요 비행기를 어떤 승현씨는 ?",
+      jumbleSentence: "비행기를 어떤 탔나요 승현씨는 ?",
       english: "What airplane did you take, Seunghyun?",
     },
     {
       correctSentence: "우리는 편리한 교통수단을 이용했어요.",
-      jumbleSentence: "이용했어요 교통수단을 편리한 우리는 .",
+      jumbleSentence: " 교통수단을 편리한 이용했어요 우리는 .",
       english: "We used a convenient means of transportation.",
     },
     {
       correctSentence: "효정씨는 어디서 승차하셨나요?",
-      jumbleSentence: "승차하셨나요 어디서 효정씨는 ?",
+      jumbleSentence: "어디서 승차하셨나요 효정씨는 ?",
       english: "Where did you get on, Hyojung?",
     },
     {
       correctSentence: "당신은 몇 시에 출발하셨나요?",
-      jumbleSentence: "출발하셨나요 시에 몇 당신은 ?",
+      jumbleSentence: "시에 몇 출발하셨나요 당신은 ?",
       english: "What time did you depart?",
     },
     {
       correctSentence: "지훈씨는 어디로 가고 있어요?",
-      jumbleSentence: "가고 있어요 어디로 지훈씨는 ?",
+      jumbleSentence: "가고 어디로  있어요  지훈씨는 ?",
       english: "Where are you going, Jihoon?",
     },
     {
       correctSentence: "저는 도서관으로 걸어갔어요.",
-      jumbleSentence: "걸어갔어요 도서관으로 저는 .",
+      jumbleSentence: "걸어갔어요 저는 도서관으로  .",
       english: "I walked to the library.",
     },
     {
       correctSentence: "그 사람은 어디에서 대중교통을 이용하나요?",
-      jumbleSentence: "이용하나요 대중교통을 어디에서 그 사람은 ?",
+      jumbleSentence: " 대중교통을 어디에서 그 이용하나요 사람은 ?",
       english: "Where does that person use public transportation?",
     },
     {
       correctSentence: "윤아씨는 자주 비행기를 타나요?",
-      jumbleSentence: "타나요 비행기를 자주 윤아씨는 ?",
+      jumbleSentence: " 비행기를 자주 타나요 윤아씨는 ?",
       english: "Does Yoona often take a plane?",
     },
   ],
@@ -1303,22 +1306,22 @@ const hobbiesJumble = {
   items: [
     {
       correctSentence: "저는 음악 듣기를 좋아해요.",
-      jumbleSentence: "좋아해요 음악 듣기를 저는 .",
+      jumbleSentence: "음악 좋아해요 듣기를 저는 .",
       english: "I like listening to music.",
     },
     {
       correctSentence: "현우씨는 무슨 취미가 있어요?",
-      jumbleSentence: "있어요 무슨 취미가 현우씨는 ?",
+      jumbleSentence: "무슨 취미가 있어요 현우씨는 ?",
       english: "What are your hobbies, Hyunwoo?",
     },
     {
       correctSentence: "우리는 같이 축구를 봤어요.",
-      jumbleSentence: "봤어요 축구를 같이 우리는 .",
+      jumbleSentence: "봤어요 같이 축구를 우리는 .",
       english: "We watched soccer together.",
     },
     {
       correctSentence: "수연씨는 요리하는 것을 좋아해요.",
-      jumbleSentence: "좋아해요 것을 요리하는 수연씨는 .",
+      jumbleSentence: "것을 요리하는 좋아해요 수연씨는 .",
       english: "Sooyeon likes cooking.",
     },
     {
@@ -1328,22 +1331,22 @@ const hobbiesJumble = {
     },
     {
       correctSentence: "저는 그림 그리는 것이 재미있어요.",
-      jumbleSentence: "재미있어요 것이 그림 그리는 저는 .",
+      jumbleSentence: " 것이 저는 그림 그리는 재미있어요 .",
       english: "I find drawing fun.",
     },
     {
       correctSentence: "민수씨는 피아노를 치나요?",
-      jumbleSentence: "치나요 피아노를 민수씨는 ?",
+      jumbleSentence: "치나요 민수씨는 피아노를 ?",
       english: "Do you play the piano, Minsoo?",
     },
     {
       correctSentence: "우리는 같이 책을 읽었어요.",
-      jumbleSentence: "읽었어요 책을 같이 우리는 .",
+      jumbleSentence: "책을 같이  읽었어요우리는 .",
       english: "We read a book together.",
     },
     {
       correctSentence: "하늘씨는 어떤 음악을 듣나요?",
-      jumbleSentence: "듣나요 어떤 음악을 하늘씨는 ?",
+      jumbleSentence: "하늘씨는 어떤 듣나요 음악을 ?",
       english: "What kind of music do you listen to, Haneul?",
     },
     {
@@ -1353,7 +1356,7 @@ const hobbiesJumble = {
     },
     {
       correctSentence: "경수씨는 사진 찍는 것을 좋아해요.",
-      jumbleSentence: "좋아해요 것을 찍는 사진 경수씨는 .",
+      jumbleSentence: "것을 찍는 사진 경수씨는 좋아해요.",
       english: "Kyungsoo likes taking photos.",
     },
     {
@@ -1363,37 +1366,37 @@ const hobbiesJumble = {
     },
     {
       correctSentence: "지민씨는 자주 책을 읽나요?",
-      jumbleSentence: "읽나요 책을 자주 지민씨는 ?",
+      jumbleSentence: "책을 자주 읽나요 지민씨는 ?",
       english: "Do you often read books, Jimin?",
     },
     {
       correctSentence: "저는 여행을 좋아해요.",
-      jumbleSentence: "좋아해요 여행을 저는 .",
+      jumbleSentence: "저는 좋아해요 여행을 .",
       english: "I like traveling.",
     },
     {
-      correctSentence: "재현씨는 어떤 취미를 가지고 계세요?",
-      jumbleSentence: "가지고 계세요 취미를 어떤 재현씨는 ?",
+      correctSentence: "재현씨는 어떤 취미를 가지고 있어요?",
+      jumbleSentence: "있어요 재현씨는 취미를 가지고 어떤 ?",
       english: "What hobbies do you have, Jaehyun?",
     },
     {
       correctSentence: "저는 주말에 산책을 했어요.",
-      jumbleSentence: "했어요 산책을 주말에 저는 .",
+      jumbleSentence: "산책을 주말에 했어요 저는 .",
       english: "I took a walk on the weekend.",
     },
     {
       correctSentence: "연주씨는 어떤 영화를 좋아해요?",
-      jumbleSentence: "좋아해요 영화를 어떤 연주씨는 ?",
+      jumbleSentence: "좋아해요 연주씨는 영화를 어떤 ?",
       english: "What movies do you like, Yeonju?",
     },
     {
       correctSentence: "우리는 같이 노래를 불렀어요.",
-      jumbleSentence: "불렀어요 노래를 같이 우리는 .",
+      jumbleSentence: "노래를 같이 우리는 불렀어요 .",
       english: "We sang together.",
     },
     {
       correctSentence: "지은씨는 어떤 게임을 좋아해요?",
-      jumbleSentence: "좋아해요 게임을 어떤 지은씨는 ?",
+      jumbleSentence: "게임을 좋아해요 어떤 지은씨는 ?",
       english: "What games do you like, Jieun?",
     },
     {
@@ -1425,7 +1428,7 @@ const newPeopleJumble = {
     },
     {
       correctSentence: "우리는 같은 학교에 다녔어요.",
-      jumbleSentence: "다녔어요 학교에 같은 우리는 .",
+      jumbleSentence: "학교에 같은 다녔어요 우리는 .",
       english: "We attended the same school.",
     },
     {
@@ -1435,7 +1438,7 @@ const newPeopleJumble = {
     },
     {
       correctSentence: "수진씨는 무슨 일을 하세요?",
-      jumbleSentence: "하세요 무슨 일을 수진씨는 ?",
+      jumbleSentence: " 무슨 일을 하세요 수진씨는 ?",
       english: "What do you do (for a living), Soojin?",
     },
     {
@@ -1445,7 +1448,7 @@ const newPeopleJumble = {
     },
     {
       correctSentence: "저는 학생이에요.",
-      jumbleSentence: "이에요 는 학생 저 .",
+      jumbleSentence: "는 이에요 학생 저 .",
       english: "I am a student.",
     },
     {
@@ -1460,12 +1463,12 @@ const newPeopleJumble = {
     },
     {
       correctSentence: "저는 음악을 듣는 것을 좋아해요.",
-      jumbleSentence: "좋아해요 듣는 것을 음악을 저는 .",
+      jumbleSentence: "듣는 것을 음악을 좋아해요 저는 .",
       english: "I like listening to music.",
     },
     {
       correctSentence: "그 사람은 어디에 살아요?",
-      jumbleSentence: "살아요 은 어디에 그 사람 ?",
+      jumbleSentence: "은 어디에 그 살아요 사람 ?",
       english: "Where does that person live?",
     },
     {
@@ -1480,32 +1483,32 @@ const newPeopleJumble = {
     },
     {
       correctSentence: "지훈씨는 어디에 일하세요?",
-      jumbleSentence: "일하세요 어디에 지훈씨는 ?",
+      jumbleSentence: "어디에 일하세요 지훈씨는 ?",
       english: "Where do you work, Jihoon?",
     },
     {
       correctSentence: "당신은 어떤 음악을 듣나요?",
-      jumbleSentence: "듣나요 어떤 음악을 당신은 ?",
+      jumbleSentence: "어떤 듣나요 당신은 음악을 ?",
       english: "What kind of music do you listen to?",
     },
     {
       correctSentence: "유리씨는 운동을 좋아해요.",
-      jumbleSentence: "좋아해요 운동을 유리씨는 .",
+      jumbleSentence: "좋아해요 유리씨는 운동을 .",
       english: "Yuri likes to exercise.",
     },
     {
       correctSentence: "저는 현재 공부하고 있어요.",
-      jumbleSentence: "있어요 현재 공부하고 저는 .",
+      jumbleSentence: "현재 공부하고 저는 있어요.",
       english: "I am currently studying.",
     },
     {
       correctSentence: "그 사람은 어떤 사람인가요?",
-      jumbleSentence: "인가요 사람 어떤 그 사람은 ?",
+      jumbleSentence: "사람 어떤 그 인가요 사람은 ?",
       english: "What kind of person is that?",
     },
     {
       correctSentence: "은비씨는 어떤 책을 읽고 있나요?",
-      jumbleSentence: "읽고 있나요 어떤 책을 은비씨는 ?",
+      jumbleSentence: "읽고 어떤 책을 있나요 은비씨는 ?",
       english: "What book are you reading, Eunbi?",
     },
   ],
@@ -1519,6 +1522,7 @@ const exerciseTypeController = {
     answerType: "korean",
     altAnswerType: null,
     promptType: "korean",
+    promptLabel: "Type the Korean word(s) shown below",
   },
   fillblank: {
     title: "Fill-in-the-blank",
@@ -1527,6 +1531,8 @@ const exerciseTypeController = {
     answerType: "blankAnswer",
     altAnswerType: "fullAnswer",
     promptType: "sentenceWithBlank",
+    promptLabel: "Fill in the missing word(s)",
+    altPromptLabel: "Write the sentence below, filling in the missing word",
   },
   grammar: {
     title: "Grammar",
@@ -1543,6 +1549,7 @@ const exerciseTypeController = {
     answerType: "correctSentence",
     altAnswerType: null,
     promptType: "jumbleSentence",
+    promptLabel: "Rewrite the following sentence in the correct order",
   },
 };
 
