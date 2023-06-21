@@ -452,16 +452,21 @@ function hideContainers() {
 function showModalAbandon(callback) {
   modalAbandon.style.display = "block";
 
-  abandonBtn.addEventListener("click", function () {
+  abandonBtn.addEventListener("click", function abandonExercise(event) {
     modalAbandon.style.display = "none";
     clearExercise();
     callback("abandon");
+    event.target.removeEventListener("click", abandonExercise);
   });
 
-  continueExerciseBtn.addEventListener("click", function () {
-    modalAbandon.style.display = "none";
-    callback("continue");
-  });
+  continueExerciseBtn.addEventListener(
+    "click",
+    function continueExercise(event) {
+      modalAbandon.style.display = "none";
+      callback("continue");
+      event.target.removeEventListener("click", continueExercise);
+    }
+  );
 }
 
 function initializeExercise(callback) {
@@ -493,7 +498,6 @@ function clearExercise() {
   currentIndex = 0;
   exerciseUnderway = false;
   userText.value = "";
-  exerciseSummaryItems = [];
   userText.classList.remove("lightup-correct");
   promptLabel.textContent = currentList[currentIndex].korean;
   nextBtn.classList.remove("bigger-next-btn");
@@ -665,6 +669,9 @@ function handleLinkClick(targetContainer) {
     showModalAbandon(function (choice) {
       if (choice === "abandon") {
         hideContainers();
+        console.log(
+          "Exercise has been abandoned. The page should navigate away."
+        );
         targetContainer.parentElement.classList.remove("hidden");
       }
     });

@@ -437,6 +437,7 @@ footer {
 footer a {
   padding: 5px 10px;
   cursor: pointer;
+  line-height: 1.5;
 }
 
 .footer-divider {
@@ -740,6 +741,7 @@ button {
 }
 
 .back-arrow {
+  opacity: 50%;
   position: fixed;
   top: 50%;
   left: 5%;
