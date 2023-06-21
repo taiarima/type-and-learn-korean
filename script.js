@@ -43,7 +43,7 @@ let hintsAllowed = true;
 const exerciseTypeConfig = {
   transcribe: {
     repetitions: 10,
-    showEnglish: "afterGrading",
+    showEnglish: showEngAfterGrading,
     showKeyboardHints: true,
     requireFullSentence: false,
     showEnglishOption: true,
@@ -51,7 +51,7 @@ const exerciseTypeConfig = {
   },
   fillblank: {
     repetitions: 15,
-    showEnglish: "afterGrading",
+    showEnglish: showEngSameTime,
     showKeyboardHints: false,
     requireFullSentence: false,
     showEnglishOption: false,
@@ -59,7 +59,7 @@ const exerciseTypeConfig = {
   },
   grammar: {
     repetitions: 10,
-    showEnglish: "afterGrading",
+    showEnglish: showEngAfterGrading,
     showKeyboardHints: false,
     requireFullSentence: false,
     showEnglishOption: true,
@@ -67,7 +67,7 @@ const exerciseTypeConfig = {
   },
   jumble: {
     repetitions: 10,
-    showEnglish: "afterGrading",
+    showEnglish: showEngAfterGrading,
     showKeyboardHints: false,
     requireFullSentence: false,
     showEnglishOption: true,
@@ -587,6 +587,8 @@ function applyUserSettings(exerciseType) {
   // The following settings are not applicable to all exercise types
   if (exerciseType !== "fillblank") {
     showEngSetting = selectedShowEnglishOption.value;
+  } else {
+    showEngSetting = showEngSameTime;
   }
 
   // The following setting is not applicable to "transcribe" and "jumble"
@@ -754,7 +756,7 @@ function determineAnswerType(exerciseType, altAnswer) {
 
 function applyDefaultSettingsByType(exerciseType) {
   //Selectors for changing settings
-  const selectedShowEnglishOption = document.querySelectorAll(
+  const allShowEnglishOptions = document.querySelectorAll(
     `${showEnglishOptionsSelector} input[type="radio"]`
   );
   const repetitionsInput = document.querySelector(repetitionsInputSelector);
@@ -800,18 +802,20 @@ function applyDefaultSettingsByType(exerciseType) {
   const config = exerciseTypeConfig[exerciseType];
 
   // 6. Show English Setting (4 choices)
-  selectedShowEnglishOption.forEach((option) => {
-    if (config.showEnglishOption) {
-      showEnglishOptionsContainer.classList.remove("hidden");
-      if (option.value === config.showEnglish) {
-        option.checked = true;
-      } else {
-        option.checked = false;
-      }
-    } else {
-      showEnglishOptionsContainer.classList.add("hidden");
-    }
+  showEnglishOptionsContainer.classList.remove("hidden");
+  allShowEnglishOptions.forEach((option) => {
+    option.checked = option.value === config.showEnglish;
+    console.log(
+      option.value,
+      config.showEnglish,
+      option.value === config.showEnglish
+    );
   });
+
+  // If the exercise type is 'fillblank', hide the English options container
+  if (exerciseType === "fillblank") {
+    showEnglishOptionsContainer.classList.add("hidden");
+  }
 
   // 7. Repetitions setting (number)
   repetitionsInput.value = config.repetitions;

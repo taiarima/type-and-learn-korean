@@ -522,7 +522,7 @@ const hobbiesWordChoice = {
       fullAnswer: "저는 요가에 관심이 많아요",
     },
     {
-      sentenceWithBlank: "예진씨는 __를 좋아해요",
+      sentenceWithBlank: "예진씨는 __을 좋아해요",
       english: "Ye Jin likes knitting",
       blankAnswer: "뜨개질",
       fullAnswer: "예진씨는 뜨개질을 좋아해요",
@@ -534,7 +534,7 @@ const hobbiesWordChoice = {
       fullAnswer: "자전거 타기가는 제 취미 중 하나예요",
     },
     {
-      sentenceWithBlank: "저는 __를 그리는 것을 사랑해요",
+      sentenceWithBlank: "저는 __을 그리는 것을 사랑해요",
       english: "I love painting",
       blankAnswer: "그림",
       fullAnswer: "저는 그림을 그리는 것을 사랑해요",
@@ -552,7 +552,7 @@ const hobbiesWordChoice = {
       fullAnswer: "박선생님은 댄스를 하는 것을 좋아해요",
     },
     {
-      sentenceWithBlank: "민호씨는 __를 찍는 것을 사랑해요",
+      sentenceWithBlank: "민호씨는 __을 찍는 것을 사랑해요",
       english: "Minho loves photography",
       blankAnswer: "사진",
       fullAnswer: "이민호씨는 사진을 찍는 것을 사랑해요",
