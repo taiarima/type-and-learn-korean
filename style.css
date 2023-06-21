@@ -303,6 +303,8 @@ main {
 .bubble {
   display: flex;
   justify-content: center;
+  text-align: center;
+  padding: 5px;
   align-items: center;
   width: 150px;
   height: 150px;
@@ -324,7 +326,7 @@ main {
   text-align: center;
   font-family: var(--font-family);
   font-weight: 900;
-  background-color: var(--color-blue);
+  background-color: var(--color-beige);
   width: 300px;
   margin: 0 auto;
   border-radius: 20px;
@@ -735,4 +737,18 @@ button {
   border: 1px solid black;
   font-family: var(--font-family);
   width: 100px;
+}
+
+.back-arrow {
+  position: fixed;
+  top: 50%;
+  left: 5%;
+  font-size: 50px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  z-index: 100;
+  color: white;
+  cursor: pointer;
+  font-family: var(--font-family);
 }

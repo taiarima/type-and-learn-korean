@@ -1,12 +1,16 @@
 "use strict";
 
+// !! TODO !! Results and settings and, uhh.... reveal answer and some other things need to be fixed with respect to exercise type
+// Reveal answer button should be disabled for transcription exercises. Turn off keyboard hints except for transcription. Turn on if reveal.
+
 // Global Variables
 let currentAnswer; // This will be the answer the user must type in for their response to be graded correct
 let charCounter = 0;
 let currentList;
 let currentIndex = 0;
 let exerciseUnderway = false;
-let currentCategory; // This will be stored to apply to labels on exercise start modal and results page
+let currentCategory = rootCategoryContainer; // This will be stored to apply to labels on exercise start modal and results page
+let previousCategory; // this will be used for when user hits back button
 let currentExerciseName; // Same as above. Is assigned in loadVocabList
 let keepDefaultSettings = true;
 let resultsSummaryItems = []; // This will hold the content of the exercise to present in results summary text area
@@ -16,6 +20,9 @@ let deconstructedCorrectAnswer = []; // used for keyboard hints
 let deconstructedUserInput = [];
 let answerRevealed = false;
 let keyboardMessage;
+let currentAnswerType;
+let currentPromptType;
+let currentExercise;
 
 // Possible values for showing English settings
 const showEngAsPrompt = "prompt"; // users will be asked to translate English to Korean
@@ -220,11 +227,14 @@ function loadVocabList(listIndex) {
 
   // Initialize the progress bar to have a sliver of progress showing
   progressBar.style.width = `${100 / repetitionNumber / 2}%`;
-
-  const randomizedList = shuffleArray(
-    basicVocabCategories.items[listIndex].items
-  );
+  currentExercise = currentCategory.items[listIndex];
+  const randomizedList = shuffleArray(currentExercise.items);
   currentList = randomizedList;
+  currentAnswerType = determineAnswerType(currentExercise.type, false);
+  currentPromptType =
+    showEngSetting === showEngAsPrompt
+      ? "english"
+      : exerciseTypeController[currentExercise.type].promptType;
   // The bottom needs to be adjusted according to the specifications of the exercise
   // currentList.forEach((prompt) => {
   //   const hangeulChars = Hangul.disassemble(prompt.korean);
@@ -233,8 +243,11 @@ function loadVocabList(listIndex) {
   // });
 
   // Stand in code for testing. It should be changed to the above later
+
+  // This needs to be changed for the type of exercise
+  // answerType --> check exercise type, then check settings
   for (let i = 0; i < repetitionNumber; i++) {
-    const hangeulChars = Hangul.disassemble(currentList[i].korean);
+    const hangeulChars = Hangul.disassemble(currentList[i][currentAnswerType]);
     const hangeulString = hangeulChars.join("");
     totalPromptChars += hangeulString.replace(/\s/g, "").length;
   }
@@ -306,18 +319,16 @@ function showNextKey() {
 
   // The user has completely typed the correct answer
   if (keyIndex == -1) {
-    document
-      .querySelector(
-        `.${deconstructedCorrectAnswer[deconstructedCorrectAnswer.length - 1]}`
-      )
-      .classList.remove("activated-key");
     return;
   }
 
   let keyToPress = deconstructedCorrectAnswer[keyIndex];
   if (keyToPress === " ") {
     keyToPress = "space-bar";
+  } else if (/[.,?]/.test(keyToPress)) {
+    return;
   }
+
   document.querySelector(`.${keyToPress}`).classList.add("activated-key");
 }
 
@@ -345,7 +356,7 @@ function createBubbles() {
 
   // Create heading element
   const heading = document.createElement("h2");
-  heading.textContent = basicVocabCategories.title;
+  heading.textContent = currentCategory.title;
   heading.classList.add("bubble-heading");
   bubbleContainer.appendChild(heading);
 
@@ -353,6 +364,57 @@ function createBubbles() {
   const bubblesPerRow = Math.floor(containerWidth / bubbleSize);
 
   basicVocabCategories.items.forEach((item, index) => {
+    const rowNumber = Math.floor(index / bubblesPerRow);
+    let row = bubbleContainer.querySelector(
+      `.bubble-row[data-row="${rowNumber}"]`
+    );
+
+    if (!row) {
+      row = document.createElement("div");
+      row.classList.add("bubble-row");
+      row.setAttribute("data-row", rowNumber);
+      bubbleContainer.appendChild(row);
+    }
+
+    const bubble = document.createElement("div");
+    bubble.classList.add("bubble");
+    bubble.style.width = `${bubbleSize}px`;
+    bubble.style.height = `${bubbleSize}px`;
+    bubble.textContent = item.title;
+    row.appendChild(bubble);
+  });
+}
+
+// Modifying createBubbles function to have more versatility
+function createBubblesNeo(category) {
+  previousCategory = currentCategory;
+  currentCategory = category;
+  if (currentCategory == rootCategoryContainer) {
+    backArrow.classList.add("hidden");
+    startLearningHeader.classList.remove("hidden");
+  } else {
+    backArrow.classList.remove("hidden");
+    startLearningHeader.classList.add("hidden");
+  }
+
+  bubbleContainer.style.display = "flex";
+  bubbleContainer.parentElement.classList.remove("hidden");
+
+  const bubbleSize = category instanceof ExerciseCategory ? 150 : 250;
+
+  // Clear existing bubbles
+  bubbleContainer.innerHTML = "";
+
+  // Create heading element
+  const heading = document.createElement("h2");
+  heading.textContent = category.title;
+  heading.classList.add("bubble-heading");
+  bubbleContainer.appendChild(heading);
+
+  const containerWidth = bubbleContainer.offsetWidth;
+  const bubblesPerRow = Math.floor(containerWidth / bubbleSize);
+
+  category.items.forEach((item, index) => {
     const rowNumber = Math.floor(index / bubblesPerRow);
     let row = bubbleContainer.querySelector(
       `.bubble-row[data-row="${rowNumber}"]`
@@ -458,12 +520,12 @@ function isKoreanInput(input) {
 }
 
 function containsNonKorean(text) {
-  const regex = /[^\sㄱ-ㅎㅏ-ㅣ가-힣.,()0-9]/;
+  const regex = /[^\sㄱ-ㅎㅏ-ㅣ가-힣.,()0-9?]/;
   return regex.test(text);
 }
 
 function filterNonKorean(text) {
-  const regex = /[^\sㄱ-ㅎㅏ-ㅣ가-힣.,()0-9]/g;
+  const regex = /[^\sㄱ-ㅎㅏ-ㅣ가-힣.,()0-9?]/g;
   return text.replace(regex, "");
 }
 
@@ -559,14 +621,14 @@ function setNextPrompt() {
   if (showEngSetting == showEngAsPrompt) {
     promptLabel.innerHTML = currentList[currentIndex].english;
   } else {
-    promptLabel.innerHTML = currentList[currentIndex].korean;
+    promptLabel.innerHTML = currentList[currentIndex][currentPromptType];
     if (showEngSetting == showEngSameTime) {
       promptLabel.innerHTML += "<br>" + currentList[currentIndex].english;
     }
   }
 
   // The current answer will change depending on settings and exercise type. For now it is just the Korean
-  currentAnswer = currentList[currentIndex].korean;
+  currentAnswer = currentList[currentIndex][currentAnswerType];
   deconstructedCorrectAnswer = Hangul.disassemble(currentAnswer);
   currentIndex++;
 
@@ -665,6 +727,16 @@ function revealAnswer() {
   gradeIncorrect();
 }
 
+// Depending on the type of exercise and user settings, the correct answer
+// will be different. This function is called during loadVocabList to make sure
+// that the correct answer type is selected, as different categories of exercises have
+// different properties.
+function determineAnswerType(exerciseType, altAnswer) {
+  return altAnswer
+    ? exerciseTypeController[exerciseType].altAnswerType
+    : exerciseTypeController[exerciseType].answerType;
+}
+
 // >>>>>>>>>>>>>>>>>>>>>>> Event Listeners <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
 startLearnLinks.forEach(function (startLearnLink) {
@@ -673,12 +745,12 @@ startLearnLinks.forEach(function (startLearnLink) {
       showModalAbandon(function (choice) {
         if (choice === "abandon") {
           hideContainers();
-          createBubbles();
+          createBubblesNeo(rootCategoryContainer);
         }
       });
     } else {
       hideContainers();
-      createBubbles();
+      createBubblesNeo(rootCategoryContainer);
     }
   });
 });
@@ -741,33 +813,52 @@ bubbleContainer.addEventListener("click", function (event) {
     const bubbleIndex = bubbles.indexOf(event.target);
 
     // Assign values for labels
-    currentCategory = basicVocabCategories.title;
-    currentExerciseName = basicVocabCategories.items[bubbleIndex].title;
-    categoryLabels.forEach((ele) => (ele.textContent = currentCategory));
-    exerciseNameLabels.forEach(
-      (ele) => (ele.textContent = currentExerciseName)
-    );
+    // Experimenting with new functionality. Saving this in case of failure.
+    // currentCategory = basicVocabCategories.title;
+    // currentExerciseName = basicVocabCategories.items[bubbleIndex].title;
 
-    // Load pre-exercise modal. Exercise will not be initialized until begin btn pressed.
-    modalStartExercise.style.display = "block";
+    const currentSelection = currentCategory.items[bubbleIndex];
+    if (currentSelection instanceof ExerciseCategory) {
+      createBubblesNeo(currentSelection);
+    } else {
+      currentExercise = currentSelection;
 
-    // Set max amount of repetitions to be the amount of items in the list
-    const repsNumberEle = document.querySelector(repetitionsInputSelector);
-    const maxValue = basicVocabCategories.items[bubbleIndex].items.length;
-    repsNumberEle.setAttribute("max", maxValue);
-    if (repsNumberEle.value > maxValue) {
-      repsNumberEle.value = maxValue;
-    }
+      // Set the instructions and type of exercise for modal
+      insertInstructions.textContent = currentExercise?.specialInstructions
+        ? currentExercise.specialInstructions
+        : exerciseTypeController[currentExercise.type].instructions;
+      exerciseTypeLabel.textContent =
+        exerciseTypeController[currentExercise.type].title;
 
-    initializeExercise(function () {
-      hideContainers();
-      learningContainer.parentElement.classList.remove("hidden");
-      keyboardCheckboxes.parentElement.classList.remove("hidden");
-      if (keyboardOn) {
-        keyboardContainer.parentElement.classList.remove("hidden");
+      categoryLabels.forEach(
+        (ele) => (ele.textContent = currentCategory.title)
+      );
+      exerciseNameLabels.forEach(
+        (ele) => (ele.textContent = currentSelection.title)
+      );
+
+      // Load pre-exercise modal. Exercise will not be initialized until begin btn pressed.
+      modalStartExercise.style.display = "block";
+      backArrow.classList.add("hidden");
+
+      // Set max amount of repetitions to be the amount of items in the list
+      const repsNumberEle = document.querySelector(repetitionsInputSelector);
+      const maxValue = currentSelection.items.length;
+      repsNumberEle.setAttribute("max", maxValue);
+      if (repsNumberEle.value > maxValue) {
+        repsNumberEle.value = maxValue;
       }
-      loadVocabList(bubbleIndex);
-    });
+
+      initializeExercise(function () {
+        hideContainers();
+        learningContainer.parentElement.classList.remove("hidden");
+        keyboardCheckboxes.parentElement.classList.remove("hidden");
+        if (keyboardOn) {
+          keyboardContainer.parentElement.classList.remove("hidden");
+        }
+        loadVocabList(bubbleIndex);
+      });
+    }
   }
 });
 
@@ -838,6 +929,7 @@ triesPerPromptRadio.forEach(function (radio) {
 // Modal windows
 closeStartExercise.onclick = function () {
   modalStartExercise.style.display = "none";
+  backArrow.classList.remove("hidden");
 };
 
 closeAbandon.onclick = function () {
@@ -846,8 +938,10 @@ closeAbandon.onclick = function () {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
-  if (event.target == modalStartExercise || event.target == modalAbandon) {
+  if (event.target == modalStartExercise) {
     modalStartExercise.style.display = "none";
+    backArrow.classList.remove("hidden");
+  } else if (event.target == modalAbandon) {
     modalAbandon.style.display = "none";
   }
 };
@@ -1076,4 +1170,8 @@ document.addEventListener("click", (event) => {
     keyboardMessage.remove();
     keyboardMessage = null;
   }
+});
+
+backArrow.addEventListener("click", function () {
+  createBubblesNeo(previousCategory);
 });

@@ -52,6 +52,8 @@ const triesContainer = document.querySelector(".tries-container");
 const triesEmojisContainer = document.querySelector(".tries-emojis");
 const triesLabel = document.querySelector(".tries-label");
 const keyboardCheckboxes = document.querySelector(".keyboard-checkboxes");
+const backArrow = document.querySelector(".back-arrow");
+const startLearningHeader = document.querySelector(".start-learning-header");
 
 // Modal Window selectors
 const modalStartExercise = document.querySelector(".modal-start-exercise");
@@ -84,6 +86,7 @@ const acceptDefaultsText = document.querySelector(".accept-defaults");
 const defaultCheckbox = document.querySelector(".default-checkbox");
 const beginExerciseButton = document.querySelector(".begin-button");
 const exSettingsContainer = document.querySelector(".ex-settings-container");
+const exerciseTypeLabel = document.querySelector(".exercise-type");
 
 // Keyboard keys
 const keyBieup = document.querySelector(".key.ㅂ");
