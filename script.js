@@ -520,12 +520,6 @@ function updateProgressBar() {
   progressBar.style.width = `${percentage}%`;
 }
 
-// This function is currently not used anywhere. Delete if unnecessary.
-function isKoreanInput(input) {
-  const koreanRegex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
-  return koreanRegex.test(input);
-}
-
 function containsNonKorean(text) {
   const regex = /[^\sㄱ-ㅎㅏ-ㅣ가-힣.,()0-9?]/;
   return regex.test(text);
@@ -671,9 +665,6 @@ function handleLinkClick(targetContainer) {
     showModalAbandon(function (choice) {
       if (choice === "abandon") {
         hideContainers();
-        console.log(
-          "Exercise has been abandoned. The page should navigate away."
-        );
         targetContainer.parentElement.classList.remove("hidden");
       }
     });
@@ -805,11 +796,6 @@ function applyDefaultSettingsByType(exerciseType) {
   showEnglishOptionsContainer.classList.remove("hidden");
   allShowEnglishOptions.forEach((option) => {
     option.checked = option.value === config.showEnglish;
-    console.log(
-      option.value,
-      config.showEnglish,
-      option.value === config.showEnglish
-    );
   });
 
   // If the exercise type is 'fillblank', hide the English options container
@@ -1047,18 +1033,6 @@ userText.addEventListener("keydown", function (event) {
   const key = keyToKoreanLetter(event.code);
 
   let targetElement = document.querySelector(`.key.${key}`);
-
-  // console.log(`syllable = ${syllable} and key = ${key}`);
-
-  // if (!targetElement) {
-  //   if (document.querySelector(`.key-upper-right.${key}`)) {
-  //     targetElement = document
-  //       .querySelector(`.key-upper-right.${key}`)
-  //       .closest(".key");
-  //   } else {
-  //     return;
-  //   }
-  // }
 
   // Remove previous lightup class if any
   const previousKey = document.querySelector(".key.lightup-correct");

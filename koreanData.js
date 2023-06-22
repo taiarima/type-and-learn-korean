@@ -1543,7 +1543,7 @@ const exerciseTypeController = {
     promptType: "sentenceWithBlank",
   },
   jumble: {
-    title: "Mixed Up Sentences",
+    title: "Mixed-up Sentences",
     instructions:
       "You will be shown sentences where the words are out of order. Rewrite the sentence using the correct word order.",
     answerType: "correctSentence",
