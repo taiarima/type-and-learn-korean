@@ -373,13 +373,13 @@ const languageLearningWordChoice = {
       fullAnswer: "김삼순씨는 교과서를 읽어요.",
     },
     {
-      sentenceWithBlank: "저는 ___를 배워요.",
+      sentenceWithBlank: "저는 ___을 배워요.",
       english: "I learn linguistics.",
       blankAnswer: "언어학",
       fullAnswer: "저는 언어학을 배워요.",
     },
     {
-      sentenceWithBlank: "대진씨는 ___를 고쳐요.",
+      sentenceWithBlank: "대진씨는 ___을 고쳐요.",
       english: "Daejin corrects the sentence.",
       blankAnswer: "문장",
       fullAnswer: "대진씨는 문장을 고쳐요.",
@@ -403,7 +403,7 @@ const languageLearningWordChoice = {
       fullAnswer: "이민지씨는 어휘를 가르칩니다.",
     },
     {
-      sentenceWithBlank: "저는 ___를 좋아해요.",
+      sentenceWithBlank: "저는 ___을 좋아해요.",
       english: "I like phrases.",
       blankAnswer: "구문",
       fullAnswer: "저는 구문을 좋아해요.",
@@ -415,7 +415,7 @@ const languageLearningWordChoice = {
       fullAnswer: "이수지씨는 관용구를 많이 사용해요.",
     },
     {
-      sentenceWithBlank: "우리는 ___를 읽어요.",
+      sentenceWithBlank: "우리는 ___을 읽어요.",
       english: "We read the script.",
       blankAnswer: "대본",
       fullAnswer: "우리는 대본을 읽어요.",
@@ -445,13 +445,13 @@ const languageLearningWordChoice = {
       fullAnswer: "김민준씨는 번역기를 사용해요.",
     },
     {
-      sentenceWithBlank: "저는 ___를 읽어요.",
+      sentenceWithBlank: "저는 ___을 읽어요.",
       english: "I read the subtitles.",
       blankAnswer: "자막",
       fullAnswer: "저는 자막을 읽어요.",
     },
     {
-      sentenceWithBlank: "우리는 ___를 배워요.",
+      sentenceWithBlank: "우리는 ___을 배워요.",
       english: "We learn the alphabet.",
       blankAnswer: "알파벳",
       fullAnswer: "우리는 알파벳을 배워요.",
