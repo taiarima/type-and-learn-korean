@@ -332,6 +332,133 @@ const sports = {
   ],
 };
 
+const languageLearningWordChoice = {
+  title: "Language Learning",
+  type: "fillblank",
+  items: [
+    {
+      sentenceWithBlank: "한국말의 ___은 어려워요.",
+      english: "Korean grammar is difficult.",
+      blankAnswer: "문법",
+      fullAnswer: "한국말의 문법은 어려워요.",
+    },
+    {
+      sentenceWithBlank: "저는 매일 ___를 해요.",
+      english: "I study every day.",
+      blankAnswer: "공부",
+      fullAnswer: "저는 매일 공부를 해요.",
+    },
+    {
+      sentenceWithBlank: "박선생님은 ___를 가르쳐요.",
+      english: "Teacher Park teaches Korean.",
+      blankAnswer: "한국어",
+      fullAnswer: "박선생님은 한국어를 가르쳐요.",
+    },
+    {
+      sentenceWithBlank: "이민수씨는 ___를 많이 씁니다.",
+      english: "Minsoo Lee writes a lot of words.",
+      blankAnswer: "단어",
+      fullAnswer: "이민수씨는 단어를 많이 씁니다.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___를 연습해야 돼요.",
+      english: "We need to practice pronunciation.",
+      blankAnswer: "발음",
+      fullAnswer: "우리는 발음을 연습해야 돼요.",
+    },
+    {
+      sentenceWithBlank: "김삼순씨는 ___를 읽어요.",
+      english: "Samsun Kim reads the textbook.",
+      blankAnswer: "교과서",
+      fullAnswer: "김삼순씨는 교과서를 읽어요.",
+    },
+    {
+      sentenceWithBlank: "저는 ___를 배워요.",
+      english: "I learn linguistics.",
+      blankAnswer: "언어학",
+      fullAnswer: "저는 언어학을 배워요.",
+    },
+    {
+      sentenceWithBlank: "대진씨는 ___를 고쳐요.",
+      english: "Daejin corrects the sentence.",
+      blankAnswer: "문장",
+      fullAnswer: "대진씨는 문장을 고쳐요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___를 들어요.",
+      english: "We listen to the listening practice.",
+      blankAnswer: "듣기",
+      fullAnswer: "우리는 듣기를 들어요.",
+    },
+    {
+      sentenceWithBlank: "김선영씨는 ___를 공부해요.",
+      english: "Sunyoung Kim studies conversation.",
+      blankAnswer: "회화",
+      fullAnswer: "김선영씨는 회화를 공부해요.",
+    },
+    {
+      sentenceWithBlank: "이민지씨는 ___를 가르칩니다.",
+      english: "Minji Lee teaches vocabulary.",
+      blankAnswer: "어휘",
+      fullAnswer: "이민지씨는 어휘를 가르칩니다.",
+    },
+    {
+      sentenceWithBlank: "저는 ___를 좋아해요.",
+      english: "I like phrases.",
+      blankAnswer: "구문",
+      fullAnswer: "저는 구문을 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "이수지씨는 ___를 많이 사용해요.",
+      english: "Sooji Lee uses a lot of idioms.",
+      blankAnswer: "관용구",
+      fullAnswer: "이수지씨는 관용구를 많이 사용해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___를 읽어요.",
+      english: "We read the script.",
+      blankAnswer: "대본",
+      fullAnswer: "우리는 대본을 읽어요.",
+    },
+    {
+      sentenceWithBlank: "조영희씨는 ___를 듣는 걸 좋아해요.",
+      english: "Younghee Cho likes listening to the dialogue.",
+      blankAnswer: "대화",
+      fullAnswer: "조영희씨는 대화를 듣는 걸 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "저는 ___를 연습해요.",
+      english: "I practice writing.",
+      blankAnswer: "쓰기",
+      fullAnswer: "저는 쓰기를 연습해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___를 고쳐요.",
+      english: "We correct the errors.",
+      blankAnswer: "오류",
+      fullAnswer: "우리는 오류를 고쳐요.",
+    },
+    {
+      sentenceWithBlank: "김민준씨는 ___를 사용해요.",
+      english: "Minjoon Kim uses the translator.",
+      blankAnswer: "번역기",
+      fullAnswer: "김민준씨는 번역기를 사용해요.",
+    },
+    {
+      sentenceWithBlank: "저는 ___를 읽어요.",
+      english: "I read the subtitles.",
+      blankAnswer: "자막",
+      fullAnswer: "저는 자막을 읽어요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___를 배워요.",
+      english: "We learn the alphabet.",
+      blankAnswer: "알파벳",
+      fullAnswer: "우리는 알파벳을 배워요.",
+    },
+  ],
+};
+
 const transportationWordChoice = {
   title: "Transportation",
   type: "fillblank",
@@ -759,6 +886,134 @@ const objectMarkers = {
   ],
 };
 
+const futureConjugation = {
+  title: "Future (으)ㄹ 거예요 Conjugation",
+  type: "grammar",
+  promptLabel: "Change the verb shown to its future (으)ㄹ 거예요 form.",
+  items: [
+    {
+      sentenceWithBlank: "우리는 피아노를 ___. (치다)",
+      english: "We will play the piano.",
+      blankAnswer: "칠 거예요",
+      fullAnswer: "우리는 피아노를 칠 거예요.",
+    },
+    {
+      sentenceWithBlank: "민수씨는 커피를 ___. (마시다)",
+      english: "Minsoo will drink coffee.",
+      blankAnswer: "마실 거예요",
+      fullAnswer: "민수씨는 커피를 마실 거예요.",
+    },
+    {
+      sentenceWithBlank: "삼순씨는 텔레비전을 ___. (보다)",
+      english: "Samsun will watch television.",
+      blankAnswer: "볼 거예요",
+      fullAnswer: "삼순씨는 텔레비전을 볼 거예요.",
+    },
+    {
+      sentenceWithBlank: "박선생님은 아침에 운동을 ___. (하다)",
+      english: "Teacher Park will exercise in the morning.",
+      blankAnswer: "할 거예요",
+      fullAnswer: "박선생님은 아침에 운동을 할 거예요.",
+    },
+    {
+      sentenceWithBlank: "우리는 축구를 ___. (하다)",
+      english: "We will play soccer.",
+      blankAnswer: "할 거예요",
+      fullAnswer: "우리는 축구를 할 거예요.",
+    },
+    {
+      sentenceWithBlank: "영희씨는 양파를 ___. (먹다)",
+      english: "Younghee will eat onions.",
+      blankAnswer: "먹을 거예요",
+      fullAnswer: "영희씨는 양파를 먹을 거예요.",
+    },
+    {
+      sentenceWithBlank: "석진씨는 영어를 ___. (공부하다)",
+      english: "Seokjin will study English.",
+      blankAnswer: "공부할 거예요",
+      fullAnswer: "석진씨는 영어를 공부할 거예요.",
+    },
+    {
+      sentenceWithBlank: "우리는 매일 저녁에 산책을 ___. (하다)",
+      english: "We will take a walk every evening.",
+      blankAnswer: "할 거예요",
+      fullAnswer: "우리는 매일 저녁에 산책을 할 거예요.",
+    },
+    {
+      sentenceWithBlank: "현우씨는 돼지고기를 ___. (먹다)",
+      english: "Hyunwoo will eat pork.",
+      blankAnswer: "먹을 거예요",
+      fullAnswer: "현우씨는 돼지고기를 먹을 거예요.",
+    },
+    {
+      sentenceWithBlank: "지민씨는 집에 ___. (가다)",
+      english: "Jimin will go home.",
+      blankAnswer: "갈 거예요",
+      fullAnswer: "지민씨는 집에 갈 거예요.",
+    },
+    {
+      sentenceWithBlank: "우리는 학교에 ___. (가다)",
+      english: "We will go to school.",
+      blankAnswer: "갈 거예요",
+      fullAnswer: "우리는 학교에 갈 거예요.",
+    },
+    {
+      sentenceWithBlank: "태형씨는 차를 ___. (운전하다)",
+      english: "Taehyung will drive a car.",
+      blankAnswer: "운전할 거예요",
+      fullAnswer: "태형씨는 차를 운전할 거예요.",
+    },
+    {
+      sentenceWithBlank: "우리는 음악을 ___. (듣다)",
+      english: "We will listen to music.",
+      blankAnswer: "들을 거예요",
+      fullAnswer: "우리는 음악을 들을 거예요.",
+    },
+    {
+      sentenceWithBlank: "이민수씨는 공을 ___. (차다)",
+      english: "Minsoo Lee will kick the ball.",
+      blankAnswer: "찰 거예요",
+      fullAnswer: "이민수씨는 공을 찰 거예요.",
+    },
+    {
+      sentenceWithBlank: "우리는 여름에 여행을 ___. (하다)",
+      english: "We will travel in the summer.",
+      blankAnswer: "할 거예요",
+      fullAnswer: "우리는 여름에 여행을 할 거예요.",
+    },
+    {
+      sentenceWithBlank: "선영씨는 책을 ___. (읽다)",
+      english: "Sunyoung will read a book.",
+      blankAnswer: "읽을 거예요",
+      fullAnswer: "선영씨는 책을 읽을 거예요.",
+    },
+    {
+      sentenceWithBlank: "대진씨는 사진을 ___. (찍다)",
+      english: "Daejin will take a photo.",
+      blankAnswer: "찍을 거예요",
+      fullAnswer: "대진씨는 사진을 찍을 거예요.",
+    },
+    {
+      sentenceWithBlank: "우리는 영화를 ___. (보다)",
+      english: "We will watch a movie.",
+      blankAnswer: "볼 거예요",
+      fullAnswer: "우리는 영화를 볼 거예요.",
+    },
+    {
+      sentenceWithBlank: "영수씨는 수영을 ___. (하다)",
+      english: "Youngsoo will swim.",
+      blankAnswer: "할 거예요",
+      fullAnswer: "영수씨는 수영을 할 거예요.",
+    },
+    {
+      sentenceWithBlank: "우리는 저녁을 ___. (먹다)",
+      english: "We will eat dinner.",
+      blankAnswer: "먹을 거예요",
+      fullAnswer: "우리는 저녁을 먹을 거예요.",
+    },
+  ],
+};
+
 const simplePresentConjugation = {
   title: "Simple Present 아요/어요 Conjugation",
   type: "grammar",
@@ -854,18 +1109,7 @@ const simplePresentConjugation = {
       blankAnswer: "해요",
       fullAnswer: "저는 매일 운동을 해요.",
     },
-    {
-      sentenceWithBlank: "당신은 언제 친구를 ___. (만나다)",
-      english: "When do you meet friends?",
-      blankAnswer: "만나요",
-      fullAnswer: "당신은 언제 친구를 만나요?",
-    },
-    {
-      sentenceWithBlank: "김선생님은 언제 퇴근을 ___. (하다)",
-      english: "When does Mr. Kim get off work?",
-      blankAnswer: "해요",
-      fullAnswer: "김선생님은 언제 퇴근을 해요?",
-    },
+
     {
       sentenceWithBlank: "우리는 매일 아침에 아침식사를 ___. (먹다)",
       english: "We eat breakfast every morning.",
@@ -873,46 +1117,192 @@ const simplePresentConjugation = {
       fullAnswer: "우리는 매일 아침에 아침식사를 먹어요.",
     },
     {
-      sentenceWithBlank: "주원씨는 언제 숙제를 ___. (하다)",
-      english: "When does Juwon do homework?",
+      sentenceWithBlank: "오늘 저녁 친구와 함께 음악을 ___. (듣다)",
+      english: "I'm listening to music with a friend tonight.",
+      blankAnswer: "듣어요",
+      fullAnswer: "오늘 저녁 친구와 함께 음악을 듣어요.",
+    },
+    {
+      sentenceWithBlank: "매일 아침 운동을 ___. (하다)",
+      english: "I exercise every morning.",
       blankAnswer: "해요",
-      fullAnswer: "주원씨는 언제 숙제를 해요?",
+      fullAnswer: "매일 아침 운동을 해요.",
     },
     {
-      sentenceWithBlank: "당신은 언제 일어나서 학교에 ___. (가다)",
-      english: "When do you get up and go to school?",
-      blankAnswer: "가요",
-      fullAnswer: "당신은 언제 일어나서 학교에 가요?",
+      sentenceWithBlank: "형은 어제 영화를 ___. (보다)",
+      english: "My older brother watched a movie yesterday.",
+      blankAnswer: "봤어요",
+      fullAnswer: "형은 어제 영화를 봤어요.",
     },
     {
-      sentenceWithBlank: "저는 언제 침대에 ___. (눕다)",
-      english: "When do I lie down on the bed?",
-      blankAnswer: "누워요",
-      fullAnswer: "저는 언제 침대에 누워요?",
-    },
-    {
-      sentenceWithBlank: "우리는 언제 휴식을 ___. (취하다)",
-      english: "When do we take a break?",
-      blankAnswer: "취해요",
-      fullAnswer: "우리는 언제 휴식을 취해요?",
-    },
-    {
-      sentenceWithBlank: "김선생님은 언제 책을 ___. (읽다)",
-      english: "When does Mr. Kim read a book?",
+      sentenceWithBlank: "우리 언니는 항상 책을 ___. (읽다)",
+      english: "My older sister always reads books.",
       blankAnswer: "읽어요",
-      fullAnswer: "김선생님은 언제 책을 읽어요?",
+      fullAnswer: "우리 언니는 항상 책을 읽어요.",
     },
     {
-      sentenceWithBlank: "주원씨는 언제 연필을 ___. (깎다)",
-      english: "When does Juwon sharpen a pencil?",
-      blankAnswer: "깎아요",
-      fullAnswer: "주원씨는 언제 연필을 깎아요?",
+      sentenceWithBlank: "주말에 무엇을 ___. (하다)",
+      english: "What are you doing on the weekend?",
+      blankAnswer: "해요",
+      fullAnswer: "주말에 무엇을 해요?",
     },
     {
-      sentenceWithBlank: "저는 언제 배를 ___. (타다)",
-      english: "When do I ride a boat?",
-      blankAnswer: "타요",
-      fullAnswer: "저는 언제 배를 타요?",
+      sentenceWithBlank: "지금 무슨 노래를 ___. (듣다)",
+      english: "What song are you listening to now?",
+      blankAnswer: "듣고 있어요",
+      fullAnswer: "지금 무슨 노래를 듣고 있어요?",
+    },
+    {
+      sentenceWithBlank: "당신의 친구가 언제 한국에 ___. (오다)",
+      english: "When is your friend coming to Korea?",
+      blankAnswer: "와요",
+      fullAnswer: "당신의 친구가 언제 한국에 와요?",
+    },
+    {
+      sentenceWithBlank: "나는 어제 저녁에 새로운 책을 ___. (사다)",
+      english: "I bought a new book last night.",
+      blankAnswer: "샀어요",
+      fullAnswer: "나는 어제 저녁에 새로운 책을 샀어요.",
+    },
+    {
+      sentenceWithBlank: "너의 가방에 무엇이 ___. (있다)",
+      english: "What's in your bag?",
+      blankAnswer: "있어요",
+      fullAnswer: "너의 가방에 무엇이 있어요?",
+    },
+    {
+      sentenceWithBlank: "아버지는 매일 저녁 신문을 ___. (읽다)",
+      english: "My father reads the newspaper every evening.",
+      blankAnswer: "읽어요",
+      fullAnswer: "아버지는 매일 저녁 신문을 읽어요.",
+    },
+  ],
+};
+
+const presentNegativeConjugation = {
+  title: "Present Negative 아요/어요 Conjugation",
+  type: "grammar",
+  promptLabel: "Change the verb shown to its negative 아요/어요 form.",
+  items: [
+    {
+      sentenceWithBlank: "저는 피아노를 ___. (치요)",
+      english: "I don't play the piano.",
+      blankAnswer: "치지 않아요",
+      fullAnswer: "저는 피아노를 치지 않아요.",
+    },
+    {
+      sentenceWithBlank: "민수씨는 커피를 ___. (마셔요)",
+      english: "Minsoo doesn't drink coffee.",
+      blankAnswer: "마시지 않아요",
+      fullAnswer: "민수씨는 커피를 마시지 않아요.",
+    },
+    {
+      sentenceWithBlank: "삼순씨는 텔레비전을 ___. (봐요)",
+      english: "Samsun doesn't watch television.",
+      blankAnswer: "보지 않아요",
+      fullAnswer: "삼순씨는 텔레비전을 보지 않아요.",
+    },
+    {
+      sentenceWithBlank: "박선생님은 아침에 운동을 ___. (해요)",
+      english: "Teacher Park doesn't exercise in the morning.",
+      blankAnswer: "하지 않아요",
+      fullAnswer: "박선생님은 아침에 운동을 하지 않아요.",
+    },
+    {
+      sentenceWithBlank: "우리는 축구를 ___. (해요)",
+      english: "We don't play soccer.",
+      blankAnswer: "하지 않아요",
+      fullAnswer: "우리는 축구를 하지 않아요.",
+    },
+    {
+      sentenceWithBlank: "영희씨는 양파를 ___. (먹어요)",
+      english: "Younghee doesn't eat onions.",
+      blankAnswer: "먹지 않아요",
+      fullAnswer: "영희씨는 양파를 먹지 않아요.",
+    },
+    {
+      sentenceWithBlank: "석진씨는 영어를 ___. (공부해요)",
+      english: "Seokjin doesn't study English.",
+      blankAnswer: "공부하지 않아요",
+      fullAnswer: "석진씨는 영어를 공부하지 않아요.",
+    },
+    {
+      sentenceWithBlank: "우리는 매일 저녁에 산책을 ___. (해요)",
+      english: "We don't take a walk every evening.",
+      blankAnswer: "하지 않아요",
+      fullAnswer: "우리는 매일 저녁에 산책을 하지 않아요.",
+    },
+    {
+      sentenceWithBlank: "현우씨는 돼지고기를 ___. (먹어요)",
+      english: "Hyunwoo doesn't eat pork.",
+      blankAnswer: "먹지 않아요",
+      fullAnswer: "현우씨는 돼지고기를 먹지 않아요.",
+    },
+    {
+      sentenceWithBlank: "민희씨는 기타를 ___. (치요)",
+      english: "Minhee doesn't play the guitar.",
+      blankAnswer: "치지 않아요",
+      fullAnswer: "민희씨는 기타를 치지 않아요.",
+    },
+    {
+      sentenceWithBlank: "지현씨는 고양이를 ___. (데려와요)",
+      english: "Jihyun doesn't have a cat.",
+      blankAnswer: "데리지 않아요",
+      fullAnswer: "지현씨는 고양이를 데리지 않아요.",
+    },
+    {
+      sentenceWithBlank: "선영씨는 자전거를 ___. (타요)",
+      english: "Sunyoung doesn't ride a bike.",
+      blankAnswer: "타지 않아요",
+      fullAnswer: "선영씨는 자전거를 타지 않아요.",
+    },
+    {
+      sentenceWithBlank: "우리는 이야기를 ___. (해요)",
+      english: "We don't talk.",
+      blankAnswer: "하지 않아요",
+      fullAnswer: "우리는 이야기를 하지 않아요.",
+    },
+    {
+      sentenceWithBlank: "지민씨는 컴퓨터 게임을 ___. (해요)",
+      english: "Jimin doesn't play computer games.",
+      blankAnswer: "하지 않아요",
+      fullAnswer: "지민씨는 컴퓨터 게임을 하지 않아요.",
+    },
+    {
+      sentenceWithBlank: "우리는 주말에 영화를 ___. (봐요)",
+      english: "We don't watch movies on the weekend.",
+      blankAnswer: "보지 않아요",
+      fullAnswer: "우리는 주말에 영화를 보지 않아요.",
+    },
+    {
+      sentenceWithBlank: "혜진씨는 수학을 ___. (공부해요)",
+      english: "Hyejin doesn't study math.",
+      blankAnswer: "공부하지 않아요",
+      fullAnswer: "혜진씨는 수학을 공부하지 않아요.",
+    },
+    {
+      sentenceWithBlank: "우리는 계단을 ___. (올라가요)",
+      english: "We don't go up the stairs.",
+      blankAnswer: "올라가지 않아요",
+      fullAnswer: "우리는 계단을 올라가지 않아요.",
+    },
+    {
+      sentenceWithBlank: "민석씨는 일찍 ___. (일어나요)",
+      english: "Minseok doesn't get up early.",
+      blankAnswer: "일어나지 않아요",
+      fullAnswer: "민석씨는 일찍 일어나지 않아요.",
+    },
+    {
+      sentenceWithBlank: "우리는 늦게 ___. (자요)",
+      english: "We don't sleep late.",
+      blankAnswer: "자지 않아요",
+      fullAnswer: "우리는 늦게 자지 않아요.",
+    },
+    {
+      sentenceWithBlank: "선미씨는 과일을 ___. (먹어요)",
+      english: "Sunmi doesn't eat fruit.",
+      blankAnswer: "먹지 않아요",
+      fullAnswer: "선미씨는 과일을 먹지 않아요.",
     },
   ],
 };
@@ -1553,22 +1943,6 @@ const exerciseTypeController = {
   },
 };
 
-const basicVocabCategories = {
-  title: "Basic Vocabulary",
-  type: "transcribe",
-  items: [],
-};
-basicVocabCategories.items.push(countries);
-basicVocabCategories.items.push(foodItems);
-basicVocabCategories.items.push(natureTerms);
-basicVocabCategories.items.push(animals);
-basicVocabCategories.items.push(colors);
-basicVocabCategories.items.push(greetings);
-basicVocabCategories.items.push(sea);
-basicVocabCategories.items.push(space);
-basicVocabCategories.items.push(technology);
-basicVocabCategories.items.push(sports);
-
 class ExerciseCategory {
   constructor(title) {
     this.title = title;
@@ -1597,6 +1971,8 @@ grammarExercises.items.push(placeMarkers);
 grammarExercises.items.push(simplePastConjugations);
 grammarExercises.items.push(simplePresentConjugation);
 grammarExercises.items.push(objectMarkers);
+grammarExercises.items.push(presentNegativeConjugation);
+grammarExercises.items.push(futureConjugation);
 
 jumbleExercises.items.push(hobbiesJumble);
 jumbleExercises.items.push(newPeopleJumble);
@@ -1604,6 +1980,7 @@ jumbleExercises.items.push(transportationJumble);
 
 wordChoiceExercises.items.push(hobbiesWordChoice);
 wordChoiceExercises.items.push(transportationWordChoice);
+wordChoiceExercises.items.push(languageLearningWordChoice);
 
 const rootCategoryContainer = {
   title: "Exercise Categories",
