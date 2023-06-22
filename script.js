@@ -98,8 +98,7 @@ const keyboardMessageContent =
 function restoreDefaultSettings() {
   repetitionNumber = 10;
   speedCalcOn = true;
-  maxTries = 3; // amount of tries user can attempt to answer before being shown correct response, only used when unlimitedTries == false
-  unlimitedTries = true;
+  maxTries = 3; // amount of tries user can attempt to answer before being shown correct response, a value of 0 means unlimited tries
   requireResponse = true; // user will be required to type the correct response before being allowed to continue
   keyboardOn = true;
   keyboardHintsOn = true;
@@ -508,7 +507,7 @@ function clearExercise() {
   correctResponsesCounter = 0;
   document.querySelector(".activated-key")?.classList.remove("activated-key");
   answerRevealed = false;
-
+  triesContainer.classList.remove("hidden");
   // I haven't decided how I'm going to handle this yet
   // if (!saveSettingsOn) {
   //   keepDefaultSettings = true;
@@ -567,7 +566,9 @@ function applyUserSettings(exerciseType) {
     selectedTriesPerPrompt === "unlimited"
       ? 0
       : parseInt(triesPerPromptInput.value);
-  unlimitedTries = maxTries === 0; // I don't think I user unlimitedTries anywhere...
+  if (maxTries === 0) {
+    triesContainer.classList.add("hidden");
+  }
 
   requireResponse = requireAnswerCheckbox.checked;
   repetitionNumber = repetitionsInput ? parseInt(repetitionsInput.value) : 10;

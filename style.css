@@ -63,9 +63,6 @@ main {
   align-items: center;
   font-family: var(--font-family);
 }
-.hidden {
-  display: none;
-}
 
 .slogan-container {
   font-family: var(--font-family);
@@ -753,4 +750,8 @@ button {
   color: white;
   cursor: pointer;
   font-family: var(--font-family);
+}
+
+.hidden {
+  display: none;
 }
