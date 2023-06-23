@@ -332,6 +332,385 @@ const sports = {
   ],
 };
 
+const familyWordChoice = {
+  title: "Family",
+  type: "fillblank",
+  items: [
+    {
+      sentenceWithBlank: "우리 ___는 맛있는 음식을 만들어요.",
+      english: "Our mother makes delicious food.",
+      blankAnswer: "엄마",
+      fullAnswer: "우리 엄마는 맛있는 음식을 만들어요.",
+    },
+    {
+      sentenceWithBlank: "민준씨의 ___는 교사예요.",
+      english: "Minjun's father is a teacher.",
+      blankAnswer: "아빠",
+      fullAnswer: "민준씨의 아빠는 교사예요.",
+    },
+    {
+      sentenceWithBlank: "제 ___은 사진을 찍는 것을 좋아해요.",
+      english: "My older brother likes taking photos.",
+      blankAnswer: "형",
+      fullAnswer: "제 형은 사진을 찍는 것을 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "지은씨의 ___은 항상 웃어요.",
+      english: "Jieun's younger sister always smiles.",
+      blankAnswer: "동생",
+      fullAnswer: "지은씨의 동생은 항상 웃어요.",
+    },
+    {
+      sentenceWithBlank: "우리 ___는 항상 저를 도와줘요.",
+      english: "Our grandmother always helps me.",
+      blankAnswer: "할머니",
+      fullAnswer: "우리 할머니는 항상 저를 도와줘요.",
+    },
+    {
+      sentenceWithBlank: "철수씨의 ___은 학생이에요.",
+      english: "Chulsoo's son is a student.",
+      blankAnswer: "아들",
+      fullAnswer: "철수씨의 아들은 학생이에요.",
+    },
+    {
+      sentenceWithBlank: "영희씨는 ___과 함께 살아요.",
+      english: "Younghee lives with her husband.",
+      blankAnswer: "남편",
+      fullAnswer: "영희씨는 남편과 함께 살아요.",
+    },
+    {
+      sentenceWithBlank: "현우씨는 ___가 이뻐요.",
+      english: "Hyunwoo's wife is beautiful.",
+      blankAnswer: "아내",
+      fullAnswer: "현우씨는 아내가 이뻐요.",
+    },
+    {
+      sentenceWithBlank: "제 ___은 항상 공부하고 있어요.",
+      english: "My cousin is always studying.",
+      blankAnswer: "사촌",
+      fullAnswer: "제 사촌은 항상 공부하고 있어요.",
+    },
+    {
+      sentenceWithBlank: "민지씨의 ___는 그림을 그리는 것을 좋아해요.",
+      english: "Minji's aunt likes drawing pictures.",
+      blankAnswer: "이모",
+      fullAnswer: "민지씨의 이모는 그림을 그리는 것을 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "유진씨의 ___은 미국에 살아요.",
+      english: "Yujin's uncle lives in America.",
+      blankAnswer: "삼촌",
+      fullAnswer: "유진씨의 삼촌은 미국에 살아요.",
+    },
+    {
+      sentenceWithBlank: "은지씨는 ___와 많이 닮았어요.",
+      english: "Eunji looks a lot like her older sister.",
+      blankAnswer: "언니",
+      fullAnswer: "은지씨는 언니와 많이 닮았어요.",
+    },
+    {
+      sentenceWithBlank: "저희 ___는 친절해요.",
+      english: "Our aunt (from father's side) is kind.",
+      blankAnswer: "고모",
+      fullAnswer: "저희 고모는 친절해요.",
+    },
+    {
+      sentenceWithBlank: "지민씨의 ___는 서울에 살아요.",
+      english: "Jimin's nephew lives in Seoul.",
+      blankAnswer: "조카",
+      fullAnswer: "지민씨의 조카는 서울에 살아요.",
+    },
+    {
+      sentenceWithBlank: "우리 ___은 많이 똑똑해요.",
+      english: "Our younger brother is very smart.",
+      blankAnswer: "동생",
+      fullAnswer: "우리 동생은 많이 똑똑해요.",
+    },
+    {
+      sentenceWithBlank: "나의 ___는 요리사예요.",
+      english: "My father-in-law is a chef.",
+      blankAnswer: "시아버지",
+      fullAnswer: "나의 시아버지는 요리사예요.",
+    },
+    {
+      sentenceWithBlank: "태민씨의 ___는 한국에서 왔어요.",
+      english: "Taemin's maternal grandfather came from Korea.",
+      blankAnswer: "외할아버지",
+      fullAnswer: "태민씨의 외할아버지는 한국에서 왔어요.",
+    },
+    {
+      sentenceWithBlank: "나의 ___는 공항에 있어요.",
+      english: "My wife is at the airport.",
+      blankAnswer: "아내",
+      fullAnswer: "나의 아내는 공항에 있어요.",
+    },
+    {
+      sentenceWithBlank: "제 ___은 피아노를 칠 수 있어요.",
+      english: "My daughter can play the piano.",
+      blankAnswer: "딸",
+      fullAnswer: "제 딸은 피아노를 칠 수 있어요.",
+    },
+    {
+      sentenceWithBlank: "현수씨의 ___는 축구를 좋아해요.",
+      english: "Hyunsoo's son-in-law likes soccer.",
+      blankAnswer: "사위",
+      fullAnswer: "현수씨의 사위는 축구를 좋아해요.",
+    },
+  ],
+};
+
+const sportsWordChoice = {
+  title: "Sports and Fitness",
+  type: "fillblank",
+  items: [
+    {
+      sentenceWithBlank: "윤지씨는 ___를 매일 연습해요.",
+      english: "Yoonji practices tennis every day.",
+      blankAnswer: "테니스",
+      fullAnswer: "윤지씨는 테니스을 매일 연습해요.",
+    },
+    {
+      sentenceWithBlank: "준호씨는 ___를 좋아해요.",
+      english: "Junho likes basketball.",
+      blankAnswer: "농구",
+      fullAnswer: "준호씨는 농구를 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "민선씨는 ___을 배우고 있어요.",
+      english: "Minseon is learning swimming.",
+      blankAnswer: "수영",
+      fullAnswer: "민선씨는 수영을 배우고 있어요.",
+    },
+    {
+      sentenceWithBlank: "우리 언니는 ___ 선수예요.",
+      english: "Our older sister is a volleyball player.",
+      blankAnswer: "배구",
+      fullAnswer: "우리 언니는 배구 선수예요.",
+    },
+    {
+      sentenceWithBlank: "재현씨는 ___을 자주 뛰어요.",
+      english: "Jaehyun often runs marathons.",
+      blankAnswer: "마라톤",
+      fullAnswer: "재현씨는 마라톤을 자주 뛰어요.",
+    },
+    {
+      sentenceWithBlank: "호진씨는 ___가 힘들어요.",
+      english: "Hojin finds weightlifting difficult.",
+      blankAnswer: "역도",
+      fullAnswer: "호진씨는 역도가 힘들어요.",
+    },
+    {
+      sentenceWithBlank: "지훈씨는 ___를 가르쳐요.",
+      english: "Jihoon teaches yoga.",
+      blankAnswer: "요가",
+      fullAnswer: "지훈씨는 요가를 가르쳐요.",
+    },
+    {
+      sentenceWithBlank: "소영씨는 ___를 잘 타요.",
+      english: "Soyoung is good at riding a bicycle.",
+      blankAnswer: "자전거",
+      fullAnswer: "소영씨는 자전거를 잘 타요.",
+    },
+    {
+      sentenceWithBlank: "준영씨는 ___을 원해요.",
+      english: "Junyoung wants a treadmill.",
+      blankAnswer: "트레드밀",
+      fullAnswer: "준영씨는 트레드밀을 원해요.",
+    },
+    {
+      sentenceWithBlank: "우리 팀은 ___에서 우승했어요.",
+      english: "Our team won in soccer.",
+      blankAnswer: "축구",
+      fullAnswer: "우리 팀은 축구에서 우승했어요.",
+    },
+    {
+      sentenceWithBlank: "선미씨는 ___을 배워요.",
+      english: "Sunmi learns aerobics.",
+      blankAnswer: "에어로빅",
+      fullAnswer: "선미씨는 에어로빅을 배워요.",
+    },
+    {
+      sentenceWithBlank: "민수씨는 ___을 시청해요.",
+      english: "Minsu watches boxing.",
+      blankAnswer: "복싱",
+      fullAnswer: "민수씨는 복싱을 시청해요.",
+    },
+    {
+      sentenceWithBlank: "예진씨는 ___을 싫어해요.",
+      english: "Yejin dislikes wrestling.",
+      blankAnswer: "레슬링",
+      fullAnswer: "예진씨는 레슬링을 싫어해요.",
+    },
+    {
+      sentenceWithBlank: "우리 동네에는 ___장이 있어요.",
+      english: "There is a golf course in our neighborhood.",
+      blankAnswer: "골프",
+      fullAnswer: "우리 동네에는 골프장이 있어요.",
+    },
+
+    {
+      sentenceWithBlank: "민철씨는 ___을 배우고 싶어요.",
+      english: "Mincheol wants to learn fencing.",
+      blankAnswer: "펜싱",
+      fullAnswer: "민철씨는 펜싱을 배우고 싶어요.",
+    },
+    {
+      sentenceWithBlank: "하늘씨는 ___를 가르치지 않아요.",
+      english: "Haneul does not teach skiing.",
+      blankAnswer: "스키",
+      fullAnswer: "하늘씨는 스키를 가르치지 않아요.",
+    },
+    {
+      sentenceWithBlank: "은주씨는 ___가 쉽지 않아요.",
+      english: "Eunju does not find gymnastics easy.",
+      blankAnswer: "체조",
+      fullAnswer: "은주씨는 체조가 쉽지 않아요.",
+    },
+    {
+      sentenceWithBlank: "진영씨는 ___을 잘하고 싶어요.",
+      english: "Jinyoung wants to be good at archery.",
+      blankAnswer: "양궁",
+      fullAnswer: "진영씨는 양궁을 잘하고 싶어요.",
+    },
+    {
+      sentenceWithBlank: "우리 친구들은 ___를 보러 가요.",
+      english: "Our friends go to watch baseball.",
+      blankAnswer: "야구",
+      fullAnswer: "우리 친구들은 야구를 보러 가요.",
+    },
+  ],
+};
+
+const jobsWordChoice = {
+  title: "Jobs and Professions",
+  type: "fillblank",
+  items: [
+    {
+      sentenceWithBlank: "김선생님은 의학을 전공해서 ___입니다.",
+      english: "Teacher Kim majored in medicine, so he is a doctor.",
+      blankAnswer: "의사",
+      fullAnswer: "김선생님은 의학을 전공해서 의사입니다.",
+    },
+    {
+      sentenceWithBlank: "영희씨는 ___에서 고객을 돕는 일을 해요.",
+      english: "Younghee helps customers at a bank.",
+      blankAnswer: "은행",
+      fullAnswer: "영희씨는 은행에서 고객을 돕는 일을 해요.",
+    },
+    {
+      sentenceWithBlank: "우리 아빠는 건물을 짓는 ___예요.",
+      english: "Our father is an engineer who builds buildings.",
+      blankAnswer: "공학자",
+      fullAnswer: "우리 아빠는 건물을 짓는 공학자예요.",
+    },
+    {
+      sentenceWithBlank: "미영씨는 병원에서 환자를 돌보는 ___예요.",
+      english: "Miyoung is a nurse who takes care of patients at the hospital.",
+      blankAnswer: "간호사",
+      fullAnswer: "미영씨는 병원에서 환자를 돌보는 간호사예요.",
+    },
+    {
+      sentenceWithBlank: "혜진씨는 ___에서 일해요.",
+      english: "Hyejin works in a company.",
+      blankAnswer: "회사",
+      fullAnswer: "혜진씨는 회사에서 일해요.",
+    },
+
+    {
+      sentenceWithBlank: "지훈씨는 ___예요.",
+      english: "Jihoon is a pilot.",
+      blankAnswer: "조종사",
+      fullAnswer: "지훈씨는 조종사예요.",
+    },
+    {
+      sentenceWithBlank: "민수씨는 ___에서 일해요.",
+      english: "Minsu works at a restaurant.",
+      blankAnswer: "식당",
+      fullAnswer: "민수씨는 식당에서 일해요.",
+    },
+
+    {
+      sentenceWithBlank: "유나씨는 ___예요.",
+      english: "Yuna is a journalist.",
+      blankAnswer: "기자",
+      fullAnswer: "유나씨는 기자예요.",
+    },
+    {
+      sentenceWithBlank: "서연씨는 ___에서 일해요.",
+      english: "Seoyeon works at a school.",
+      blankAnswer: "학교",
+      fullAnswer: "서연씨는 학교에서 일해요.",
+    },
+    {
+      sentenceWithBlank: "진우씨는 ___이에요.",
+      english: "Jinwoo is a firefighter.",
+      blankAnswer: "소방관",
+      fullAnswer: "진우씨는 소방관이에요.",
+    },
+    {
+      sentenceWithBlank: "하늘씨는 ___에서 일해요.",
+      english: "Haneul works at a library.",
+      blankAnswer: "도서관",
+      fullAnswer: "하늘씨는 도서관에서 일해요.",
+    },
+    {
+      sentenceWithBlank: "지민씨는 ___이에요.",
+      english: "Jimin is a policeman.",
+      blankAnswer: "경찰관",
+      fullAnswer: "지민씨는 경찰관이에요.",
+    },
+    {
+      sentenceWithBlank: "석진씨는 ___에서 일해요.",
+      english: "Seokjin works at a bakery.",
+      blankAnswer: "빵집",
+      fullAnswer: "석진씨는 빵집에서 일해요.",
+    },
+    {
+      sentenceWithBlank: "나래씨는 ___예요.",
+      english: "Narae is a chef.",
+      blankAnswer: "요리사",
+      fullAnswer: "나래씨는 요리사예요.",
+    },
+    {
+      sentenceWithBlank: "도윤씨는 ___에서 일해요.",
+      english: "Doyun works at a post office.",
+      blankAnswer: "우체국",
+      fullAnswer: "도윤씨는 우체국에서 일해요.",
+    },
+    {
+      sentenceWithBlank: "하은씨는 ___예요.",
+      english: "Haeun is an architect.",
+      blankAnswer: "건축가",
+      fullAnswer: "하은씨는 건축가예요.",
+    },
+    {
+      sentenceWithBlank: "소희씨는 ___에서 일해요.",
+      english: "Sohee works at a movie theater.",
+      blankAnswer: "영화관",
+      fullAnswer: "소희씨는 영화관에서 일해요.",
+    },
+
+    {
+      sentenceWithBlank: "철수씨는 ___가 되고 싶어요.",
+      english: "Chulsoo wants to become a lawyer.",
+      blankAnswer: "변호사",
+      fullAnswer: "철수씨는 변호사가 되고 싶어요.",
+    },
+    {
+      sentenceWithBlank: "대진씨는 ___의 일을 좋아해요.",
+      english: "Daejin likes the work of a pharmacist.",
+      blankAnswer: "약사",
+      fullAnswer: "대진씨는 약사의 일을 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "태현씨는 ___의 공부가 재미있어요.",
+      english: "Taehyun finds the study of science interesting.",
+      blankAnswer: "과학",
+      fullAnswer: "태현씨는 과학의 공부가 재미있어요.",
+    },
+  ],
+};
+
 const languageLearningWordChoice = {
   title: "Language Learning",
   type: "fillblank",
@@ -685,10 +1064,10 @@ const hobbiesWordChoice = {
       fullAnswer: "이민호씨는 사진을 찍는 것을 사랑해요",
     },
     {
-      sentenceWithBlank: "저의 취미는 __를 보는 것입니다",
+      sentenceWithBlank: "저의 취미는 __를 보는 것예요",
       english: "Watching movies is my hobby",
       blankAnswer: "영화",
-      fullAnswer: "저의 취미는 영화를 보는 것입니다",
+      fullAnswer: "저의 취미는 영화를 보는 것예요",
     },
     {
       sentenceWithBlank: "저는 __를 치는 것을 좋아합니다",
@@ -697,10 +1076,10 @@ const hobbiesWordChoice = {
       fullAnswer: "저는 피아노를 치는 것을 좋아합니다",
     },
     {
-      sentenceWithBlank: "제가 좋아하는 것은 __를 수집하는 것입니다",
+      sentenceWithBlank: "제가 좋아하는 것은 __를 수집하는 것예요",
       english: "What I like is collecting stamps",
       blankAnswer: "우표",
-      fullAnswer: "제가 좋아하는 것은 우표를 수집하는 것입니다",
+      fullAnswer: "제가 좋아하는 것은 우표를 수집하는 것예요",
     },
   ],
 };
@@ -1842,8 +2221,8 @@ const newPeopleJumble = {
       english: "I am a student.",
     },
     {
-      correctSentence: "우리는 친구입니다.",
-      jumbleSentence: "친구 . 우리는 입니다",
+      correctSentence: "우리는 친구예요.",
+      jumbleSentence: "친구 . 우리는 예요",
       english: "We are friends.",
     },
     {
@@ -1981,6 +2360,9 @@ jumbleExercises.items.push(transportationJumble);
 wordChoiceExercises.items.push(hobbiesWordChoice);
 wordChoiceExercises.items.push(transportationWordChoice);
 wordChoiceExercises.items.push(languageLearningWordChoice);
+wordChoiceExercises.items.push(jobsWordChoice);
+wordChoiceExercises.items.push(sportsWordChoice);
+wordChoiceExercises.items.push(familyWordChoice);
 
 const rootCategoryContainer = {
   title: "Exercise Categories",
@@ -1991,10 +2373,3 @@ rootCategoryContainer.items.push(grammarExercises);
 rootCategoryContainer.items.push(jumbleExercises);
 rootCategoryContainer.items.push(wordChoiceExercises);
 rootCategoryContainer.items.push(basicTypingExercises);
-
-// Make six basic categories
-// Basic typing exercises
-// Word Choice
-// Grammar
-// Mixed up sentences
-//

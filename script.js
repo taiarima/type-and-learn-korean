@@ -1104,7 +1104,7 @@ userText.addEventListener("input", function () {
 // This event listener is necessary to prevent the inadvertent behavior
 // of totalCharsTyped being incremented twice upon completion of a Korean syllable
 userText.addEventListener("compositionend", function () {
-  totalCharsTyped--; // this might be unnecessay now TODO
+  totalCharsTyped--;
 });
 
 showKeyboardCheckbox.addEventListener("change", function () {
