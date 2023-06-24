@@ -459,6 +459,381 @@ const familyWordChoice = {
   ],
 };
 
+const artAndCultureWordChoice = {
+  title: "Art and Culture",
+  type: "fillblank",
+  items: [
+    {
+      sentenceWithBlank: "민수씨는 ___를 매일 연습해요.",
+      english: "Minsu practices piano every day.",
+      blankAnswer: "피아노",
+      fullAnswer: "민수씨는 피아노를 매일 연습해요.",
+    },
+    {
+      sentenceWithBlank: "수연씨는 ___을 좋아해요.",
+      english: "Suyeon likes classical music.",
+      blankAnswer: "클래식 음악",
+      fullAnswer: "수연씨는 클래식 음악을 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "은지씨는 ___를 배우고 있어요.",
+      english: "Eunji is learning ballet.",
+      blankAnswer: "발레",
+      fullAnswer: "은지씨는 발레를 배우고 있어요.",
+    },
+    {
+      sentenceWithBlank: "재현씨는 ___를 읽어요.",
+      english: "Jaehyun reads poetry.",
+      blankAnswer: "시",
+      fullAnswer: "재현씨는 시를 읽어요.",
+    },
+    {
+      sentenceWithBlank: "영희씨는 ___ 그립니다.",
+      english: "Younghee draws landscapes.",
+      blankAnswer: "풍경화",
+      fullAnswer: "영희씨는 풍경화를 그립니다.",
+    },
+    {
+      sentenceWithBlank: "대식씨는 ___을 찍습니다.",
+      english: "Daesik takes photos.",
+      blankAnswer: "사진",
+      fullAnswer: "대식씨는 사진을 찍습니다.",
+    },
+    {
+      sentenceWithBlank: "현우씨는 ___를 모읍니다.",
+      english: "Hyunwoo collects stamps.",
+      blankAnswer: "우표",
+      fullAnswer: "현우씨는 우표를 모읍니다.",
+    },
+    {
+      sentenceWithBlank: "채은씨는 ___에 참여합니다.",
+      english: "Chaeun participates in theatre.",
+      blankAnswer: "연극",
+      fullAnswer: "채은씨는 연극에 참여합니다.",
+    },
+    {
+      sentenceWithBlank: "지민씨는 ___을 감상합니다.",
+      english: "Jimin appreciates modern art.",
+      blankAnswer: "현대 미술",
+      fullAnswer: "지민씨는 현대 미술을 감상합니다.",
+    },
+    {
+      sentenceWithBlank: "진우씨는 ___을 즐깁니다.",
+      english: "Jinwoo enjoys jazz music.",
+      blankAnswer: "재즈 음악",
+      fullAnswer: "진우씨는 재즈 음악을 즐깁니다.",
+    },
+    {
+      sentenceWithBlank: "유진씨는 ___를 연주해요.",
+      english: "Yujin plays the guitar.",
+      blankAnswer: "기타",
+      fullAnswer: "유진씨는 기타를 연주해요.",
+    },
+    {
+      sentenceWithBlank: "성민씨는 ___를 만듭니다.",
+      english: "Sungmin creates pottery.",
+      blankAnswer: "도예",
+      fullAnswer: "성민씨는 도예를 만듭니다.",
+    },
+    {
+      sentenceWithBlank: "세진씨는 ___을 구경해요.",
+      english: "Sejin visits museums.",
+      blankAnswer: "박물관",
+      fullAnswer: "세진씨는 박물관을 구경해요.",
+    },
+    {
+      sentenceWithBlank: "현지씨는 ___을 공부해요.",
+      english: "Hyunji studies literature.",
+      blankAnswer: "문학",
+      fullAnswer: "현지씨는 문학을 공부해요.",
+    },
+    {
+      sentenceWithBlank: "세영씨는 ___을 들어요.",
+      english: "Seyoung listens to pop music.",
+      blankAnswer: "팝 음악",
+      fullAnswer: "세영씨는 팝 음악을 들어요.",
+    },
+    {
+      sentenceWithBlank: "준수씨는 ___를 봐요.",
+      english: "Junsu watches films.",
+      blankAnswer: "영화",
+      fullAnswer: "준수씨는 영화를 봐요.",
+    },
+    {
+      sentenceWithBlank: "수민씨는 ___을 씁니다.",
+      english: "Sumin writes novels.",
+      blankAnswer: "소설",
+      fullAnswer: "수민씨는 소설을 씁니다.",
+    },
+    {
+      sentenceWithBlank: "창민씨는 ___를 따라합니다.",
+      english: "Changmin follows fashion trends.",
+      blankAnswer: "패션 트렌드",
+      fullAnswer: "창민씨는 패션 트렌드를 따라합니다.",
+    },
+    {
+      sentenceWithBlank: "설아씨는 ___을 설치합니다.",
+      english: "Seola installs sculptures.",
+      blankAnswer: "조각상",
+      fullAnswer: "설아씨는 조각상을 설치합니다.",
+    },
+    {
+      sentenceWithBlank: "지호씨는 ___를 찾아다닙니다.",
+      english: "Jiho explores architectural sites.",
+      blankAnswer: "건축 사이트",
+      fullAnswer: "지호씨는 건축 사이트를 찾아다닙니다.",
+    },
+  ],
+};
+
+const foodAndCookingWordChoice = {
+  title: "Food and Cooking",
+  type: "fillblank",
+  items: [
+    {
+      sentenceWithBlank: "지현씨는 ___을 매일 요리해요.",
+      english: "Jihyun cooks rice every day.",
+      blankAnswer: "밥",
+      fullAnswer: "지현씨는 밥을 매일 요리해요.",
+    },
+    {
+      sentenceWithBlank: "희준씨는 ___를 좋아해요.",
+      english: "Heejun likes kimchi.",
+      blankAnswer: "김치",
+      fullAnswer: "희준씨는 김치를 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "경미씨는 ___굽기를 배우고 있어요.",
+      english: "Kyungmi is learning how to bake bread.",
+      blankAnswer: "빵",
+      fullAnswer: "경미씨는 빵 굽기를 배우고 있어요.",
+    },
+    {
+      sentenceWithBlank: "용호씨는 ___을 만듭니다.",
+      english: "Yongho makes bibimbap.",
+      blankAnswer: "비빔밥",
+      fullAnswer: "용호씨는 비빔밥을 만듭니다.",
+    },
+    {
+      sentenceWithBlank: "지원씨는 ___을 차려놓습니다.",
+      english: "Jiwon prepares the table.",
+      blankAnswer: "식탁",
+      fullAnswer: "지원씨는 식탁을 차려놓습니다.",
+    },
+    {
+      sentenceWithBlank: "예림씨는 ___을 매운맛으로 요리합니다.",
+      english: "Yerim cooks spicy ramen.",
+      blankAnswer: "라면",
+      fullAnswer: "예림씨는 라면을 매운맛으로 요리합니다.",
+    },
+    {
+      sentenceWithBlank: "은우씨는 ___을 끓입니다.",
+      english: "Eunwoo boils water.",
+      blankAnswer: "물",
+      fullAnswer: "은우씨는 물을 끓입니다.",
+    },
+    {
+      sentenceWithBlank: "수진씨는 ___를 잘라놓습니다.",
+      english: "Sujin cuts the vegetables.",
+      blankAnswer: "야채",
+      fullAnswer: "수진씨는 야채를 잘라놓습니다.",
+    },
+    {
+      sentenceWithBlank: "태양씨는 ___를 먹습니다.",
+      english: "Taeyang eats chicken.",
+      blankAnswer: "닭고기",
+      fullAnswer: "태양씨는 닭고기를 먹습니다.",
+    },
+    {
+      sentenceWithBlank: "선영씨는 ___를 마십니다.",
+      english: "Seonyoung drinks tea.",
+      blankAnswer: "차",
+      fullAnswer: "선영씨는 차를 마십니다.",
+    },
+    {
+      sentenceWithBlank: "하윤씨는 ___를 구웁니다.",
+      english: "Hayoon grills meat.",
+      blankAnswer: "고기",
+      fullAnswer: "하윤씨는 고기를 구웁니다.",
+    },
+    {
+      sentenceWithBlank: "다희씨는 ___을 버립니다.",
+      english: "Dahee throws away leftovers.",
+      blankAnswer: "남은 음식",
+      fullAnswer: "다희씨는 남은 음식을 버립니다.",
+    },
+    {
+      sentenceWithBlank: "창석씨는 ___을 만듭니다.",
+      english: "Changseok makes soybean paste soup.",
+      blankAnswer: "된장국",
+      fullAnswer: "창석씨는 된장국을 만듭니다.",
+    },
+    {
+      sentenceWithBlank: "하은씨는 ___을 싸옵니다.",
+      english: "Haeun wraps sushi.",
+      blankAnswer: "초밥",
+      fullAnswer: "하은씨는 초밥을 싸옵니다.",
+    },
+    {
+      sentenceWithBlank: "도윤씨는 ___를 익혀요.",
+      english: "Doyun cooks the potatoes.",
+      blankAnswer: "감자",
+      fullAnswer: "도윤씨는 감자를 익혀요.",
+    },
+    {
+      sentenceWithBlank: "재연씨는 ___를 담그요.",
+      english: "Jaeyeon marinates the beef.",
+      blankAnswer: "소고기",
+      fullAnswer: "재연씨는 소고기를 담그요.",
+    },
+    {
+      sentenceWithBlank: "효진씨는 ___를 섞습니다.",
+      english: "Hyojin mixes the ingredients.",
+      blankAnswer: "재료",
+      fullAnswer: "효진씨는 재료를 섞습니다.",
+    },
+    {
+      sentenceWithBlank: "윤서씨는 ___를 씁니다.",
+      english: "Yunseo peels the apple.",
+      blankAnswer: "사과",
+      fullAnswer: "윤서씨는 사과를 씁니다.",
+    },
+    {
+      sentenceWithBlank: "지훈씨는 ___을 담아요.",
+      english: "Jihoon packs the lunchbox.",
+      blankAnswer: "도시락",
+      fullAnswer: "지훈씨는 도시락을 담아요.",
+    },
+    {
+      sentenceWithBlank: "혜진씨는 ___를 축하해요.",
+      english: "Hyejin celebrates the birthday with a cake.",
+      blankAnswer: "생일 케이크",
+      fullAnswer: "혜진씨는 생일 케이크를 축하해요.",
+    },
+  ],
+};
+
+const educationAndLearningWordChoice = {
+  title: "Education and Learning",
+  type: "fillblank",
+  items: [
+    {
+      sentenceWithBlank: "민수씨는 ___을 공부하고 있어요.",
+      english: "Minsu is studying mathematics.",
+      blankAnswer: "수학",
+      fullAnswer: "민수씨는 수학을 공부하고 있어요.",
+    },
+    {
+      sentenceWithBlank: "예진씨는 ___를 읽지 않아요.",
+      english: "Yejin does not read the textbook.",
+      blankAnswer: "교과서",
+      fullAnswer: "예진씨는 교과서를 읽지 않아요.",
+    },
+    {
+      sentenceWithBlank: "석진씨는 ___가 좋아요?",
+      english: "Does Seokjin like history?",
+      blankAnswer: "역사",
+      fullAnswer: "석진씨는 역사가 좋아요?",
+    },
+    {
+      sentenceWithBlank: "주희씨는 ___ 수업에서 그립니다.",
+      english: "Juhee draws in the art class.",
+      blankAnswer: "미술",
+      fullAnswer: "주희씨는 미술 수업에서 그립니다.",
+    },
+    {
+      sentenceWithBlank: "재현씨는 ___를 알아요?",
+      english: "Does Jaehyun know French?",
+      blankAnswer: "프랑스어",
+      fullAnswer: "재현씨는 프랑스어를 알아요?",
+    },
+    {
+      sentenceWithBlank: "영희씨는 ___를 쓰지 않아요.",
+      english: "Younghee does not write an essay.",
+      blankAnswer: "에세이",
+      fullAnswer: "영희씨는 에세이를 쓰지 않아요.",
+    },
+    {
+      sentenceWithBlank: "은주씨는 ___에 들어갑니다.",
+      english: "Eunju enters the library.",
+      blankAnswer: "도서관",
+      fullAnswer: "은주씨는 도서관에 들어갑니다.",
+    },
+    {
+      sentenceWithBlank: "지윤씨는 ___를 가르칩니다.",
+      english: "Jiyoon teaches English.",
+      blankAnswer: "영어",
+      fullAnswer: "지윤씨는 영어를 가르칩니다.",
+    },
+    {
+      sentenceWithBlank: "상준씨는 ___을 받았어요.",
+      english: "Sangjun received a scholarship.",
+      blankAnswer: "장학금",
+      fullAnswer: "상준씨는 장학금을 받았어요.",
+    },
+    {
+      sentenceWithBlank: "영수씨는 ___를 듣지 않아요.",
+      english: "Youngsoo does not listen to the lecture.",
+      blankAnswer: "강의",
+      fullAnswer: "영수씨는 강의를 듣지 않아요.",
+    },
+    {
+      sentenceWithBlank: "현지씨는 ___를 하고 있어요.",
+      english: "Hyunji is doing homework.",
+      blankAnswer: "숙제",
+      fullAnswer: "현지씨는 숙제를 하고 있어요.",
+    },
+    {
+      sentenceWithBlank: "민재씨는 ___가 어려워요?",
+      english: "Is physics difficult for Minjae?",
+      blankAnswer: "물리학",
+      fullAnswer: "민재씨는 물리학이 어려워요?",
+    },
+    {
+      sentenceWithBlank: "정원씨는 ___를 검토합니다.",
+      english: "Jeongwon reviews the notes.",
+      blankAnswer: "노트",
+      fullAnswer: "정원씨는 노트를 검토합니다.",
+    },
+    {
+      sentenceWithBlank: "정호씨는 ___가 흥미로워요?",
+      english: "Is geography interesting to Jungho?",
+      blankAnswer: "지리학",
+      fullAnswer: "정호씨는 지리학이 흥미로워요?",
+    },
+    {
+      sentenceWithBlank: "선영씨는 ___ 수업을 봅니다.",
+      english: "Sunyoung watches the online class.",
+      blankAnswer: "온라인",
+      fullAnswer: "선영씨는 온라인 수업을 봅니다.",
+    },
+    {
+      sentenceWithBlank: "수민씨는 ___를 연습해요.",
+      english: "Soomin practices the piano.",
+      blankAnswer: "피아노",
+      fullAnswer: "수민씨는 피아노를 연습해요.",
+    },
+    {
+      sentenceWithBlank: "우진씨는 ___을 해요?",
+      english: "Does Woojin solve the equation?",
+      blankAnswer: "방정식",
+      fullAnswer: "우진씨는 방정식을 해요?",
+    },
+    {
+      sentenceWithBlank: "재혁씨는 ___를 기억하지 않아요.",
+      english: "Jaehyuk does not remember the formula.",
+      blankAnswer: "공식",
+      fullAnswer: "재혁씨는 공식을 기억하지 않아요.",
+    },
+    {
+      sentenceWithBlank: "지연씨는 ___를 써요.",
+      english: "Jiyeon writes a report.",
+      blankAnswer: "보고서",
+      fullAnswer: "지연씨는 보고서를 써요.",
+    },
+  ],
+};
+
 const sportsWordChoice = {
   title: "Sports and Fitness",
   type: "fillblank",
@@ -1261,6 +1636,133 @@ const objectMarkers = {
       english: "We go to the zoo",
       blankAnswer: "을",
       fullAnswer: "우리는 동물원을 가요",
+    },
+  ],
+};
+
+const subjectMarkers = {
+  title: "The Subject Marker 이/가",
+  type: "grammar",
+  items: [
+    {
+      sentenceWithBlank: "치킨___ 맛있어요.",
+      english: "The chicken is delicious.",
+      blankAnswer: "이",
+      fullAnswer: "치킨이 맛있어요.",
+    },
+    {
+      sentenceWithBlank: "미나씨___ 선생님이에요.",
+      english: "Mina is a teacher.",
+      blankAnswer: "가",
+      fullAnswer: "미나씨가 선생님이에요.",
+    },
+    {
+      sentenceWithBlank: "학교___ 멀어요.",
+      english: "The school is far.",
+      blankAnswer: "가",
+      fullAnswer: "학교가 멀어요.",
+    },
+    {
+      sentenceWithBlank: "서울___ 큰 도시이에요.",
+      english: "Seoul is a big city.",
+      blankAnswer: "이",
+      fullAnswer: "서울이 큰 도시이에요.",
+    },
+    {
+      sentenceWithBlank: "창문___ 열려 있어요.",
+      english: "The window is open.",
+      blankAnswer: "이",
+      fullAnswer: "창문이 열려 있어요.",
+    },
+    {
+      sentenceWithBlank: "우리집___ 넓어요.",
+      english: "Our house is spacious.",
+      blankAnswer: "이",
+      fullAnswer: "우리집이 넓어요.",
+    },
+    {
+      sentenceWithBlank: "지하철___ 편해요.",
+      english: "The subway is convenient.",
+      blankAnswer: "이",
+      fullAnswer: "지하철이 편해요.",
+    },
+    {
+      sentenceWithBlank: "영화___ 재미있어요.",
+      english: "The movie is interesting.",
+      blankAnswer: "가",
+      fullAnswer: "영화가 재미있어요.",
+    },
+    {
+      sentenceWithBlank: "제주도___ 아름다워요.",
+      english: "Jeju Island is beautiful.",
+      blankAnswer: "가",
+      fullAnswer: "제주도가 아름다워요.",
+    },
+    {
+      sentenceWithBlank: "카페___ 조용해요.",
+      english: "The cafe is quiet.",
+      blankAnswer: "가",
+      fullAnswer: "카페가 조용해요.",
+    },
+    {
+      sentenceWithBlank: "피자___ 매워요.",
+      english: "The pizza is spicy.",
+      blankAnswer: "가",
+      fullAnswer: "피자가 매워요.",
+    },
+    {
+      sentenceWithBlank: "송이씨___ 학생이에요.",
+      english: "Songyi is a student.",
+      blankAnswer: "가",
+      fullAnswer: "송이씨가 학생이에요.",
+    },
+    {
+      sentenceWithBlank: "이번 주___ 길어요.",
+      english: "This week is long.",
+      blankAnswer: "가",
+      fullAnswer: "이번 주가 길어요.",
+    },
+    {
+      sentenceWithBlank: "호텔___ 비싸요.",
+      english: "The hotel is expensive.",
+      blankAnswer: "이",
+      fullAnswer: "호텔이 비싸요.",
+    },
+    {
+      sentenceWithBlank: "박물관___ 열려 있어요.",
+      english: "The museum is open.",
+      blankAnswer: "이",
+      fullAnswer: "박물관이 열려 있어요.",
+    },
+    {
+      sentenceWithBlank: "차___ 빨라요.",
+      english: "The car is fast.",
+      blankAnswer: "가",
+      fullAnswer: "차가 빨라요.",
+    },
+    {
+      sentenceWithBlank: "반찬___ 다양해요.",
+      english: "The side dishes are diverse.",
+      blankAnswer: "이",
+      fullAnswer: "반찬이 다양해요.",
+    },
+    {
+      sentenceWithBlank: "춤___ 멋있어요.",
+      english: "The dance is cool.",
+      blankAnswer: "이",
+      fullAnswer: "춤이 멋있어요.",
+    },
+    {
+      sentenceWithBlank: "벚꽃___ 예뻐요.",
+      english: "The cherry blossoms are pretty.",
+      blankAnswer: "이",
+      fullAnswer: "벚꽃이 예뻐요.",
+    },
+    {
+      sentenceWithBlank: "사진___ 아름다워요.",
+      english: "The picture is beautiful.",
+      blankAnswer: "이",
+      fullAnswer: "사진이 아름다워요.",
     },
   ],
 };
@@ -2352,6 +2854,7 @@ grammarExercises.items.push(simplePresentConjugation);
 grammarExercises.items.push(objectMarkers);
 grammarExercises.items.push(presentNegativeConjugation);
 grammarExercises.items.push(futureConjugation);
+grammarExercises.items.push(subjectMarkers);
 
 jumbleExercises.items.push(hobbiesJumble);
 jumbleExercises.items.push(newPeopleJumble);
@@ -2363,6 +2866,9 @@ wordChoiceExercises.items.push(languageLearningWordChoice);
 wordChoiceExercises.items.push(jobsWordChoice);
 wordChoiceExercises.items.push(sportsWordChoice);
 wordChoiceExercises.items.push(familyWordChoice);
+wordChoiceExercises.items.push(educationAndLearningWordChoice);
+wordChoiceExercises.items.push(foodAndCookingWordChoice);
+wordChoiceExercises.items.push(artAndCultureWordChoice);
 
 const rootCategoryContainer = {
   title: "Exercise Categories",
