@@ -117,10 +117,20 @@ function stopTimer() {
   totalTimeTyped += (endTime - startTime) / 1000 / 60; // Update time and convert to minutes.
 }
 
-// Function to evluate if the user-provided response is correct according to the given prompt
+// Function to evaluate if the user-provided response is correct according to the given prompt
+// Now ignores punctuation
 function checkAnswer() {
+  const trimmedUserText = userText.value.trim();
+  const trimmedAnswer = currentAnswer.trim();
+
+  const removeEndPunctuation = (str) =>
+    /[.?!]/.test(str.slice(-1)) ? str.slice(0, -1) : str;
+
+  const processedUserText = removeEndPunctuation(trimmedUserText);
+  const processedAnswer = removeEndPunctuation(trimmedAnswer);
+
   // User entered correct answer
-  if (userText.value.trim() === currentAnswer) {
+  if (processedUserText === processedAnswer) {
     gradeCorrect();
   }
   // User entered incorrect answer
