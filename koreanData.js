@@ -332,6 +332,363 @@ const sports = {
   ],
 };
 
+const weatherWordChoice = {
+  title: "Weather and Seasons",
+  type: "fillblank",
+  items: [
+    {
+      sentenceWithBlank: "___에 눈이 많이 와요.",
+      english: "It snows a lot in winter.",
+      blankAnswer: "겨울",
+      fullAnswer: "겨울에 눈이 많이 와요.",
+    },
+    {
+      sentenceWithBlank: "___에 날씨가 따뜻해져요.",
+      english: "The weather gets warm in spring.",
+      blankAnswer: "봄",
+      fullAnswer: "봄에 날씨가 따뜻해져요.",
+    },
+    {
+      sentenceWithBlank: "___에는 날씨가 더워요.",
+      english: "It's hot in summer.",
+      blankAnswer: "여름",
+      fullAnswer: "여름에는 날씨가 더워요.",
+    },
+    {
+      sentenceWithBlank: "___에 낙엽이 떨어져요.",
+      english: "Leaves fall in autumn.",
+      blankAnswer: "가을",
+      fullAnswer: "가을에 낙엽이 떨어져요.",
+    },
+    {
+      sentenceWithBlank: "현재 ___가 흐리네요.",
+      english: "It's currently cloudy.",
+      blankAnswer: "하늘",
+      fullAnswer: "현재 하늘가 흐리네요.",
+    },
+    {
+      sentenceWithBlank: "예슬씨는 ___ 오는 날을 좋아해요.",
+      english: "Yesul likes rainy days.",
+      blankAnswer: "비",
+      fullAnswer: "예슬씨는 비 오는 날을 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___ 날에 소풍을 갔어요.",
+      english: "We went on a picnic on a sunny day.",
+      blankAnswer: "맑은",
+      fullAnswer: "우리는 맑은 날에 소풍을 갔어요.",
+    },
+    {
+      sentenceWithBlank: "진우씨는 ___ 오는 날을 싫어해요.",
+      english: "Jinwoo dislikes snowy days.",
+      blankAnswer: "눈",
+      fullAnswer: "진우씨는 눈오는 날을 싫어해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___ 밤에 불꽃놀이를 보러 갔어요.",
+      english: "We went to see the fireworks on a clear night.",
+      blankAnswer: "맑은",
+      fullAnswer: "우리는 맑은 밤에 불꽃놀이를 보러 갔어요.",
+    },
+    {
+      sentenceWithBlank: "현재 ___이 세게 불어요.",
+      english: "The wind is currently blowing strongly.",
+      blankAnswer: "바람",
+      fullAnswer: "현재 바람이 세게 불어요.",
+    },
+    {
+      sentenceWithBlank: "서연씨는 ___ 날씨를 즐겨요.",
+      english: "Seoyeon enjoys sunny weather.",
+      blankAnswer: "맑은",
+      fullAnswer: "서연씨는 맑은 날씨를 즐겨요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___ 날씨에 감기를 잘 걸려요.",
+      english: "We often catch a cold in cold weather.",
+      blankAnswer: "추운",
+      fullAnswer: "우리는 추운 날씨에 감기를 잘 걸려요.",
+    },
+    {
+      sentenceWithBlank: "현재 ___가 참 좋아요.",
+      english: "The weather is really nice now.",
+      blankAnswer: "날씨",
+      fullAnswer: "현재 날씨가 참 좋아요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___ 날씨에 운동을 하러 갔어요.",
+      english: "We went to exercise in the cool weather.",
+      blankAnswer: "시원한",
+      fullAnswer: "우리는 시원한 날씨에 운동을 하러 갔어요.",
+    },
+    {
+      sentenceWithBlank: "소희씨는 가을 ___를 좋아해요.",
+      english: "Sohee likes the fall season.",
+      blankAnswer: "계절",
+      fullAnswer: "소희씨는 가을 계절를 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "예진씨는 ___ 날씨를 싫어해요.",
+      english: "Yejin dislikes humid weather.",
+      blankAnswer: "습한",
+      fullAnswer: "예진씨는 습한 날씨를 싫어해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___ 날씨에 축제를 즐겼어요.",
+      english: "We enjoyed the festival in warm weather.",
+      blankAnswer: "따뜻한",
+      fullAnswer: "우리는 따뜻한 날씨에 축제를 즐겼어요.",
+    },
+    {
+      sentenceWithBlank: "지민씨는 ___을 좋아해요.",
+      english: "Jimin likes spring.",
+      blankAnswer: "봄",
+      fullAnswer: "지민씨는 봄을 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___ 날씨에 바베큐 파티를 했어요.",
+      english: "We had a barbecue party in good weather.",
+      blankAnswer: "좋은",
+      fullAnswer: "우리는 좋은 날씨에 바베큐 파티를 했어요.",
+    },
+  ],
+};
+
+const clothesWordChoice = {
+  title: "Clothes and Fashion",
+  type: "fillblank",
+  items: [
+    {
+      sentenceWithBlank: "영수씨는 ___를 입었어요.",
+      english: "Youngsoo wore a shirt.",
+      blankAnswer: "셔츠",
+      fullAnswer: "영수씨는 셔츠를 입었어요.",
+    },
+    {
+      sentenceWithBlank: "그 ___은 비싸요.",
+      english: "The bag is expensive.",
+      blankAnswer: "가방",
+      fullAnswer: "그 가방은 비싸요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___ 옷을 선호해요.",
+      english: "We prefer comfortable clothes.",
+      blankAnswer: "편한",
+      fullAnswer: "우리는 편한 옷을 선호해요.",
+    },
+    {
+      sentenceWithBlank: "진희씨는 ___하는 옷을 좋아해요.",
+      english: "Jinhee likes fashionable clothes.",
+      blankAnswer: "유행",
+      fullAnswer: "진희씨는 유행하는 옷을 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "저는 새로운 ___가 필요해요.",
+      english: "I need a new coat.",
+      blankAnswer: "코트",
+      fullAnswer: "저는 새로운 코트가 필요해요.",
+    },
+    {
+      sentenceWithBlank: "그들은 많은 ___를 팔았어요.",
+      english: "They sold a lot of dresses.",
+      blankAnswer: "드레스",
+      fullAnswer: "그들은 많은 드레스를 팔았어요.",
+    },
+    {
+      sentenceWithBlank: "유진씨는 멋진 ___를 찾고 있어요.",
+      english: "Yujin is looking for a nice hat.",
+      blankAnswer: "모자",
+      fullAnswer: "유진씨는 멋진 모자를 찾고 있어요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___을 신었어요.",
+      english: "We wore sandals.",
+      blankAnswer: "샌들",
+      fullAnswer: "우리는 샌들을 신었어요.",
+    },
+    {
+      sentenceWithBlank: "민지씨는 ___를 입었어요.",
+      english: "Minji wore a scarf.",
+      blankAnswer: "스카프",
+      fullAnswer: "민지씨는 스카프를 입었어요.",
+    },
+    {
+      sentenceWithBlank: "___를 주세요.",
+      english: "Please give me the pants.",
+      blankAnswer: "바지",
+      fullAnswer: "바지를 주세요.",
+    },
+    {
+      sentenceWithBlank: "이 ___은 좋아요.",
+      english: "These shoes are good.",
+      blankAnswer: "신발",
+      fullAnswer: "이 신발은 좋아요.",
+    },
+    {
+      sentenceWithBlank: "저는 ___이 필요해요.",
+      english: "I need a pair of gloves.",
+      blankAnswer: "장갑",
+      fullAnswer: "저는 장갑이 필요해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___을 찾아요.",
+      english: "We are looking for a jacket.",
+      blankAnswer: "자켓",
+      fullAnswer: "우리는 자켓을 찾아요.",
+    },
+    {
+      sentenceWithBlank: "미소씨는 ___를 좋아해요.",
+      english: "Miso likes skirts.",
+      blankAnswer: "치마",
+      fullAnswer: "미소씨는 치마를 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "저는 ___가 필요해요.",
+      english: "I need a belt.",
+      blankAnswer: "벨트",
+      fullAnswer: "저는 벨트가 필요해요.",
+    },
+    {
+      sentenceWithBlank: "___을 가져가세요.",
+      english: "Please take the socks.",
+      blankAnswer: "양말",
+      fullAnswer: "양말을 가져가세요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___을 입었어요.",
+      english: "We wore uniforms.",
+      blankAnswer: "제복",
+      fullAnswer: "우리는 제복을 입었어요.",
+    },
+    {
+      sentenceWithBlank: "수민씨는 ___를 좋아해요.",
+      english: "Soomin likes sweaters.",
+      blankAnswer: "스웨터",
+      fullAnswer: "수민씨는 스웨터를 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "저는 ___가 필요해요.",
+      english: "I need sunglasses.",
+      blankAnswer: "선글라스",
+      fullAnswer: "저는 선글라스가 필요해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___를 신었어요.",
+      english: "We wore boots.",
+      blankAnswer: "부츠",
+      fullAnswer: "우리는 부츠를 신었어요.",
+    },
+  ],
+};
+
+const holidayWordChoice = {
+  title: "Holidays and Celebrations",
+  type: "fillblank",
+  items: [
+    {
+      sentenceWithBlank: "우리는 ___를 새로운 옷으로 축하해요.",
+      english: "We celebrate the New Year with new clothes.", // ** TODO
+      blankAnswer: "새해",
+      fullAnswer: "우리는 새해를 새로운 옷으로 축하해요.",
+    },
+    {
+      sentenceWithBlank: "유나씨는 ___에 많은 선물을 받아요.",
+      english: "Yuna receives many gifts on Christmas.",
+      blankAnswer: "크리스마스",
+      fullAnswer: "유나씨는 크리스마스에 많은 선물을 받아요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___에 가족과 함께 모여요.",
+      english: "We gather with family on Chuseok.",
+      blankAnswer: "추석",
+      fullAnswer: "우리는 추석에 가족과 함께 모여요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___에 친구들을 초대해요.",
+      english: "We invite friends on birthdays.",
+      blankAnswer: "생일",
+      fullAnswer: "우리는 생일에 친구들을 초대해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___에 노래를 불러요.",
+      english: "We sing songs on Christmas Eve.",
+      blankAnswer: "크리스마스 이브",
+      fullAnswer: "우리는 크리스마스 이브에 노래를 불러요.",
+    },
+    {
+      sentenceWithBlank: "혜진씨는 ___에 특별한 음식을 준비해요.",
+      english: "Hyejin prepares special food on Lunar New Year.",
+      blankAnswer: "설날",
+      fullAnswer: "혜진씨는 설날에 특별한 음식을 준비해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___에 케이크를 만들어요.",
+      english: "We make a cake on Mother's Day.",
+      blankAnswer: "어머니날",
+      fullAnswer: "우리는 어머니날에 케이크를 만들어요.",
+    },
+    {
+      sentenceWithBlank: "찬호씨는 ___에 가족 사진을 찍어요.",
+      english: "Chanho takes a family photo on Thanksgiving.",
+      blankAnswer: "감사절",
+      fullAnswer: "찬호씨는 감사절에 가족 사진을 찍어요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___에 불을 켜요.",
+      english: "We light a fire on New Year's Eve.",
+      blankAnswer: "새해 전날",
+      fullAnswer: "우리는 새해 전날에 불을 켜요.",
+    },
+    {
+      sentenceWithBlank: "예림씨는 ___에 좋아하는 영화를 봐요.",
+      english: "Yerim watches her favorite movie on Valentine's Day.",
+      blankAnswer: "발렌타인 데이",
+      fullAnswer: "예림씨는 발렌타인 데이에 좋아하는 영화를 봐요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___에 떡국을 먹어요.",
+      english: "We eat rice cake soup on New Year's Day.",
+      blankAnswer: "새해 첫날",
+      fullAnswer: "우리는 새해 첫날에 떡국을 먹어요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___에 불꽃놀이를 보러 가요.",
+      english: "We go to see the fireworks on Children's Day.",
+      blankAnswer: "어린이날",
+      fullAnswer: "우리는 어린이날에 불꽃놀이를 보러 가요.",
+    },
+    {
+      sentenceWithBlank: "소연씨는 ___에 친구들과 파티를 해요.",
+      english: "Soyeon has a party with friends on Halloween.",
+      blankAnswer: "할로윈",
+      fullAnswer: "소연씨는 할로윈에 친구들과 파티를 해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___에 축복을 기원해요.",
+      english: "We wish for blessings on Buddha's birthday.",
+      blankAnswer: "부처님 오신 날",
+      fullAnswer: "우리는 부처님 오신 날에 축복을 기원해요.",
+    },
+    {
+      sentenceWithBlank: "은주씨는 ___에 꽃을 선물해요.",
+      english: "Eunju gives flowers on Parents' Day.",
+      blankAnswer: "어버이날",
+      fullAnswer: "은주씨는 어버이날에 꽃을 선물해요.",
+    },
+    {
+      sentenceWithBlank: "미경씨는 ___에 나무를 장식해요.",
+      english: "Mikyung decorates a tree on Christmas Eve.",
+      blankAnswer: "크리스마스 이브",
+      fullAnswer: "미경씨는 크리스마스 이브에 나무를 장식해요.",
+    },
+    {
+      sentenceWithBlank: "우리는 ___에 편지를 씁니다.",
+      english: "We write letters on New Year's Day.",
+      blankAnswer: "새해 첫날",
+      fullAnswer: "우리는 새해 첫날에 편지를 씁니다.",
+    },
+  ],
+};
+
 const familyWordChoice = {
   title: "Family",
   type: "fillblank",
@@ -2869,6 +3226,9 @@ wordChoiceExercises.items.push(familyWordChoice);
 wordChoiceExercises.items.push(educationAndLearningWordChoice);
 wordChoiceExercises.items.push(foodAndCookingWordChoice);
 wordChoiceExercises.items.push(artAndCultureWordChoice);
+wordChoiceExercises.items.push(clothesWordChoice);
+wordChoiceExercises.items.push(holidayWordChoice);
+wordChoiceExercises.items.push(weatherWordChoice);
 
 const rootCategoryContainer = {
   title: "Exercise Categories",
