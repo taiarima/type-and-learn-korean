@@ -61,7 +61,7 @@ const exerciseTypeConfig = {
     repetitions: 10,
     showEnglish: showEngAfterGrading,
     showKeyboardHints: false,
-    requireFullSentence: false,
+    requireFullSentence: true,
     showEnglishOption: true,
     showHints: false,
   },
