@@ -905,6 +905,7 @@ bubbleContainer.addEventListener("click", function (event) {
 
     const currentSelection = currentCategory.items[bubbleIndex];
     if (currentSelection instanceof ExerciseCategory) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
       createBubbles(currentSelection);
     } else {
       currentExercise = currentSelection;
