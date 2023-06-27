@@ -231,6 +231,7 @@ function gradeIncorrect() {
     }
   }
 }
+
 function printExerciseSummary() {
   exerciseSummaryTextArea.value = "";
 

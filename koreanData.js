@@ -2387,8 +2387,8 @@ const simplePresentConjugation = {
     {
       sentenceWithBlank: "지금 무슨 노래를 ___. (듣다)",
       english: "What song are you listening to now?",
-      blankAnswer: "듣고 있어요",
-      fullAnswer: "지금 무슨 노래를 듣고 있어요?",
+      blankAnswer: "들어요",
+      fullAnswer: "지금 무슨 노래를 들어요?",
     },
     {
       sentenceWithBlank: "당신의 친구가 언제 한국에 ___. (오다)",

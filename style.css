@@ -684,10 +684,14 @@ button {
   width: 0%;
 }
 
+.ex-settings-container {
+  display: block;
+}
+
 .show-english-container {
   border: 2px solid var(--color-gray);
-  padding: 5px;
-  margin: 5px -10px;
+  padding: 10px;
+  margin: 5px 0 15px -10px;
 }
 
 .show-english-options {
