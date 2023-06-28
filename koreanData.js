@@ -1472,7 +1472,7 @@ const languageLearningWordChoice = {
       fullAnswer: "이민수씨는 단어를 많이 씁니다.",
     },
     {
-      sentenceWithBlank: "우리는 ___를 연습해야 돼요.",
+      sentenceWithBlank: "우리는 ___을 연습해야 돼요.",
       english: "We need to practice pronunciation.",
       blankAnswer: "발음",
       fullAnswer: "우리는 발음을 연습해야 돼요.",
@@ -3180,7 +3180,11 @@ const exerciseTypeController = {
     promptLabel: "Rewrite the following sentence in the correct order",
   },
 };
-
+// New idea, reading exercises can have a new structure:
+// {word: "text as is", cards: [ {korean: 한국말, english: Korean} , ... ]
+//
+//
+//
 const introduction1Reading = {
   type: "reading",
   level: "CEFR: A2, TOPIK: 2, Vocab: 500-1000 words",
@@ -3188,9 +3192,14 @@ const introduction1Reading = {
   vocabularyList: [
     { korean: "안녕하세요", english: "hello (dict. form 안녕하다)" },
     { korean: "여러분", english: "everyone" },
-    { korean: "저", english: "I, me" },
-    { korean: "이수진", english: "Lee Soo-jin" },
-    { korean: "부산", english: "Busan" },
+    { korean: "저는", english: "I/me + [subject particle]" },
+    {
+      korean: "이수진이라고",
+      english: "Lee Soo-jin + [marker to indicate content of something said]",
+    },
+    { korean: "해요", english: "am called (when coming after name + ~라고)" },
+    { korean: "저는", english: "I/me + [subject particle]" },
+    { korean: "부산에서", english: "Busan + [particle for 'from']" },
     { korean: "태어났어요", english: "was born (dict. form 태어나다)" },
     { korean: "한국인", english: "Korean person" },
     { korean: "대학생", english: "college student" },

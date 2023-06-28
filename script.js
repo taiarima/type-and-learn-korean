@@ -95,15 +95,257 @@ const keyboardMessageContent =
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>> Function declarations <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
-function restoreDefaultSettings() {
-  repetitionNumber = 10;
-  speedCalcOn = true;
-  maxTries = 3; // amount of tries user can attempt to answer before being shown correct response, a value of 0 means unlimited tries
-  requireResponse = true; // user will be required to type the correct response before being allowed to continue
-  keyboardOn = true;
-  keyboardHintsOn = true;
-  // saveSettingsOn = true; // As long as this is checked, defaults will not be automatically be restored
-  showEngSetting = showEngAfterGrading;
+// ---Loading Exercises ---//
+// The main logic of the app consists in the user's interactions with exercises
+// The following functions deal with creating an exercise instance.
+// The general flow is:
+// 1. createBubbles - the selectable exercises are displayed
+// 2. After user makes a selection, applyDefaultSettingsByType makes sure settings
+//    correspond with the type of exercise selected.
+// 3. initializeExercise will be invoked once user chooses settings and hits begin
+// 4. The above in turn invokes loadVocabList, which creates the list which will
+//    represent the contents of the exercise.
+// ---Loading Exercises ---//
+
+// A "bubble" is a selectable box which is either an exercise category or an exercise
+// This function is called when user clicks on start learning or an exercise category
+function createBubbles(category) {
+  previousCategory = currentCategory;
+  currentCategory = category;
+  if (currentCategory == rootCategoryContainer) {
+    backArrow.classList.add("hidden");
+    startLearningHeader.classList.remove("hidden");
+  } else {
+    backArrow.classList.remove("hidden");
+    startLearningHeader.classList.add("hidden");
+  }
+
+  bubbleContainer.style.display = "flex";
+  bubbleContainer.parentElement.classList.remove("hidden");
+
+  const bubbleSize = category instanceof ExerciseCategory ? 150 : 250;
+
+  // Clear existing bubbles
+  bubbleContainer.innerHTML = "";
+
+  // Create heading element
+  const heading = document.createElement("h2");
+  heading.textContent = category.title;
+  heading.classList.add("bubble-heading");
+  bubbleContainer.appendChild(heading);
+
+  const containerWidth = bubbleContainer.offsetWidth;
+  const bubblesPerRow = Math.floor(containerWidth / bubbleSize);
+
+  category.items.forEach((item, index) => {
+    const rowNumber = Math.floor(index / bubblesPerRow);
+    let row = bubbleContainer.querySelector(
+      `.bubble-row[data-row="${rowNumber}"]`
+    );
+
+    if (!row) {
+      row = document.createElement("div");
+      row.classList.add("bubble-row");
+      row.setAttribute("data-row", rowNumber);
+      bubbleContainer.appendChild(row);
+    }
+
+    const bubble = document.createElement("div");
+    bubble.classList.add("bubble");
+    bubble.style.width = `${bubbleSize}px`;
+    bubble.style.height = `${bubbleSize}px`;
+    bubble.textContent = item.title;
+    row.appendChild(bubble);
+  });
+}
+
+// The default settings and which settings are available depends on
+// the exercise type. This function is invoked after user chooses an exercise,
+// in the corresponding eventListener.
+function applyDefaultSettingsByType(exerciseType) {
+  //Selectors for changing settings
+  const allShowEnglishOptions = document.querySelectorAll(
+    `${showEnglishOptionsSelector} input[type="radio"]`
+  );
+  const repetitionsInput = document.querySelector(repetitionsInputSelector);
+  const onScreenKeyboardCheckbox = document.querySelector(
+    onScreenKeyboardCheckboxSelector
+  );
+  const keyboardHintsCheckbox = document.querySelector(
+    keyboardHintsCheckboxSelector
+  );
+  const calculateTypingSpeedCheckbox = document.querySelector(
+    calculateTypingSpeedCheckboxSelector
+  );
+  const triesPerPromptInput = document.querySelector(
+    ".tries-per-prompt-number"
+  );
+  const unlimitedRadio = document.querySelector(".unlimited-tries");
+  const limitedRadio = document.querySelector(".limited-tries");
+  const requireFullSentenceCheckbox = document.querySelector(
+    requireFullSentenceSelector
+  );
+
+  // There are 8 total settings, currently only 5, 6, 7, and 8 are unique
+
+  // 1. Tries per prompt Setting (unlimited, limited number) // SAME FOR ALL //
+  unlimitedRadio.checked = false;
+  limitedRadio.checked = true;
+  triesPerPromptNumber.disabled = false;
+  triesPerPromptInput.value = "3";
+
+  // 2. Require answer setting (on/off) // SAME FOR ALL //
+  requireAnswerCheckbox.checked = true;
+
+  // 3. Calculate typing speed setting (on/off) // SAME FOR ALL //
+  calculateTypingSpeedCheckbox.checked = true;
+
+  // 4. On-screen keyboard (on/off) // SAME FOR ALL //
+  onScreenKeyboardCheckbox.checked = true;
+
+  // 5. Require full sentence // Default is false for all, but some options disable it
+  requireFullSentenceCheckbox.checked = false;
+
+  // Get the configuration for the current exercise type
+  const config = exerciseTypeConfig[exerciseType];
+
+  // 6. Show English Setting (4 choices)
+  showEnglishOptionsContainer.classList.remove("hidden");
+  allShowEnglishOptions.forEach((option) => {
+    option.checked = option.value === config.showEnglish;
+  });
+
+  // If the exercise type is 'fillblank', hide the English options container
+  if (exerciseType === "fillblank") {
+    showEnglishOptionsContainer.classList.add("hidden");
+  }
+
+  // 7. Repetitions setting (number)
+  repetitionsInput.value = config.repetitions;
+
+  // 8. Keyboard hints (on/off)
+  hintsAllowed = keyboardHintsCheckbox.checked = config.showKeyboardHints;
+  showHintsCheckbox.disabled = !config.showHints;
+  showHintsLabel.classList[config.showHints ? "remove" : "add"]("hidden");
+
+  // 5. Require full sentence disabled or no
+  requireFullSentenceLabel.classList[
+    config.requireFullSentence ? "remove" : "add"
+  ]("hidden");
+}
+
+// This is called after a user selects an exercise, but the contents
+// are only really executed when the user clicks the beginExercise button.
+// This button will is shown at the bottom of a modal which pops up when
+// a user clicks on a bubble (a shape showing an exercise name -- see above).
+// The modal includes options which allow users to change settings. The
+// settings are applied here by invoking the applyUserSettings function (see below).
+function initializeExercise(callback) {
+  beginExerciseButton.addEventListener("click", function beginExercise(event) {
+    // Other stuff will go here later
+    applyUserSettings(currentExercise.type);
+    // Reveal typing results as necessary
+    if (speedCalcOn) {
+      typingResults.classList.remove("hidden");
+    } else {
+      typingResults.classList.add("hidden");
+    }
+    modalStartExercise.style.display = "none";
+    callback();
+    // Remove the listener afterwards to prevent it doubling up later
+    event.target.removeEventListener("click", beginExercise);
+  });
+}
+
+// Function to apply user settings. Available settings depend on exercise type.
+function applyUserSettings(exerciseType) {
+  // Settings shared by all exercise types
+  const selectedShowEnglishOption = document.querySelector(
+    `${showEnglishOptionsSelector} input[type="radio"]:checked`
+  );
+  const repetitionsInput = document.querySelector(repetitionsInputSelector);
+  const onScreenKeyboardCheckbox = document.querySelector(
+    onScreenKeyboardCheckboxSelector
+  );
+  const keyboardHintsCheckbox = document.querySelector(
+    keyboardHintsCheckboxSelector
+  );
+  const calculateTypingSpeedCheckbox = document.querySelector(
+    calculateTypingSpeedCheckboxSelector
+  );
+  const triesPerPromptInput = document.querySelector(
+    ".tries-per-prompt-number"
+  );
+  const selectedTriesPerPrompt = document.querySelector(
+    'input[name="triesPerPrompt"]:checked'
+  ).value;
+  const requireFullSentenceCheckbox = document.querySelector(
+    requireFullSentenceSelector
+  );
+
+  // Apply common settings
+  maxTries =
+    selectedTriesPerPrompt === "unlimited"
+      ? 0
+      : parseInt(triesPerPromptInput.value);
+  if (maxTries === 0) {
+    triesContainer.classList.add("hidden");
+  }
+
+  requireResponse = requireAnswerCheckbox.checked;
+  repetitionNumber = repetitionsInput ? parseInt(repetitionsInput.value) : 10;
+  speedCalcOn = calculateTypingSpeedCheckbox.checked;
+
+  keyboardOn = onScreenKeyboardCheckbox.checked;
+  showKeyboardCheckbox.checked = keyboardOn;
+  keyboardHintsOn = keyboardHintsCheckbox.checked;
+  showHintsCheckbox.checked = keyboardHintsOn;
+
+  // The following settings are not applicable to all exercise types
+  if (exerciseType !== "fillblank") {
+    showEngSetting = selectedShowEnglishOption.value;
+  } else {
+    showEngSetting = showEngSameTime;
+  }
+
+  // The following setting is not available to "transcribe" and "jumble",
+  // so should only be evaluated if it is not a transcribe or jumble type exercise.
+  if (exerciseType !== "transcribe" && exerciseType !== "jumble") {
+    requireFullSentence = requireFullSentenceCheckbox.checked;
+  }
+}
+
+// This loads the prompts that a user will be shown for an exercise in accordance with
+// the exercise and settings they have selected.
+function loadVocabList() {
+  // Bool to prevent user from accidentally navigating away during exercise
+  exerciseUnderway = true;
+
+  // Initialize the progress bar to have a sliver of progress showing
+  progressBar.style.width = `${100 / repetitionNumber / 2}%`;
+
+  // Make the list of prompts for the exercise
+  const randomizedList = shuffleArray(currentExercise.items);
+  currentList = randomizedList.slice(0, repetitionNumber);
+  currentAnswerType = determineAnswerType(
+    currentExercise.type,
+    requireFullSentence
+  );
+  currentPromptType = exerciseTypeController[currentExercise.type].promptType;
+  currentPromptInstructions = setPromptInstructions();
+
+  // This is for the purpose of calculating typing speed
+  if (speedCalcOn) {
+    for (let i = 0; i < repetitionNumber; i++) {
+      const hangeulChars = Hangul.disassemble(
+        currentList[i][currentAnswerType]
+      );
+      const hangeulString = hangeulChars.join("");
+      totalPromptChars += hangeulString.replace(/\s/g, "").length;
+    }
+  }
+
+  setNextPrompt();
 }
 
 function startTimer() {
@@ -278,39 +520,6 @@ function generateResults() {
   resultsContainer.parentElement.classList.remove("hidden");
 }
 
-// This loads the prompts that a user will be shown for an exercise in accordance with
-// the exercise and settings they have selected.
-function loadVocabList() {
-  // Bool to prevent user from accidentally navigating away during exercise
-  exerciseUnderway = true;
-
-  // Initialize the progress bar to have a sliver of progress showing
-  progressBar.style.width = `${100 / repetitionNumber / 2}%`;
-
-  // Make the list of prompts for the exercise
-  const randomizedList = shuffleArray(currentExercise.items);
-  currentList = randomizedList.slice(0, repetitionNumber);
-  currentAnswerType = determineAnswerType(
-    currentExercise.type,
-    requireFullSentence
-  );
-  currentPromptType = exerciseTypeController[currentExercise.type].promptType;
-  currentPromptInstructions = setPromptInstructions();
-
-  // This is for the purpose of calculating typing speed
-  if (speedCalcOn) {
-    for (let i = 0; i < repetitionNumber; i++) {
-      const hangeulChars = Hangul.disassemble(
-        currentList[i][currentAnswerType]
-      );
-      const hangeulString = hangeulChars.join("");
-      totalPromptChars += hangeulString.replace(/\s/g, "").length;
-    }
-  }
-
-  setNextPrompt();
-}
-
 // This is a function to show the user the next key to press by highlighting the key aqua
 // on the on-screen keyboard
 function showNextKey() {
@@ -399,58 +608,6 @@ function shuffleArray(array) {
   return newArray;
 }
 
-// A "bubble" is a selectable box which is either an exercise category or an exercise
-// This function is called when user clicks on start learning or an exercise category
-function createBubbles(category) {
-  previousCategory = currentCategory;
-  currentCategory = category;
-  if (currentCategory == rootCategoryContainer) {
-    backArrow.classList.add("hidden");
-    startLearningHeader.classList.remove("hidden");
-  } else {
-    backArrow.classList.remove("hidden");
-    startLearningHeader.classList.add("hidden");
-  }
-
-  bubbleContainer.style.display = "flex";
-  bubbleContainer.parentElement.classList.remove("hidden");
-
-  const bubbleSize = category instanceof ExerciseCategory ? 150 : 250;
-
-  // Clear existing bubbles
-  bubbleContainer.innerHTML = "";
-
-  // Create heading element
-  const heading = document.createElement("h2");
-  heading.textContent = category.title;
-  heading.classList.add("bubble-heading");
-  bubbleContainer.appendChild(heading);
-
-  const containerWidth = bubbleContainer.offsetWidth;
-  const bubblesPerRow = Math.floor(containerWidth / bubbleSize);
-
-  category.items.forEach((item, index) => {
-    const rowNumber = Math.floor(index / bubblesPerRow);
-    let row = bubbleContainer.querySelector(
-      `.bubble-row[data-row="${rowNumber}"]`
-    );
-
-    if (!row) {
-      row = document.createElement("div");
-      row.classList.add("bubble-row");
-      row.setAttribute("data-row", rowNumber);
-      bubbleContainer.appendChild(row);
-    }
-
-    const bubble = document.createElement("div");
-    bubble.classList.add("bubble");
-    bubble.style.width = `${bubbleSize}px`;
-    bubble.style.height = `${bubbleSize}px`;
-    bubble.textContent = item.title;
-    row.appendChild(bubble);
-  });
-}
-
 // Function to call when clicking a nav link to close all other sections
 function hideContainers() {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -477,23 +634,6 @@ function showModalAbandon(callback) {
       event.target.removeEventListener("click", continueExercise);
     }
   );
-}
-
-function initializeExercise(callback) {
-  beginExerciseButton.addEventListener("click", function beginExercise(event) {
-    // Other stuff will go here later
-    applyUserSettings(currentExercise.type);
-    // Reveal typing results as necessary
-    if (speedCalcOn) {
-      typingResults.classList.remove("hidden");
-    } else {
-      typingResults.classList.add("hidden");
-    }
-    modalStartExercise.style.display = "none";
-    callback();
-    // Remove the listener afterwards to prevent it doubling up later
-    event.target.removeEventListener("click", beginExercise);
-  });
 }
 
 // After a user completes or exits an exercise, this will clear all the content of the previous exercise
@@ -544,63 +684,6 @@ function filterNonKorean(text) {
 function playWarningSound() {
   const audio = new Audio("path/to/warning-sound.mp3");
   audio.play();
-}
-
-// Function to apply user settings, now taking into account exercise type
-function applyUserSettings(exerciseType) {
-  // Settings shared by all exercise types
-  const selectedShowEnglishOption = document.querySelector(
-    `${showEnglishOptionsSelector} input[type="radio"]:checked`
-  );
-  const repetitionsInput = document.querySelector(repetitionsInputSelector);
-  const onScreenKeyboardCheckbox = document.querySelector(
-    onScreenKeyboardCheckboxSelector
-  );
-  const keyboardHintsCheckbox = document.querySelector(
-    keyboardHintsCheckboxSelector
-  );
-  const calculateTypingSpeedCheckbox = document.querySelector(
-    calculateTypingSpeedCheckboxSelector
-  );
-  const triesPerPromptInput = document.querySelector(
-    ".tries-per-prompt-number"
-  );
-  const selectedTriesPerPrompt = document.querySelector(
-    'input[name="triesPerPrompt"]:checked'
-  ).value;
-  const requireFullSentenceCheckbox = document.querySelector(
-    requireFullSentenceSelector
-  );
-
-  // Apply common settings
-  maxTries =
-    selectedTriesPerPrompt === "unlimited"
-      ? 0
-      : parseInt(triesPerPromptInput.value);
-  if (maxTries === 0) {
-    triesContainer.classList.add("hidden");
-  }
-
-  requireResponse = requireAnswerCheckbox.checked;
-  repetitionNumber = repetitionsInput ? parseInt(repetitionsInput.value) : 10;
-  speedCalcOn = calculateTypingSpeedCheckbox.checked;
-
-  keyboardOn = onScreenKeyboardCheckbox.checked;
-  showKeyboardCheckbox.checked = keyboardOn;
-  keyboardHintsOn = keyboardHintsCheckbox.checked;
-  showHintsCheckbox.checked = keyboardHintsOn;
-
-  // The following settings are not applicable to all exercise types
-  if (exerciseType !== "fillblank") {
-    showEngSetting = selectedShowEnglishOption.value;
-  } else {
-    showEngSetting = showEngSameTime;
-  }
-
-  // The following setting is not applicable to "transcribe" and "jumble"
-  if (exerciseType !== "transcribe" && exerciseType !== "jumble") {
-    requireFullSentence = requireFullSentenceCheckbox.checked;
-  }
 }
 
 // Sets next prompt and puts the current rep in the results summary array
@@ -755,78 +838,6 @@ function determineAnswerType(exerciseType, altAnswer) {
   return altAnswer
     ? exerciseTypeController[exerciseType].altAnswerType
     : exerciseTypeController[exerciseType].answerType;
-}
-
-function applyDefaultSettingsByType(exerciseType) {
-  //Selectors for changing settings
-  const allShowEnglishOptions = document.querySelectorAll(
-    `${showEnglishOptionsSelector} input[type="radio"]`
-  );
-  const repetitionsInput = document.querySelector(repetitionsInputSelector);
-  const onScreenKeyboardCheckbox = document.querySelector(
-    onScreenKeyboardCheckboxSelector
-  );
-  const keyboardHintsCheckbox = document.querySelector(
-    keyboardHintsCheckboxSelector
-  );
-  const calculateTypingSpeedCheckbox = document.querySelector(
-    calculateTypingSpeedCheckboxSelector
-  );
-  const triesPerPromptInput = document.querySelector(
-    ".tries-per-prompt-number"
-  );
-  const unlimitedRadio = document.querySelector(".unlimited-tries");
-  const limitedRadio = document.querySelector(".limited-tries");
-  const requireFullSentenceCheckbox = document.querySelector(
-    requireFullSentenceSelector
-  );
-
-  // There are 8 total settings, currently only 5, 6, 7, and 8 are unique
-
-  // 1. Tries per prompt Setting (unlimited, limited number) // SAME FOR ALL //
-  unlimitedRadio.checked = false;
-  limitedRadio.checked = true;
-  triesPerPromptNumber.disabled = false;
-  triesPerPromptInput.value = "3";
-
-  // 2. Require answer setting (on/off) // SAME FOR ALL //
-  requireAnswerCheckbox.checked = true;
-
-  // 3. Calculate typing speed setting (on/off) // SAME FOR ALL //
-  calculateTypingSpeedCheckbox.checked = true;
-
-  // 4. On-screen keyboard (on/off) // SAME FOR ALL //
-  onScreenKeyboardCheckbox.checked = true;
-
-  // 5. Require full sentence // Default is false for all, but some options disable it
-  requireFullSentenceCheckbox.checked = false;
-
-  // Get the configuration for the current exercise type
-  const config = exerciseTypeConfig[exerciseType];
-
-  // 6. Show English Setting (4 choices)
-  showEnglishOptionsContainer.classList.remove("hidden");
-  allShowEnglishOptions.forEach((option) => {
-    option.checked = option.value === config.showEnglish;
-  });
-
-  // If the exercise type is 'fillblank', hide the English options container
-  if (exerciseType === "fillblank") {
-    showEnglishOptionsContainer.classList.add("hidden");
-  }
-
-  // 7. Repetitions setting (number)
-  repetitionsInput.value = config.repetitions;
-
-  // 8. Keyboard hints (on/off)
-  hintsAllowed = keyboardHintsCheckbox.checked = config.showKeyboardHints;
-  showHintsCheckbox.disabled = !config.showHints;
-  showHintsLabel.classList[config.showHints ? "remove" : "add"]("hidden");
-
-  // 5. Require full sentence disabled or no
-  requireFullSentenceLabel.classList[
-    config.requireFullSentence ? "remove" : "add"
-  ]("hidden");
 }
 
 // >>>>>>>>>>>>>>>>>>>>>>> Event Listeners <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
