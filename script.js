@@ -95,7 +95,7 @@ const keyboardMessageContent =
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>> Function declarations <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
-// ---Loading Exercises ---//
+// --- Functions for Initializing Exercises ---//
 // The main logic of the app consists in the user's interactions with exercises
 // The following functions deal with creating an exercise instance.
 // The general flow is:
@@ -105,7 +105,7 @@ const keyboardMessageContent =
 // 3. initializeExercise will be invoked once user chooses settings and hits begin
 // 4. The above in turn invokes loadVocabList, which creates the list which will
 //    represent the contents of the exercise.
-// ---Loading Exercises ---//
+// ---↓ Funcions for Initializing Exercises ↓---//
 
 // A "bubble" is a selectable box which is either an exercise category or an exercise
 // This function is called when user clicks on start learning or an exercise category
@@ -348,15 +348,94 @@ function loadVocabList() {
   setNextPrompt();
 }
 
-function startTimer() {
-  timerOn = true;
-  startTime = new Date().getTime();
+// Used for randomizing order of prompts for exercises, called in loadVocabList
+function shuffleArray(array) {
+  const newArray = [...array];
+  const length = newArray.length;
+
+  for (let i = length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[randomIndex]] = [newArray[randomIndex], newArray[i]];
+  }
+
+  return newArray;
 }
 
-function stopTimer() {
-  timerOn = false;
-  endTime = new Date().getTime();
-  totalTimeTyped += (endTime - startTime) / 1000 / 60; // Update time and convert to minutes.
+// Depending on the type of exercise and user settings, the correct answer
+// will be different. Called during loadVocabList to make sure
+// that the correct answer type is selected, as different categories of exercises have
+// different properties.
+function determineAnswerType(exerciseType, altAnswer) {
+  return altAnswer
+    ? exerciseTypeController[exerciseType].altAnswerType
+    : exerciseTypeController[exerciseType].answerType;
+}
+
+// Prompt instructions depend on the exercise type and user settings.
+// The instructions for the current exercise are set during loadVocabList
+// when this function is invoked. Instructions appear above the prompt in the prompt container.
+function setPromptInstructions() {
+  let instructions = "";
+  if (currentExercise.type === "grammar") {
+    instructions = currentExercise.promptLabel;
+  } else {
+    if (requireFullSentence) {
+      instructions =
+        exerciseTypeController[currentExercise.type].altPromptLabel;
+    } else {
+      instructions = exerciseTypeController[currentExercise.type].promptLabel;
+    }
+  }
+  return instructions;
+}
+
+// ---↑ End of Fuctions for Initializing Exercises ↑---//
+
+// ---Functions for Exercise Logic ---//
+/*  The following exercises are for exercise logic.
+ *   This includes:
+ *   -Displaying the current prompt (setNextPrompt)
+ *   -Checking correctness of user input (checkAnswer)
+ *   -Behavior for correct and incorrect responses (gradeCorrect, gradeIncorrect)
+ *   -Setting the text to display for answer in case response was incorrect (setAnswerText)
+ *   -Revealing answer if user gives up and decides to reveal answer (revealAnswer)
+ */
+// ---↓ Functions for Exercise Logic ↓---//
+
+// Sets next prompt, and refreshes all GUI elements that may have changed
+function setNextPrompt() {
+  // Restore reveal button
+  revealBtn.disabled = false;
+  revealBtn.classList.remove("disabled-button");
+
+  // Restore other GUI elements
+  nextBtn.classList.remove("bigger-next-btn");
+  promptContainer.classList.remove("lightup-incorrect");
+  userText.classList.remove("lightup-correct");
+  userText.disabled = false;
+  userText.focus();
+  userText.value = "";
+  nextBtn.textContent = nextBtnPrompt;
+
+  if (maxTries) {
+    userTriesAmount = 0;
+    updateTriesGUI();
+  }
+  answerRevealed = false;
+
+  promptInstructions.textContent = currentPromptInstructions;
+
+  promptLabel.innerHTML = currentList[currentIndex][currentPromptType];
+  if (showEngSetting == showEngSameTime) {
+    promptLabel.innerHTML += "<br>" + currentList[currentIndex].english;
+  }
+
+  currentAnswer = currentList[currentIndex][currentAnswerType];
+  deconstructedCorrectAnswer = Hangul.disassemble(currentAnswer);
+  currentIndex++;
+
+  // This function should be invoked when appropriate to show the user the first key to be pressed
+  showNextKey();
 }
 
 // Function to evaluate if the user-provided response is correct according to the given prompt
@@ -408,21 +487,6 @@ function gradeCorrect() {
   speedCalcOn && stopTimer();
 }
 
-function setAnswerText() {
-  promptLabel.innerHTML = `Answer: ${
-    currentList[currentIndex - 1][currentAnswerType]
-  }`;
-
-  if (currentAnswerType == "blankAnswer") {
-    promptLabel.innerHTML +=
-      "<br>" + currentList[currentIndex - 1].sentenceWithBlank;
-  }
-
-  if (showEngSetting == showEngAfterGrading) {
-    promptLabel.innerHTML += "<br>" + currentList[currentIndex - 1].english;
-  }
-}
-
 // Executes when user has entered an incorrect response
 function gradeIncorrect() {
   setTimeout(() => {
@@ -432,7 +496,7 @@ function gradeIncorrect() {
     nextBtn.classList.add("bigger-next-btn");
     nextBtn.textContent = nextBtnTryAgainText;
     userTriesAmount++;
-    updateTriesUI();
+    updateTriesGUI();
     userText.classList.add("lightup-incorrect");
 
     setTimeout(() => {
@@ -472,6 +536,45 @@ function gradeIncorrect() {
       calcSpeedOn && stopTimer();
     }
   }
+}
+
+// In the case user has answered incorrectly, this function is invoked
+// to determine the correct text to display for the answer.
+function setAnswerText() {
+  promptLabel.innerHTML = `Answer: ${
+    currentList[currentIndex - 1][currentAnswerType]
+  }`;
+
+  if (currentAnswerType == "blankAnswer") {
+    promptLabel.innerHTML +=
+      "<br>" + currentList[currentIndex - 1].sentenceWithBlank;
+  }
+
+  if (showEngSetting == showEngAfterGrading) {
+    promptLabel.innerHTML += "<br>" + currentList[currentIndex - 1].english;
+  }
+}
+
+// Function to handle the reveal answer action
+function revealAnswer() {
+  if (answerRevealed) {
+    return;
+  }
+  answerRevealed = true;
+  gradeIncorrect();
+}
+
+// ---↑ End Functions for Exercise Logic ↑---//
+
+function startTimer() {
+  timerOn = true;
+  startTime = new Date().getTime();
+}
+
+function stopTimer() {
+  timerOn = false;
+  endTime = new Date().getTime();
+  totalTimeTyped += (endTime - startTime) / 1000 / 60; // Update time and convert to minutes.
 }
 
 function printExerciseSummary() {
@@ -595,19 +698,6 @@ function showNextKey() {
   document.querySelector(`.${keyToPress}`).classList.add("activated-key");
 }
 
-// Used for randomizing order of prompts for exercises
-function shuffleArray(array) {
-  const newArray = [...array];
-  const length = newArray.length;
-
-  for (let i = length - 1; i > 0; i--) {
-    const randomIndex = Math.floor(Math.random() * (i + 1));
-    [newArray[i], newArray[randomIndex]] = [newArray[randomIndex], newArray[i]];
-  }
-
-  return newArray;
-}
-
 // Function to call when clicking a nav link to close all other sections
 function hideContainers() {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -686,60 +776,7 @@ function playWarningSound() {
   audio.play();
 }
 
-// Sets next prompt and puts the current rep in the results summary array
-function setNextPrompt() {
-  // Restore reveal button
-  revealBtn.disabled = false;
-  revealBtn.classList.remove("disabled-button");
-
-  // Restore other GUI elements
-  nextBtn.classList.remove("bigger-next-btn");
-  promptContainer.classList.remove("lightup-incorrect");
-  userText.classList.remove("lightup-correct");
-  userText.disabled = false;
-  userText.focus();
-  userText.value = "";
-  nextBtn.textContent = nextBtnPrompt;
-
-  if (maxTries) {
-    userTriesAmount = 0;
-    updateTriesUI();
-  }
-  answerRevealed = false;
-
-  promptInstructions.textContent = currentPromptInstructions;
-
-  // Actual prompt will depend on various settings, this is under construction TODO
-  promptLabel.innerHTML = currentList[currentIndex][currentPromptType];
-  if (showEngSetting == showEngSameTime) {
-    promptLabel.innerHTML += "<br>" + currentList[currentIndex].english;
-  }
-
-  // The current answer will change depending on settings and exercise type. For now it is just the Korean
-  currentAnswer = currentList[currentIndex][currentAnswerType];
-  deconstructedCorrectAnswer = Hangul.disassemble(currentAnswer);
-  currentIndex++;
-
-  // This function should be invoked when appropriate to show the user the first key to be pressed
-  showNextKey();
-}
-
-function setPromptInstructions() {
-  let instructions = "";
-  if (currentExercise.type === "grammar") {
-    instructions = currentExercise.promptLabel;
-  } else {
-    if (requireFullSentence) {
-      instructions =
-        exerciseTypeController[currentExercise.type].altPromptLabel;
-    } else {
-      instructions = exerciseTypeController[currentExercise.type].promptLabel;
-    }
-  }
-  return instructions;
-}
-
-function updateTriesUI() {
+function updateTriesGUI() {
   // Clear the previous emojis
   triesEmojisContainer.innerHTML = "";
 
@@ -819,25 +856,6 @@ function keyToKoreanLetter(keyCode, isShiftPressed) {
   } else {
     return null;
   }
-}
-
-// Function to handle the reveal answer action
-function revealAnswer() {
-  if (answerRevealed) {
-    return;
-  }
-  answerRevealed = true;
-  gradeIncorrect();
-}
-
-// Depending on the type of exercise and user settings, the correct answer
-// will be different. This function is called during loadVocabList to make sure
-// that the correct answer type is selected, as different categories of exercises have
-// different properties.
-function determineAnswerType(exerciseType, altAnswer) {
-  return altAnswer
-    ? exerciseTypeController[exerciseType].altAnswerType
-    : exerciseTypeController[exerciseType].answerType;
 }
 
 // >>>>>>>>>>>>>>>>>>>>>>> Event Listeners <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
