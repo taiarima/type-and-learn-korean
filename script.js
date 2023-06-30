@@ -399,6 +399,7 @@ function setPromptInstructions() {
  *   -Behavior for correct and incorrect responses (gradeCorrect, gradeIncorrect)
  *   -Setting the text to display for answer in case response was incorrect (setAnswerText)
  *   -Revealing answer if user gives up and decides to reveal answer (revealAnswer)
+ *   -Clearing the exercise after completion or abandonment (clearExercise)
  */
 // ---↓ Functions for Exercise Logic ↓---//
 
@@ -564,18 +565,43 @@ function revealAnswer() {
   gradeIncorrect();
 }
 
+// After a user completes or exits an exercise, this will clear all the content of the previous exercise
+// so the next one starts out fresh.
+function clearExercise() {
+  startTime = 0;
+  totalCharsTyped = 0;
+  totalTimeTyped = 0;
+  totalPromptChars = 0;
+  startTime = 0;
+  endTime = 0;
+  currentIndex = 0;
+  exerciseUnderway = false;
+  userText.value = "";
+  userText.classList.remove("lightup-correct");
+  promptLabel.textContent = currentList[currentIndex].korean;
+  nextBtn.classList.remove("bigger-next-btn");
+  promptContainer.classList.remove("lightup-incorrect");
+  userText.disabled = false;
+  nextBtn.textContent = nextBtnPrompt;
+  userTriesAmount = 0;
+  correctResponsesCounter = 0;
+  document.querySelector(".activated-key")?.classList.remove("activated-key");
+  answerRevealed = false;
+  triesContainer.classList.remove("hidden");
+  // I haven't decided how I'm going to handle this yet
+  // if (!saveSettingsOn) {
+  //   keepDefaultSettings = true;
+  // }
+}
+
 // ---↑ End Functions for Exercise Logic ↑---//
 
-function startTimer() {
-  timerOn = true;
-  startTime = new Date().getTime();
-}
-
-function stopTimer() {
-  timerOn = false;
-  endTime = new Date().getTime();
-  totalTimeTyped += (endTime - startTime) / 1000 / 60; // Update time and convert to minutes.
-}
+// --- Functions for Generating Results ---//
+/*  There are two principle functions for generating results
+  * 1. printExerciseSummary -- used to show what the prompts and answers of exercise were
+  * 2. generateResults -- Shows user performance and calls above function
+*/
+// --- Functions for Generating Results ---//
 
 function printExerciseSummary() {
   exerciseSummaryTextArea.value = "";
@@ -621,6 +647,27 @@ function generateResults() {
   clearExercise();
   hideContainers();
   resultsContainer.parentElement.classList.remove("hidden");
+}
+
+// --- End Functions for Generating Results ---//
+
+// --- Functions for Typing-Related Tasks ---//
+/*  The following are functions related to user typing. 
+  * They include stop and start time functions for calculating typing speed,
+  * functions to show the key currently being typed, keyboard hints (show the next
+  * key to be typed), and checking to make sure that user is typing only Korean.
+*/
+// --- Functions for Typing-Related Tasks ---//
+
+function startTimer() {
+  timerOn = true;
+  startTime = new Date().getTime();
+}
+
+function stopTimer() {
+  timerOn = false;
+  endTime = new Date().getTime();
+  totalTimeTyped += (endTime - startTime) / 1000 / 60; // Update time and convert to minutes.
 }
 
 // This is a function to show the user the next key to press by highlighting the key aqua
@@ -698,68 +745,6 @@ function showNextKey() {
   document.querySelector(`.${keyToPress}`).classList.add("activated-key");
 }
 
-// Function to call when clicking a nav link to close all other sections
-function hideContainers() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  const containers = document.querySelectorAll(".container");
-  containers.forEach((ele) => ele.classList.add("hidden"));
-}
-
-// This function is for when a user attempts to navigate away during the middle of the exercise
-function showModalAbandon(callback) {
-  modalAbandon.style.display = "block";
-
-  abandonBtn.addEventListener("click", function abandonExercise(event) {
-    modalAbandon.style.display = "none";
-    clearExercise();
-    callback("abandon");
-    event.target.removeEventListener("click", abandonExercise);
-  });
-
-  continueExerciseBtn.addEventListener(
-    "click",
-    function continueExercise(event) {
-      modalAbandon.style.display = "none";
-      callback("continue");
-      event.target.removeEventListener("click", continueExercise);
-    }
-  );
-}
-
-// After a user completes or exits an exercise, this will clear all the content of the previous exercise
-// so the next one starts out fresh.
-function clearExercise() {
-  startTime = 0;
-  totalCharsTyped = 0;
-  totalTimeTyped = 0;
-  totalPromptChars = 0;
-  startTime = 0;
-  endTime = 0;
-  currentIndex = 0;
-  exerciseUnderway = false;
-  userText.value = "";
-  userText.classList.remove("lightup-correct");
-  promptLabel.textContent = currentList[currentIndex].korean;
-  nextBtn.classList.remove("bigger-next-btn");
-  promptContainer.classList.remove("lightup-incorrect");
-  userText.disabled = false;
-  nextBtn.textContent = nextBtnPrompt;
-  userTriesAmount = 0;
-  correctResponsesCounter = 0;
-  document.querySelector(".activated-key")?.classList.remove("activated-key");
-  answerRevealed = false;
-  triesContainer.classList.remove("hidden");
-  // I haven't decided how I'm going to handle this yet
-  // if (!saveSettingsOn) {
-  //   keepDefaultSettings = true;
-  // }
-}
-
-function updateProgressBar() {
-  const percentage = (currentIndex / repetitionNumber) * 100;
-  progressBar.style.width = `${percentage}%`;
-}
-
 function containsNonKorean(text) {
   const regex = /[^\sㄱ-ㅎㅏ-ㅣ가-힣.,()0-9?]/;
   return regex.test(text);
@@ -768,42 +753,6 @@ function containsNonKorean(text) {
 function filterNonKorean(text) {
   const regex = /[^\sㄱ-ㅎㅏ-ㅣ가-힣.,()0-9?]/g;
   return text.replace(regex, "");
-}
-
-// Function to play a warning sound, haven't got a sound file for it yet
-function playWarningSound() {
-  const audio = new Audio("path/to/warning-sound.mp3");
-  audio.play();
-}
-
-function updateTriesGUI() {
-  // Clear the previous emojis
-  triesEmojisContainer.innerHTML = "";
-
-  // Calculate the number of remaining tries
-  const remainingTries = maxTries - userTriesAmount;
-  triesLabel.textContent = `Tries remaining: ${remainingTries}`;
-
-  // Add emojis for each remaining try
-  for (let i = 0; i < remainingTries; i++) {
-    const emoji = document.createElement("span");
-    emoji.textContent = "❤️";
-    triesEmojisContainer.appendChild(emoji);
-  }
-}
-
-function handleLinkClick(targetContainer) {
-  if (exerciseUnderway) {
-    showModalAbandon(function (choice) {
-      if (choice === "abandon") {
-        hideContainers();
-        targetContainer.parentElement.classList.remove("hidden");
-      }
-    });
-  } else {
-    hideContainers();
-    targetContainer.parentElement.classList.remove("hidden");
-  }
 }
 
 function keyToKoreanLetter(keyCode, isShiftPressed) {
@@ -855,6 +804,81 @@ function keyToKoreanLetter(keyCode, isShiftPressed) {
     }
   } else {
     return null;
+  }
+}
+
+// --- End of Functions for Typing-Related Tasks ---//
+
+// --- GUI Handling Functions ---//
+
+function updateTriesGUI() {
+  // Clear the previous emojis
+  triesEmojisContainer.innerHTML = "";
+
+  // Calculate the number of remaining tries
+  const remainingTries = maxTries - userTriesAmount;
+  triesLabel.textContent = `Tries remaining: ${remainingTries}`;
+
+  // Add emojis for each remaining try
+  for (let i = 0; i < remainingTries; i++) {
+    const emoji = document.createElement("span");
+    emoji.textContent = "❤️";
+    triesEmojisContainer.appendChild(emoji);
+  }
+}
+
+function updateProgressBar() {
+  const percentage = (currentIndex / repetitionNumber) * 100;
+  progressBar.style.width = `${percentage}%`;
+}
+
+// Function to call when clicking a nav link to close all other sections
+function hideContainers() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  const containers = document.querySelectorAll(".container");
+  containers.forEach((ele) => ele.classList.add("hidden"));
+}
+
+// This function is for when a user attempts to navigate away during the middle of the exercise
+function showModalAbandon(callback) {
+  modalAbandon.style.display = "block";
+
+  abandonBtn.addEventListener("click", function abandonExercise(event) {
+    modalAbandon.style.display = "none";
+    clearExercise();
+    callback("abandon");
+    event.target.removeEventListener("click", abandonExercise);
+  });
+
+  continueExerciseBtn.addEventListener(
+    "click",
+    function continueExercise(event) {
+      modalAbandon.style.display = "none";
+      callback("continue");
+      event.target.removeEventListener("click", continueExercise);
+    }
+  );
+}
+
+// --- End GUI Handling Functions ---/
+
+// Function to play a warning sound, haven't got a sound file for it yet
+function playWarningSound() {
+  const audio = new Audio("path/to/warning-sound.mp3");
+  audio.play();
+}
+
+function handleLinkClick(targetContainer) {
+  if (exerciseUnderway) {
+    showModalAbandon(function (choice) {
+      if (choice === "abandon") {
+        hideContainers();
+        targetContainer.parentElement.classList.remove("hidden");
+      }
+    });
+  } else {
+    hideContainers();
+    targetContainer.parentElement.classList.remove("hidden");
   }
 }
 
