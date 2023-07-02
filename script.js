@@ -594,13 +594,22 @@ function clearExercise() {
   // }
 }
 
+function initTextExercise(text) {
+  let textSplitIntoWords = text.split(" ");
+
+  readingPassageArea.textContent = "";
+  readingPassageArea.innerHTML = textSplitIntoWords
+    .map((word) => `<span class="passage-word">${word}</span>`)
+    .join(" ");
+}
+
 // ---↑ End Functions for Exercise Logic ↑---//
 
 // --- Functions for Generating Results ---//
 /*  There are two principle functions for generating results
-  * 1. printExerciseSummary -- used to show what the prompts and answers of exercise were
-  * 2. generateResults -- Shows user performance and calls above function
-*/
+ * 1. printExerciseSummary -- used to show what the prompts and answers of exercise were
+ * 2. generateResults -- Shows user performance and calls above function
+ */
 // --- Functions for Generating Results ---//
 
 function printExerciseSummary() {
@@ -652,11 +661,11 @@ function generateResults() {
 // --- End Functions for Generating Results ---//
 
 // --- Functions for Typing-Related Tasks ---//
-/*  The following are functions related to user typing. 
-  * They include stop and start time functions for calculating typing speed,
-  * functions to show the key currently being typed, keyboard hints (show the next
-  * key to be typed), and checking to make sure that user is typing only Korean.
-*/
+/*  The following are functions related to user typing.
+ * They include stop and start time functions for calculating typing speed,
+ * functions to show the key currently being typed, keyboard hints (show the next
+ * key to be typed), and checking to make sure that user is typing only Korean.
+ */
 // --- Functions for Typing-Related Tasks ---//
 
 function startTimer() {
@@ -1257,4 +1266,10 @@ document.addEventListener("click", (event) => {
 
 backArrow.addEventListener("click", function () {
   createBubbles(previousCategory);
+});
+
+readingPassageArea.addEventListener("click", function (event) {
+  if (event.target.classList.contains("passage-word")) {
+    event.target.classList.toggle("highlighted-word");
+  }
 });

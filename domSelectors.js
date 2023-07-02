@@ -54,6 +54,7 @@ const triesLabel = document.querySelector(".tries-label");
 const keyboardCheckboxes = document.querySelector(".keyboard-checkboxes");
 const backArrow = document.querySelector(".back-arrow");
 const startLearningHeader = document.querySelector(".start-learning-header");
+const readingPassageArea = document.querySelector(".reading-ex-test");
 
 // Modal Window selectors
 const modalStartExercise = document.querySelector(".modal-start-exercise");

@@ -210,6 +210,10 @@ main {
   margin-top: 10px;
 }
 
+.keyboard-hints-label:disabled:hover {
+  
+}
+
 @media screen and (max-width: 525px) {
   .keyboard-container {
     display: none;
@@ -769,4 +773,9 @@ button {
 
 .hidden {
   display: none;
+}
+
+.highlighted-word {
+  font-weight: bold;
+  background-color: var(--color-green);
 }
