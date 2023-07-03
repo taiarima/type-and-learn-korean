@@ -210,9 +210,9 @@ main {
   margin-top: 10px;
 }
 
-.keyboard-hints-label:disabled:hover {
+/* .keyboard-hints-label:disabled:hover {
   
-}
+} */
 
 @media screen and (max-width: 525px) {
   .keyboard-container {
@@ -633,6 +633,10 @@ button {
 
 .info-flag:hover::after {
   display: block;
+}
+
+.show-hints-checkbox.info-flag:enabled:hover::after {
+  display: none;
 }
 
 .results-container {
