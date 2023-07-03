@@ -3530,6 +3530,7 @@ grammarExercises.items.push(objectMarkers);
 grammarExercises.items.push(presentNegativeConjugation);
 grammarExercises.items.push(futureConjugation);
 grammarExercises.items.push(subjectMarkers);
+grammarExercises.items.push(essentialAdjectives);
 
 jumbleExercises.items.push(hobbiesJumble);
 jumbleExercises.items.push(newPeopleJumble);
