@@ -2125,7 +2125,7 @@ const subjectMarkers = {
 };
 
 const essentialAdjectives = {
-  title: "Using Essential Adjectives",
+  title: "Basic Adjective Forms",
   type: "grammar",
   promptLabel: "Change the adjective shown to its appropriate form.",
   items: [
@@ -2214,8 +2214,7 @@ const essentialAdjectives = {
       fullAnswer: "저는 돈이 많은 사람이 부럽습니다.",
     },
     {
-      sentenceWithBlank:
-        "경험이 ___ 사람들은 일 찾기가 어려워요. (적다)",
+      sentenceWithBlank: "경험이 ___ 사람들은 일 찾기가 어려워요. (적다)",
       english: "People with little experience find it hard to get a job.",
       blankAnswer: "경험이 적은",
       fullAnswer: "경험이 적은 사람들은 일 찾기가 어려워요.",
