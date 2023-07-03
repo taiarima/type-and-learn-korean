@@ -2124,6 +2124,141 @@ const subjectMarkers = {
   ],
 };
 
+const essentialAdjectives = {
+  title: "Using Essential Adjectives",
+  type: "grammar",
+  promptLabel: "Change the adjective shown to its appropriate form.",
+  items: [
+    {
+      sentenceWithBlank: "김선생님은 ___ 사람이에요. (착하다)",
+      english: "Teacher Kim is a kind person.",
+      blankAnswer: "착한",
+      fullAnswer: "김선생님은 착한 사람이에요.",
+    },
+    {
+      sentenceWithBlank: "오늘은 ___ 날씨예요. (추우하다)",
+      english: "Today is cold.",
+      blankAnswer: "추운",
+      fullAnswer: "오늘은 추운 날씨예요.",
+    },
+    {
+      sentenceWithBlank: "대진씨는 무슨 색이 ____? (좋다)",
+      english: "What color does Daejin like?",
+      blankAnswer: "좋아요",
+      fullAnswer: "대진씨는 무슨 색이 좋아요?",
+    },
+    {
+      sentenceWithBlank: "우리 집은 ___ 마당이 있어요. (넓다)",
+      english: "Our house has a wide yard.",
+      blankAnswer: "넓은",
+      fullAnswer: "우리 집은 넓은 마당이 있어요.",
+    },
+    {
+      sentenceWithBlank: "민지씨는 ___ 책을 읽어요. (재미있다)",
+      english: "Minji reads interesting books.",
+      blankAnswer: "재미있는",
+      fullAnswer: "민지씨는 재미있는 책을 읽어요.",
+    },
+    {
+      sentenceWithBlank: "밥은 이미 ___? (차갑다)",
+      english: "Is the rice already cold?",
+      blankAnswer: "차가워요",
+      fullAnswer: "밥은 이미 차가워요?",
+    },
+    {
+      sentenceWithBlank: "저는 ___ 음식을 먹지 않아요. (짜다)",
+      english: "I don't eat salty food.",
+      blankAnswer: "짠",
+      fullAnswer: "저는 짠 음식을 먹지 않아요.",
+    },
+    {
+      sentenceWithBlank: "강남구는 ___ 동네에요. (조용하다)",
+      english: "Gangnam is a quiet neighborhood.",
+      blankAnswer: "조용한",
+      fullAnswer: "강남구는 조용한 동네에요.",
+    },
+    {
+      sentenceWithBlank: "대진씨의 집은 ___ 집이에요. (크다)",
+      english: "Daejin's house is big.",
+      blankAnswer: "큰",
+      fullAnswer: "대진씨의 집은 큰 집이에요.",
+    },
+    {
+      sentenceWithBlank: "마트에서 ___ 사과를 샀어요. (작다)",
+      english: "I bought small apples at the market.",
+      blankAnswer: "작은",
+      fullAnswer: "마트에서 작은 사과를 샀어요.",
+    },
+    {
+      sentenceWithBlank: "우리 학교는 ___ 학교에요. (나쁘다)",
+      english: "Our school is a bad school.",
+      blankAnswer: "나쁜",
+      fullAnswer: "우리 학교는 나쁜 학교에요.",
+    },
+    {
+      sentenceWithBlank: "홍대는 ___ 곳이에요. (예쁘다)",
+      english: "Hongdae is a pretty place.",
+      blankAnswer: "예쁜",
+      fullAnswer: "홍대는 예쁜 곳이에요.",
+    },
+    {
+      sentenceWithBlank: "김선생님은 항상 ___ 선생님이에요. (바쁘다)",
+      english: "Teacher Kim is always a busy teacher.",
+      blankAnswer: "바쁜",
+      fullAnswer: "김선생님은 항상 바쁜 선생님이에요.",
+    },
+    {
+      sentenceWithBlank: "저는 돈이 ___ 사람이 부럽습니다. (많다)",
+      english: "I'm jealous of people who have a lot of money.",
+      blankAnswer: "많은",
+      fullAnswer: "저는 돈이 많은 사람이 부럽습니다.",
+    },
+    {
+      sentenceWithBlank:
+        "경험이 ___ 사람들은 일 찾기가 어려워요. (적다)",
+      english: "People with little experience find it hard to get a job.",
+      blankAnswer: "경험이 적은",
+      fullAnswer: "경험이 적은 사람들은 일 찾기가 어려워요.",
+    },
+    {
+      sentenceWithBlank: "이 가게에서 ___ 옷을 살 수 있어요. (싸다)",
+      english: "You can buy cheap clothes at this store.",
+      blankAnswer: "싼",
+      fullAnswer: "이 가게에서 싼 옷을 살 수 있어요.",
+    },
+    {
+      sentenceWithBlank: "이 레스토랑은 ___. (비싸다)",
+      english: "This restaurant is expensive.",
+      blankAnswer: "비싸요",
+      fullAnswer: "이 레스토랑은 비싸요.",
+    },
+    {
+      sentenceWithBlank: "혜진씨는 ___ 옷을 좋아해요. (멋지다)",
+      english: "Hyejin likes stylish clothes.",
+      blankAnswer: "멋진",
+      fullAnswer: "혜진씨는 멋진 옷을 좋아해요.",
+    },
+    {
+      sentenceWithBlank: "저의 강아지는 ___. (귀엽다)",
+      english: "My puppy is cute.",
+      blankAnswer: "귀여워요",
+      fullAnswer: "저의 강아지는 귀여워요.",
+    },
+    {
+      sentenceWithBlank: "___ 나라가 많아요. (아름답다)",
+      english: "There are many beautiful countries.",
+      blankAnswer: "아름다운",
+      fullAnswer: "아름다운 나라가 많아요.",
+    },
+    {
+      sentenceWithBlank: "하늘이 ___. (맑다)",
+      english: "The sky is clear.",
+      blankAnswer: "맑아요",
+      fullAnswer: "하늘이 맑아요.",
+    },
+  ],
+};
+
 const futureConjugation = {
   title: "Future (으)ㄹ 거예요 Conjugation",
   type: "grammar",
