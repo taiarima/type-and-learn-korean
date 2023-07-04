@@ -240,7 +240,7 @@ function applyDefaultSettingsByType(exerciseType) {
 // a user clicks on a bubble (a shape showing an exercise name -- see above).
 // The modal includes options which allow users to change settings. The
 // settings are applied here by invoking the applyUserSettings function (see below).
-function initializeExercise(callback) {
+function initializeExercise() {
   beginExerciseButton.addEventListener("click", function beginExercise(event) {
     // Other stuff will go here later
     applyUserSettings(currentExercise.type);
@@ -251,7 +251,13 @@ function initializeExercise(callback) {
       typingResults.classList.add("hidden");
     }
     modalStartExercise.style.display = "none";
-    callback();
+    hideContainers();
+    learningContainer.parentElement.classList.remove("hidden");
+    keyboardCheckboxes.parentElement.classList.remove("hidden");
+    if (keyboardOn) {
+      keyboardContainer.parentElement.classList.remove("hidden");
+    }
+    loadVocabList();
     // Remove the listener afterwards to prevent it doubling up later
     event.target.removeEventListener("click", beginExercise);
   });
@@ -595,6 +601,10 @@ function clearExercise() {
 }
 
 function initTextExercise(text) {
+  // Hide containers
+  // Reveal reading container
+  // Put the words
+  // Set instructions
   let textSplitIntoWords = text.split(" ");
 
   readingPassageArea.textContent = "";
@@ -616,13 +626,14 @@ function printExerciseSummary() {
   exerciseSummaryTextArea.value = "";
 
   currentList.forEach((item, index) => {
-    exerciseSummaryTextArea.value += `\n${index + 1}.\nPrompt: ${
+    exerciseSummaryTextArea.value += `${index + 1}.\nPrompt: ${
       item[currentPromptType]
     }\n`;
     exerciseSummaryTextArea.value += `Answer: ${item[currentAnswerType]}\n`;
     if (showEngSetting != showNoEng) {
       exerciseSummaryTextArea.value += `English: ${item.english}\n`;
     }
+    exerciseSummaryTextArea.value += `\n`;
   });
 
   exerciseSummaryTextArea.scrollTop = 0;
@@ -972,7 +983,6 @@ bubbleContainer.addEventListener("click", function (event) {
       createBubbles(currentSelection);
     } else {
       currentExercise = currentSelection;
-      applyDefaultSettingsByType(currentExercise.type);
 
       // Set the instructions and type of exercise for modal
       insertInstructions.textContent = currentExercise?.specialInstructions
@@ -992,23 +1002,19 @@ bubbleContainer.addEventListener("click", function (event) {
       modalStartExercise.style.display = "block";
       backArrow.classList.add("hidden");
 
-      // Set max amount of repetitions to be the amount of items in the list
-      const repsNumberEle = document.querySelector(repetitionsInputSelector);
-      const maxValue = currentSelection.items.length;
-      repsNumberEle.setAttribute("max", maxValue);
-      if (repsNumberEle.value > maxValue) {
-        repsNumberEle.value = maxValue;
-      }
-
-      initializeExercise(function () {
-        hideContainers();
-        learningContainer.parentElement.classList.remove("hidden");
-        keyboardCheckboxes.parentElement.classList.remove("hidden");
-        if (keyboardOn) {
-          keyboardContainer.parentElement.classList.remove("hidden");
+      if (currentExercise.type == "reading") {
+        initTextExercise();
+      } else {
+        applyDefaultSettingsByType(currentExercise.type);
+        // Set max amount of repetitions to be the amount of items in the list
+        const repsNumberEle = document.querySelector(repetitionsInputSelector);
+        const maxValue = currentSelection.items.length;
+        repsNumberEle.setAttribute("max", maxValue);
+        if (repsNumberEle.value > maxValue) {
+          repsNumberEle.value = maxValue;
         }
-        loadVocabList();
-      });
+        initializeExercise();
+      }
     }
   }
 });

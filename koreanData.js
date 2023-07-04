@@ -3313,6 +3313,17 @@ const exerciseTypeController = {
     promptType: "jumbleSentence",
     promptLabel: "Rewrite the following sentence in the correct order",
   },
+  reading: {
+    title: "Reading Passage",
+    instructions:
+      "This is a passage designed to increase your vocabulary and reading proficiency. You are advised to work through the passage following these steps:\n 1. Read through the passage once or twice without stopping.\n2. Read through the passage again, this time identifying any words you are unsure of by clicking on them.\n3. Click \"Create Vocabulary List\" to create a list of vocabulary from the words you have clicked on.\n4. Study the vocabulary words, then read over the passage again, refering to your vocabulary list when you encounter a word you don't understand.\n5. Read the passage repeatedly until you can read through the entire passage fluidly without running into any word you don't understand.",
+    promptPreVocab:
+      "Click on words you do not know. Create a vocabulary list with the button below",
+    promptPostVocab:
+      "Your vocabulary list has been created. You can hover over highlighted words to reveal their meanings.",
+    promptPostVocabMobile:
+      "Your vocabulary list has been created, and can be reviewed below the passage. You can tap on highlighted words to reveal their meanings.",
+  },
 };
 // New idea, reading exercises can have a new structure:
 // {word: "text as is", cards: [ {korean: 한국말, english: Korean} , ... ]
@@ -3321,6 +3332,8 @@ const exerciseTypeController = {
 //
 const introduction1Reading = {
   type: "reading",
+  specialInstructions:
+    "The following passage is a self-introduction from a university student. ",
   level: "CEFR: A2, TOPIK: 2, Vocab: 500-1000 words",
   text: "안녕하세요 여러분. 저는 이수진이라고 해요. 저는 부산에서 태어났어요. 한국인이에요. 대학생으로서 저는 서울의 한 대학에서 경영학을 전공하고 있어요. 저는 여행을 좋아해요. 특히, 새로운 문화를 배우고 다양한 사람들을 만나는 것을 좋아해요. 그래서 여름 방학 때마다 다른 나라를 여행해 보려고 노력해요. 또한, 저는 음악 듣는 것을 좋아해요. 음악은 저에게 힘을 주고, 일상에서 휴식을 취할 수 있는 좋은 방법이에요. 특히, K-팝을 좋아하는데, BTS가 제가 가장 좋아하는 그룹이에요. 마지막으로, 저는 요리도 좋아해요. 특히, 한식을 만드는 것을 좋아하는데, 김치찌개가 제일 잘하는 음식이에요. 여러분과 함께 학교에서 좋은 시간을 보낼 수 있어서 기쁘게 생각해요. 앞으로 잘 부탁드려요. 감사합니다!",
   vocabularyList: [
