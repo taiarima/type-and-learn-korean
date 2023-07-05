@@ -210,10 +210,6 @@ main {
   margin-top: 10px;
 }
 
-/* .keyboard-hints-label:disabled:hover {
-  
-} */
-
 @media screen and (max-width: 525px) {
   .keyboard-container {
     display: none;
@@ -782,4 +778,16 @@ button {
 .highlighted-word {
   font-weight: bold;
   background-color: var(--color-green);
+}
+
+.create-vocab-btn {
+  width: 100%;
+}
+
+.create-vocab-btn:hover {
+  background-color: lightseagreen;
+}
+.create-vocab-btn:active {
+  background-color: rgb(26, 145, 139);
+  transform: translate(2px, 2px);
 }

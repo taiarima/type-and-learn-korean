@@ -55,6 +55,7 @@ const keyboardCheckboxes = document.querySelector(".keyboard-checkboxes");
 const backArrow = document.querySelector(".back-arrow");
 const startLearningHeader = document.querySelector(".start-learning-header");
 const readingPassageArea = document.querySelector(".reading-ex-test");
+const readingContainer = document.querySelector(".reading-container");
 
 // Modal Window selectors
 const modalStartExercise = document.querySelector(".modal-start-exercise");
@@ -91,7 +92,7 @@ const showHintsLabel = document.querySelector(".hints-label");
 const categoryLabels = document.querySelectorAll(".category");
 const exerciseNameLabels = document.querySelectorAll(".exercise-name");
 const insertInstructions = document.querySelector(".insert-instructions");
-const acceptDefaultsText = document.querySelector(".accept-defaults");
+const acceptDefaultsLabel = document.querySelector(".accept-defaults");
 const defaultCheckbox = document.querySelector(".default-checkbox");
 const beginExerciseButton = document.querySelector(".begin-button");
 const exSettingsContainer = document.querySelector(".ex-settings-container");

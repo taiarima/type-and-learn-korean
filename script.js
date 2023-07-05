@@ -7,7 +7,7 @@ let currentIndex = 0;
 let exerciseUnderway = false; // Boolean to indicate exercise is underway/in progress
 let currentCategory = rootCategoryContainer; // This will be stored to apply to labels on exercise start modal and results page
 let previousCategory; // this will be used for when user hits back button
-let currentExerciseName; // Same as above. Is assigned in loadVocabList
+let currentExerciseName; // Same as above. Is assigned in createTypingExercise
 let keepDefaultSettings = true;
 let userTriesAmount = 0; // For each prompt, the amount of tries a user attempts will be tracked. Only relevant if maxTries != 0
 let correctResponsesCounter = 0;
@@ -103,7 +103,7 @@ const keyboardMessageContent =
 // 2. After user makes a selection, applyDefaultSettingsByType makes sure settings
 //    correspond with the type of exercise selected.
 // 3. initializeExercise will be invoked once user chooses settings and hits begin
-// 4. The above in turn invokes loadVocabList, which creates the list which will
+// 4. The above in turn invokes createTypingExercise, which creates the list which will
 //    represent the contents of the exercise.
 // ---↓ Funcions for Initializing Exercises ↓---//
 
@@ -257,7 +257,7 @@ function initializeExercise() {
     if (keyboardOn) {
       keyboardContainer.parentElement.classList.remove("hidden");
     }
-    loadVocabList();
+    createTypingExercise();
     // Remove the listener afterwards to prevent it doubling up later
     event.target.removeEventListener("click", beginExercise);
   });
@@ -323,7 +323,7 @@ function applyUserSettings(exerciseType) {
 
 // This loads the prompts that a user will be shown for an exercise in accordance with
 // the exercise and settings they have selected.
-function loadVocabList() {
+function createTypingExercise() {
   // Bool to prevent user from accidentally navigating away during exercise
   exerciseUnderway = true;
 
@@ -354,7 +354,7 @@ function loadVocabList() {
   setNextPrompt();
 }
 
-// Used for randomizing order of prompts for exercises, called in loadVocabList
+// Used for randomizing order of prompts for exercises, called in createTypingExercise
 function shuffleArray(array) {
   const newArray = [...array];
   const length = newArray.length;
@@ -368,7 +368,7 @@ function shuffleArray(array) {
 }
 
 // Depending on the type of exercise and user settings, the correct answer
-// will be different. Called during loadVocabList to make sure
+// will be different. Called during createTypingExercise to make sure
 // that the correct answer type is selected, as different categories of exercises have
 // different properties.
 function determineAnswerType(exerciseType, altAnswer) {
@@ -378,7 +378,7 @@ function determineAnswerType(exerciseType, altAnswer) {
 }
 
 // Prompt instructions depend on the exercise type and user settings.
-// The instructions for the current exercise are set during loadVocabList
+// The instructions for the current exercise are set during createTypingExercise
 // when this function is invoked. Instructions appear above the prompt in the prompt container.
 function setPromptInstructions() {
   let instructions = "";
@@ -594,23 +594,54 @@ function clearExercise() {
   document.querySelector(".activated-key")?.classList.remove("activated-key");
   answerRevealed = false;
   triesContainer.classList.remove("hidden");
+  defaultCheckbox.classList.remove("hidden");
+  acceptDefaultsLabel.classList.remove("hidden");
   // I haven't decided how I'm going to handle this yet
   // if (!saveSettingsOn) {
   //   keepDefaultSettings = true;
   // }
 }
 
-function initTextExercise(text) {
-  // Hide containers
-  // Reveal reading container
-  // Put the words
-  // Set instructions
-  let textSplitIntoWords = text.split(" ");
+function initTextExercise() {
+  // Add reading instructions
+  insertInstructions.textContent +=
+    exerciseTypeController[currentExercise.type].instructions;
+  defaultCheckbox.classList.add("hidden");
+  acceptDefaultsLabel.classList.add("hidden");
 
-  readingPassageArea.textContent = "";
-  readingPassageArea.innerHTML = textSplitIntoWords
-    .map((word) => `<span class="passage-word">${word}</span>`)
-    .join(" ");
+  beginExerciseButton.addEventListener("click", function beginExercise(event) {
+    // Put text into reading area
+    let textSplitIntoWords = currentExercise.text.split(" ");
+    readingPassageArea.textContent = "";
+    readingPassageArea.innerHTML = textSplitIntoWords
+      .map((word) => `<span class="passage-word">${word}</span>`)
+      .join(" ");
+
+    //Set GUI
+    modalStartExercise.style.display = "none";
+    hideContainers();
+    readingContainer.parentElement.classList.remove("hidden");
+    // Remove the listener afterwards to prevent it doubling up later
+    event.target.removeEventListener("click", beginExercise);
+  });
+}
+
+function buildVocabList() {
+  // Display Vocab List area
+  // Go through the passage and 
+  // 1. Change the class to something else
+  //    a. style should be diff
+  //    b. styled words should have hover effect that shows meaning
+  // 2. Change the event listener that highlights words
+  //    a. this should make a popup, add/remove to vocab list
+  // 3. Add each word to the vocab list to an array
+  // 4. Add each item of the array to a list
+  // 5. Add button for create exercises using this passage
+  //    a. transcription (sentences)
+  //    b. vocab drill
+  //        i. this could be made into a game with multiple levels
+  //    c. mixed up sentences
+  //    d. fill in the blank
 }
 
 // ---↑ End Functions for Exercise Logic ↑---//
