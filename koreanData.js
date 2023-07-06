@@ -3386,6 +3386,7 @@ const introduction1Reading = {
 
 const introduction2Reading = {
   type: "reading",
+  title: "Self Introduction 02",
   level: "CEFR: A2, TOPIK: 2, Vocab: 800-1000 words",
   text: "안녕하세요, 저는 최지민이에요. 저는 경기도에서 왔어요. 저는 프로그래머로 일하고 있어요. 독서를 좋아해서, 주말마다 책을 읽는 시간을 가집니다. 특히, 사이언스 픽션과 판타지 책을 좋아해요. 또한, 저는 피아노를 치는 것을 좋아해요. 음악은 저에게 큰 행복을 주는 요소 중 하나예요. 간혹, 저는 작곡도 해봅니다. 그리고, 저는 동물을 사랑해서, 고양이 두 마리와 함께 살고 있어요. 그들의 이름은 피치와 마롱이에요. 매일 그들과 함께하는 시간은 저에게 큰 기쁨이에요. 마지막으로, 저는 요가를 배우고 있어요. 요가는 저의 신체와 마음을 치유해 주는 도구이에요. 저와 같이 이 곳에서 좋은 추억을 만들 수 있길 바라요. 잘 부탁드립니다. 감사합니다!",
   vocabularyList: [
@@ -3508,6 +3509,33 @@ const introduction2Reading = {
   ],
 };
 
+const introduction3Reading = {
+  type: "reading",
+  specialInstructions:
+    "The following passage is a self-introduction from a recent graduate who is starting a new job.",
+  title: "Self-Introduction 03",
+  level: "CEFR: A2, TOPIK: 2, Vocab: 500-1000 words",
+  text: "안녕하세요, 여러분. 저는 김지민이라고 합니다. 저는 대구에서 태어났고, 서울대학교에서 경영학을 전공했습니다. 최근에 저희 회사에 합류했습니다. 저는 학부 시절, 경영학 및 마케팅에 대한 깊은 흥미를 가지게 되었고, 이 분야에서 실무 경험을 쌓아 나가고 싶었습니다. 그래서 대학교에서는 다양한 프로젝트에 참여하고, 여러 경영 전략에 대해 공부하면서 실제 비즈니스 환경에서 어떻게 적용되는지 배웠습니다. 제 취미는 요리와 여행입니다. 요리는 저에게 창의적인 표현의 한 방법이며, 여행은 새로운 사람들을 만나고 다양한 문화를 경험하는 좋은 기회입니다. 저는 이제 시작하는 입사생이지만, 여러분과 함께 회사를 성장시키는데 기여하고 싶습니다. 제 열정과 배운 것들을 최대한 활용하여 회사에 기여하겠습니다. 제 소개는 여기까지입니다. 앞으로 잘 부탁드려요. 제가 아직 많이 부족하지만, 함께 성장해 나가면서 서로 도와주면 좋겠습니다. 감사합니다.",
+};
+
+const summerVacReading01 = {
+  type: "reading",
+  specialInstructions:
+    "The following passage is a letter from a Korean student, Kyung-hee, studying in the USA and sharing her summer vacation experiences.",
+  title: "Kyung-hee's Summer Vacation",
+  level: "CEFR: A2, TOPIK: 2, Vocab: 500-1000 words",
+  text: "엄마, 안녕하세요? 여기 미국은 아직 여름이네요. 지난 주에는 동생들에게 보낼 사진을 찍으러 큰 공원에 갔어요. 공원에는 다양한 꽃들이 피어 있고, 아이들이 물놀이를 하고 있었어요. 그런 모습을 보니까 한국의 여름을 생각나게 했어요.미국에서의 제 첫 여름은 정말 특별했어요. 미국 친구들이랑 함께 농구를 하거나, 바베큐 파티를 즐기거나, 여러 가지 미식을 맛보는 등 많은 경험을 했어요. 이런 경험들은 한국에서는 쉽게 할 수 없는 것들이라 더욱 소중하게 느껴져요.또한, 여기 있는 한국 친구들과 함께 한식을 만들어 먹는 시간도 가졌어요. 그럴 때마다 엄마의 요리가 그리워져요. 하지만 가장 기억에 남는 것은 미국의 독립기념일인 4월 4일에 열린 불꽃놀이였어요. 그날 밤, 하늘을 수놓은 불꽃놀이는 정말 아름다웠어요. 미국에서의 생활은 가끔 어렵고 외롭기도 하지만, 이런 특별한 경험들로 인해 더 많이 배우고 성장하고 있다는 것을 느껴요. 그럼, 이만 줄을 마치겠습니다. 빠른 시일 내에 엄마에게 전화할게요. 항상 건강하세요. 사랑해요, 엄마. - 경희",
+};
+
+const summerVacReading02 = {
+  type: "reading",
+  specialInstructions:
+    "The following passage is a letter from an American student, Michael, studying in Korea and sharing his experiences.",
+  title: "Michael's Study in Korea",
+  level: "CEFR: A2, TOPIK: 2, Vocab: 500-1000 words",
+  text: "안녕, 친구들! 여기 한국에서 편지를 쓰네. 날씨는 정말 덥지만, 그래도 한국에서의 생활이 꽤 재미있어. 한국의 여름은 우리네 보스턴보다 습해. 그래서 잘 못 참겠어도 에어컨이 있는 곳에 있어야 해. 사람들은 더위를 피하기 위해 백화점이나 영화관에 가는 것 같아. 꽤 스마트하지 않아? 이번 주에는 명동에 가서 쇼핑도 했어. 여기서 유명한 건 '스트리트 푸드'인데, 분명히 맛있어. 그리고 나는 이제 김밥을 만드는 방법을 알아. 조만간 집에서 만들어 봐야겠어. 그리고 한국어 공부도 잘 하고 있어. 아직 많이 부족하지만 꾸준히 공부하면서 실력이 점점 향상되고 있어. 어렵지만 매우 흥미롭고 보람찬 일이야. 친구들, 너희들에게 더 많은 이야기를 들려주고 싶지만, 이만 줄을 그어야 할 것 같아. 곧 이야기하자. 그럼 이만, - 마이클",
+};
+
 class ExerciseCategory {
   constructor(title) {
     this.title = title;
@@ -3547,6 +3575,10 @@ jumbleExercises.items.push(newPeopleJumble);
 jumbleExercises.items.push(transportationJumble);
 
 readingExercises.items.push(introduction1Reading);
+readingExercises.items.push(introduction2Reading);
+readingExercises.items.push(introduction3Reading);
+readingExercises.items.push(summerVacReading01);
+readingExercises.items.push(summerVacReading02);
 
 wordChoiceExercises.items.push(hobbiesWordChoice);
 wordChoiceExercises.items.push(transportationWordChoice);
